@@ -17,8 +17,7 @@ app.get('/introduction', function(request, response){
     // TODO: 告知綿羊這個 wifi 不會偷其他的東西，並且綿羊牆是匿名的，請綿羊放心
     // TODO: 請他去連官方提供的 wifi
     // TODO: 告知他釣魚牆的相關資訊，e.g. 位置、釣魚牆統計資料
-    response.sendFile('front-end/index.html', {root: '../'});
-    //response.sendFile('front-end/introduction/index.html', {root: '../'});
+    response.sendFile('frontend/introduction/index.html', {root: '../'});
 });
 
 // Receive flags.
@@ -32,28 +31,28 @@ app.all('*', function(request, response){
     const host = request.headers.host
     console.log(host)
     if (host.includes('facebook')){
-        response.sendFile('front-end/facebook/index.html', {root: '../'});
+        response.sendFile('frontend/facebook/index.html', {root: '../'});
     }
     else if (host.includes('gmail')){
-        response.sendFile('front-end/gmail/index.html', {root: '../'});
+        response.sendFile('frontend/gmail/index.html', {root: '../'});
     }
     else if (host.includes('twitter')){
-        response.sendFile('front-end/twitter/index.html', {root: '../'});
+        response.sendFile('frontend/twitter/index.html', {root: '../'});
     }
     else if (host.includes('github')){
-        response.sendFile('front-end/github/index.html', {root: '../'});
+        response.sendFile('frontend/github/index.html', {root: '../'});
     }
     else if (host.includes('linkedin')){
-        response.sendFile('front-end/linkedin/index.html', {root: '../'});
+        response.sendFile('frontend/linkedin/index.html', {root: '../'});
     }
     else if (host.includes('instagram')){
-        response.sendFile('front-end/instagram/index.html', {root: '../'});
+        response.sendFile('frontend/instagram/index.html', {root: '../'});
     }
     else if (host.includes('hackmd')){
-        response.sendFile('front-end/hackmd/index.html', {root: '../'});
+        response.sendFile('frontend/hackmd/index.html', {root: '../'});
     }
     else{
-        response.sendFile('front-end/hitcon/index.html', {root: '../'});
+        response.sendFile('frontend/hitcon/index.html', {root: '../'});
     }
 });
 
