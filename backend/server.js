@@ -17,6 +17,7 @@ app.post('/fish', urlencodedParser, function(req, res){
     const host = req.headers.host
     console.log(host)
     console.log(req.url);
+    console.log(req.body);
 
     const username = req.body.username;
     const password = req.body.password;
