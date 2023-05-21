@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="dev">
+
+<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="mobile-web-app-capable" content="yes">
+<meta property="og:image" content="../images/HackMD-og.jpg">
+
+    <meta property="fb:app_id" content="1436904003272070">
+
+<meta name="csrf-token" content="ORSTACOI-ITsOtihUTN3KmsO0iNJwWJiI5EQ">
+<title>404 Not Found - HackMD</title>
+<link rel="icon" type="image/png" href="../images/favicon.png">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+
+<!-- Google Tag Manager -->
+<script nonce="9621394a-09e2-4fa3-a501-9212e6ccc1e5">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KLW9Z3');</script>
+<!-- End Google Tag Manager -->
+
+
+ <link href="../css/font-vendor.3d113077b3e51703e6ff.css" rel="stylesheet"><link href="../css/common-vendor.3f50d6443fc55574a09d.css" rel="stylesheet"><link href="../css/error-vendor.edbb460f62a82319aac3.css" rel="stylesheet"><link href="../css/error.576681167a4088137d7f.css" rel="stylesheet">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+<![endif]-->
+
+
+    
+<style>
+  .grecaptcha-badge {
+      visibility: hidden;
+  }
+</style>
+<script nonce="9621394a-09e2-4fa3-a501-9212e6ccc1e5" src="https://www.google.com/recaptcha/api.js?render=6LdtkK4ZAAAAAG1B4iENhmQTce1xNTyHu0GjgnXi&amp;hl=dev"></script>
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top unselectable hidden-print">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        
+            <a class="navbar-brand pull-left" style="float: left;" href="https://hackmd.io/"><i class="fa fa-file-text"></i> HackMD</a>
+        
+    </div>
+</nav>
+
+    <div class="container-fluid hmd-text-center">
+        <div class="vertical-center-row">
+            
+                <h1>404 Not Found</h1>
+<div class="blue-icon">
+    <img src="not-found.svg">
+</div>
+
+<p>
+    We can&#39;t find the page you’re looking for.
+    <br>
+    Sign in or head back to home.
+</p>
+<div class="action">
+    <a type="button" class="btn btn-lg btn-primary ui-home" href="https://hackmd.io/">Home</a>
+    <a type="button" class="btn btn-lg btn-success ui-signin" data-toggle="modal" data-target=".signin-modal">Sign in</a>
+</div>
+
+
+            
+        </div>
+    </div>
+
+    <!-- signin modal -->
+<div class="modal fade signin-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: 10px; right: 20px; position: absolute;"><span aria-hidden="true">&times;</span></button>
+            
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<h3>Sign in</h3>
+
+<form data-toggle="validator" role="form" class="form-horizontal" method="post" enctype="application/x-www-form-urlencoded" id="signin-form">
+    <div class="hmd-dn"><input type="hidden" name="_csrf" value="ORSTACOI-ITsOtihUTN3KmsO0iNJwWJiI5EQ"></div>
+    <div class="hmd-dn"><input type="hidden" name="create_team" value="false"></div>
+    <div class="hmd-dn"><input type="hidden" name="create_paid_team" value="false"></div>
+    <div class="form-group  ">
+        <label for="email" class="control-label">Email</label>
+        <label for="inputEmail" class="control-label pull-right errors">
+            
+        </label>
+        <span class="help-block control-label with-errors pull-right" style="display: inline;"></span>
+        <div class="input-block">
+            
+                <input type="email" class="form-control" name="email" placeholder="Your email" required autocomplete="email">
+            
+            <span class="error-sign"></span>
+        </div>
+    </div>
+    <div class="form-group ">
+        <label for="password" class="control-label">Password</label>
+        <label for="inputPassword" class="control-label pull-right errors">
+            
+        </label>
+        <span class="help-block control-label with-errors pull-right" style="display: inline;"></span>
+        <div class="input-block">
+            <input type="password" class="form-control" name="password" placeholder="Your password" required autocomplete="current-password">
+            <span class="error-sign"></span>
+            
+                <span class="control-label pull-right" style="font-size: 13px; margin-top: 5px;"><a href="https://hackmd.io/settings/forgotPassword" style="text-decoration: underline;">Forgot password</a></span>
+            
+        </div>
+    </div>
+
+    <div style="text-align: center; padding-top: 15px; margin-bottom: 0px;">
+        
+            <input type="submit" class="btn btn-success btn-large" formaction="https://hackmd.io/login" value="Sign in">
+        
+
+        
+    </div>
+</form>
+
+
+
+
+
+
+
+
+    
+        <p class="separator">or</p>
+    
+
+    
+        <p>By clicking below, you agree to our <a href="https://hackmd.io/s/terms" target="_blank">terms of service</a>.</p>
+    
+
+    
+
+
+
+
+
+
+
+
+ 
+
+
+
+<script id="gsi-client" src="https://accounts.google.com/gsi/client" async defer nonce="9621394a-09e2-4fa3-a501-9212e6ccc1e5"></script>
+<script nonce="9621394a-09e2-4fa3-a501-9212e6ccc1e5">
+    function handleCredentialResponse(response) {
+        const form = document.getElementById('sign-in-with-google-form')
+        form.children.credential.value = response.credential
+        form.children.method.value = location.href.toLowerCase() === 'https://hackmd.io/settings#general' ? 'merge' : 'login'
+        form.submit()
+    }
+    var GSI_READY = new Promise(function (resolve) {
+        function initialize () {
+            google.accounts.id.initialize({
+                client_id: '911617723593-drikdibvvn63slfd6kbqigo8ql1no55s.apps.googleusercontent.com',
+                callback: handleCredentialResponse
+            })
+            const loginPath = 'https://hackmd.io/login'
+            const joinPath = 'https://hackmd.io/join'
+            const renderButton = function () {
+                google.accounts.id.renderButton(
+                    document.getElementById('sign-in-with-google-button'),
+                    { type: 'standard', width: 250 }
+                )
+            }
+            if (location.href.toLowerCase() === loginPath || location.href.toLowerCase() === joinPath) {
+                renderButton()
+            } else {
+                $('.signin-modal').one('shown.bs.modal', function () {
+                    renderButton()
+                })
+            }
+            resolve()
+        }
+
+        window.addEventListener('load', function () { initialize() })
+    })
+</script>
+<form class="hidden" id="sign-in-with-google-form" action="/auth/google" method="post">
+    <input type="hidden" name="credential">
+    <input type="hidden" name="method">
+</form>
+ 
+
+<div class="social-buttons-container">
+    
+    <div id="sign-in-with-google-button"></div>
+    
+    
+    <a href="https://hackmd.io/auth/facebook" class="btn btn-lg btn-block btn-social btn-facebook">
+        <i class="fa fa-facebook"></i> Sign in via Facebook
+    </a>
+    
+    
+    <a href="https://hackmd.io/auth/twitter" class="btn btn-lg btn-block btn-social btn-twitter">
+        <i class="fa fa-twitter"></i> Sign in via Twitter
+    </a>
+    
+    
+    <a href="https://hackmd.io/auth/github" class="btn btn-lg btn-block btn-social btn-github">
+        <i class="fa fa-github"></i> Sign in via GitHub
+    </a>
+    
+    
+    <a href="https://hackmd.io/auth/dropbox" class="btn btn-lg btn-block btn-social btn-dropbox">
+        <i class="fa fa-dropbox"></i> Sign in via Dropbox
+    </a>
+    
+    
+    
+</div>
+
+
+
+
+
+    <div>
+        <p>New to HackMD? <a href="https://hackmd.io/join">Sign up</a></p>
+    </div>
+
+
+            
+
+<script nonce="9621394a-09e2-4fa3-a501-9212e6ccc1e5">
+function bindRecaptchaOnSubmitButton () {
+  const btn = document.querySelector('#signin-form input[type="submit"]')
+  if (!btn) {
+    setTimeout(() => bindRecaptchaOnSubmitButton(), 100)
+    return
+  }
+  btn.addEventListener('click', e => {
+    e.preventDefault()
+    e.stopPropagation()
+    const siteKey = '6LdtkK4ZAAAAAG1B4iENhmQTce1xNTyHu0GjgnXi'
+    grecaptcha.ready(() => {
+      grecaptcha.execute(siteKey, {action: 'login'}).then(token => {
+        const input = document.createElement('input')
+        input.setAttribute('type', 'hidden')
+        input.setAttribute('name', 'g-recaptcha-response')
+        input.setAttribute('value', token)
+        const form = document.querySelector('#signin-form')
+        form.appendChild(input)
+        form.action = btn.formAction
+        form.submit()
+      })
+    })
+  })
+}
+bindRecaptchaOnSubmitButton()
+</script>
+
+
+        </div>
+    </div>
+</div>
+
+    
+    <script src="https://www.googletagmanager.com/gtag/js?id=UA-60728495-1"></script>
+    <script nonce="9621394a-09e2-4fa3-a501-9212e6ccc1e5">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        let userid = (document.cookie.match('(^|; )userid=([^;]*)')||0)[2];
+        gtag('config', 'UA-60728495-1', {'user_id': userid});
+        
+    </script>
+
+
+
+<script src="../js/bundle.min.js" crossorigin="anonymous"></script>
+<script nonce="9621394a-09e2-4fa3-a501-9212e6ccc1e5">Sentry.init({ dsn: 'https://73410f1915d84abc8b2dd1f1aabd1c82@sentry.hackmd.dev/4', environment: 'production', integrations: function (intrus) { return intrus.filter(function (itr) { return itr.name !== 'TryCatch' }) } });</script>
+
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLW9Z3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+ <script src="../js/font-vendor.8ccf5b3bef0e171569b5.js" defer="defer"></script><script src="../js/common-vendor.5a96f2fab315139321d3.js" defer="defer"></script><script src="../js/error-vendor.f8abbf87a335acb73f82.js" defer="defer"></script><script src="../js/error-common.1ec29318dddfc3fc190a.js" defer="defer"></script><script src="../js/error.55feb8cda0abee6976d6.js" defer="defer"></script>
+
+
+</body>
+</html>
