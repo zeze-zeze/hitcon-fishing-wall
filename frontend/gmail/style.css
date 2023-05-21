@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+  }
+  
+  .top {
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: 25px;
+    width: 210px;
+    height: 26px;
+    font-size: 14px;
+  }
+  
+  .top a {
+    margin-right: 30px;
+    text-decoration: none;
+  }
+  
+  .top a:visited {
+    color: black;
+  }
+  
+  #button {
+    display: inline-block;
+    height: 26px;
+    width: 80px;
+    text-align: center;
+    padding-top: 10px;
+    font-weight: bold;
+    color: white;
+    background-color: dodgerblue;
+    border-radius: 5px;
+    float: right;
+    margin-top: -20px;
+  }
+  
+  .middle {
+    width: 500px;
+    margin: 100px auto 0 auto;
+  }
+  
+  img {
+    width: 300px;
+    margin-left: 100px;
+  }
+  
+  .middle input {
+    width: 500px;
+    height: 30px;
+    font-size: 20px;
+  }
+  
+  .prvi-gumb {
+    display: inline-block;
+    height: 32px;
+    width: 200px;
+    margin-left: 33px;
+    text-align: center;
+    font-size: 18px;
+    padding-top: 8px;
+    background-color: lightgray;
+    color: dimgray;
+    border-radius: 5px;
+  }
+  
+  .prvi-gumb:hover {
+    color: black;
+    font-weight: bold;
+    border: 1px solid black;
+    height: 30px;
+    width: 198px;
+  }
+  
+  p {
+    text-align: center;
+  }
+  
+  .bottom {
+    height: 40px;
+    width: 100%;
+    background-color: #F2F2F2;
+    position: fixed;
+    bottom: 0;
+    font-size: 14px;
+  }
+  
+  .bottom div {
+    width: 250px;
+    display: inline-block;
+    margin-left: 24px;
+    padding-top: 12px;
+  }
+  
+  .bottom div a {
+    margin-right: 24px;
+    text-decoration: none;
+  }
+  
+  .bottom div a:hover {
+    text-decoration: underline;
+  }
+  
+  .bottom div a:visited {
+    color: black;
+  }
+  
+  .bottom-desni {
+      float: right;
+      text-align: right;
+  }

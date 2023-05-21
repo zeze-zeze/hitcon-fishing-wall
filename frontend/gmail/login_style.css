@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+  }
+  
+  .logo {
+    width: 112px;
+    height: 36px;
+    margin: 30px auto;
+  }
+  
+  p:nth-child(2) {
+    font-size: 45px;
+    text-align: center;
+    margin-top: -10px;
+  }
+  
+  p:nth-child(3) {
+    font-size: 20px;
+    text-align: center;
+    margin-top: -25px;
+  }
+  
+  .login {
+    height: 300px;
+    width: 350px;
+    margin: auto;
+    background-color: #F7F7F7;
+    box-shadow: 0px 1px 1px 0px grey;
+  }
+  
+  .login > div:nth-child(3) {
+    width: 100px;
+    margin: auto;
+  }
+  
+  .login > div:nth-child(3) > img {
+    height: 100px;
+    border-radius: 100%;
+  }
+  
+  input {
+    height: 35px;
+    width: 250px;
+    margin-left: 48px;
+    font-size: 20px;
+  }
+  
+  .button {
+    display: inline-block;
+    height: 40px;
+    width: 250px;
+    margin-left: 49px;
+    text-align: center;
+    background-color:dodgerblue;
+    border: 1px solid blue;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .login > a:last-child {
+    display: inline-block;
+    float: right;
+    margin-right: 49px;
+    font-size: 14px;
+    text-decoration: none;
+    color: mediumblue;
+  }
+  
+  .login >a:last-child:hover {
+    text-decoration: underline;
+  }
+  
+  p:nth-child(5) {
+    text-align: center;
+  }
+  
+  p > a {
+    text-decoration: none;
+    color: mediumblue;
+  }
+  
+  p > a:hover {
+    text-decoration: underline;
+  }
+  
+  p:nth-child(6) {
+    text-align: center;
+  }
+  
+  .logo-strip {
+    width: 230px;
+    margin: -10px auto;
+  }
+  
+  .bottom {
+    height: 35px;
+    width: 100%;
+    border-top: 0.5px solid #E5E5E5;
+    position: fixed;
+    bottom: 0;
+    font-size: 12px;
+    background-color: white;
+  }
+  
+  .bottom a {
+    margin-left: 24px;
+    text-decoration: none;
+  }
+  
+  .bottom a:hover {
+    text-decoration: underline;
+  }
