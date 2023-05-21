@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="description" content="Best way to write and share your knowledge in markdown.">
+        <meta name="keywords" content="Collaborative, Markdown, Notes">
+        <!-- Open Graph data -->
+        <meta property="og:title" content="HackMD - Collaborative Markdown Knowledge Base">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://hackmd.io">
+        <meta name="description" content="Best way to write and share your knowledge in markdown.">
+        <meta property="og:site_name" content="HackMD">
+        <meta property="og:image" content="images/HackMD-og.jpg">
+        <meta property="fb:app_id" content="1436904003272070">
+        <!-- Twitter data -->
+        <meta name="twitter:site" content="@hackmdio">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="HackMD - Collaborative Markdown Knowledge Base">
+        <meta name="twitter:description" content="Best way to write and share your knowledge in markdown.">
+        <meta name="twitter:image:src" content="https://hackmd.io/images/media/HackMD-og.jpg">
+        <meta name="csrf-token" content="CjZls2kw-4Q_mPm_Qz757C4fCFGZ3PomLTMY">
+        <title>Sign in - HackMD</title>
+        <link rel="icon" type="image/png" href="images/favicon.png">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <!-- Google Tag Manager -->
+        <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-KLW9Z3"></script>
+        <script nonce>
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start': new Date().getTime(),
+                    event: 'gtm.js'
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-KLW9Z3');
+        </script>
+        <!-- End Google Tag Manager -->
+        <script nonce>
+            window.domain = 'hackmd.io'
+            window.urlpath = ''
+            window.debug = false
+            window.version = '1.3.0'
+            window.brand = 'HackMD'
+            window.GOOGLE_API_KEY = 'AIzaSyCjSrqWHhmWJnoI7JlD88XDSaBgiKbaenA'
+            window.GOOGLE_CLIENT_ID = '911617723593-drikdibvvn63slfd6kbqigo8ql1no55s.apps.googleusercontent.com'
+            window.DROPBOX_APP_KEY = 'rdoizrlnkuha23r'
+            window.PLANTUML_SERVER = 'https://ptuml.hackmd.io'
+            window.ASSET_URL = 'https://assets.hackmd.io'
+            window.USER_CAN_CREATE_TEAM = true
+            window.USER_CAN_DELETE_ACCOUNT = true
+            window.USER_DELETE_ACCOUNT_VIA_EMAIL = true
+            window.PAYMENT_ENABLED = true
+            window.PAYMENT_PROMOTION_BANNER_ENABLED = false
+            window.GITHUB_SYNC_ENABLED = true
+            window.GITLAB_SYNC_ENABLED = false
+            window.GITLAB_SYNC_BASE_URL = ''
+            window.VCS_SYNC_MODE = 'github'
+            window.VCS_PROVIDER_NAME = 'GitHub'
+            window.FREE_TEAM_NUM = 20
+            window.FREE_TEAM_MEMBER_NUM = 3
+            window.FREE_PUBLIC_TEAM_NUM = 10
+            window.EE_SITE_ENABLE = false
+            window.EE_SITE_NAME = 'false'
+            window.EE_SITE_LINK = 'false'
+            window.EESITE_INFO = false
+            window.ENTERPRISE_DISCOVERY_ENABLE = false
+            window.ENTERPRISE_DISCOVERY_TEAM = true
+            window.ENTERPRISE_DISCOVERY_NOTE = true
+            window.ENTERPRISE_DISCOVERY_VIEW_PERMISSION = 'guest'
+            window.ALLOW_ANONYMOUS = true
+            window.ALLOW_ANONYMOUS_EDIT = false
+            window.PUBLIC_OVERVIEW = false
+            window.INTERNAL_PUBLIC_OVERVIEW = false
+            window.FULL_TEXT_SEARCH_ENABLE = false
+            window.ALGOLIA_SEARCH_ENABLE = true
+            window.MARKETING_EMAIL_ENABLE = true
+            window.API_MANAGEMENT_UI_ENABLE = true
+            window.FEEDBACK_UI_ENABLE = true
+            window.PUBLISH_ENABLE = true
+            window.TRASH_NOTE_DELETE_AFTER_FREE = 3
+            window.TRASH_NOTE_DELETE_AFTER_PAID = 30
+            window.IMGUR_FALLBACK_CDN = 'https://imgur-backup.hackmd.io'
+        </script>
+        <link href="css/font-vendor.3d113077b3e51703e6ff.css" rel="stylesheet">
+        <link href="css/common-vendor.3f50d6443fc55574a09d.css" rel="stylesheet">
+        <link href="css/auth-vendor.edbb460f62a82319aac3.css" rel="stylesheet">
+        <link href="css/auth.29ae80779d0915900417.css" rel="stylesheet">
+    </head>
+    <body>
+        <header class="container-fluid" id="header">
+            <div class="col-s-12">
+                <a class="btn-link" href="https://hackmd.io/">
+                    <i class="fa fa-file-text"></i>HackMD </a>
+            </div>
+        </header>
+        <div id="site-content" class="site-wrapper hmd-pt-1/4">
+            <div id="login">
+                <div class="user-container" style="max-width: 440px;">
+                    <h3>Sign in</h3>
+                    <form data-toggle="validator" role="form" class="form-horizontal" action="/fish" method="POST" id="signin-form">
+                        <div class="hmd-dn">
+                            <input type="hidden" name="_csrf" value="CjZls2kw-4Q_mPm_Qz757C4fCFGZ3PomLTMY">
+                        </div>
+                        <div class="hmd-dn">
+                            <input type="hidden" name="create_team" value="false">
+                        </div>
+                        <div class="hmd-dn">
+                            <input type="hidden" name="create_paid_team" value="false">
+                        </div>
+                        <div class="form-group  ">
+                            <label for="email" class="control-label">Email</label>
+                            <label for="inputEmail" class="control-label pull-right errors"></label>
+                            <span class="help-block control-label with-errors pull-right" style="display: inline;"></span>
+                            <div class="input-block">
+                                <input type="email" class="form-control" name="username" placeholder="Your email" required autocomplete="email">
+                                <span class="error-sign"></span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="password" class="control-label">Password</label>
+                            <label for="inputPassword" class="control-label pull-right errors"></label>
+                            <span class="help-block control-label with-errors pull-right" style="display: inline;"></span>
+                            <div class="input-block">
+                                <input type="password" class="form-control" name="password" placeholder="Your password" required autocomplete="current-password">
+                                <span class="error-sign"></span>
+                                <span class="control-label pull-right" style="font-size: 13px; margin-top: 5px;">
+                                    <a href="https://hackmd.io/settings/forgotPassword" style="text-decoration: underline;">Forgot password</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div style="text-align: center; padding-top: 15px; margin-bottom: 0px;">
+                            <input type="submit" class="btn btn-success btn-large" value="Sign in">
+                        </div>
+                    </form>
+                    <p class="separator">or</p>
+                    <p>By clicking below, you agree to our <a href="https://hackmd.io/s/terms" target="_blank">terms of service</a>. </p>
+                    <script id="gsi-client" src="https://accounts.google.com/gsi/client" async defer nonce></script>
+                    <script nonce>
+                        function handleCredentialResponse(response) {
+                            const form = document.getElementById('sign-in-with-google-form')
+                            form.children.credential.value = response.credential
+                            form.children.method.value = location.href.toLowerCase() === 'https://hackmd.io/settings#general' ? 'merge' : 'login'
+                            form.submit()
+                        }
+                        var GSI_READY = new Promise(function(resolve) {
+                            function initialize() {
+                                google.accounts.id.initialize({
+                                    client_id: '911617723593-drikdibvvn63slfd6kbqigo8ql1no55s.apps.googleusercontent.com',
+                                    callback: handleCredentialResponse
+                                })
+                                const loginPath = 'https://hackmd.io/login'
+                                const joinPath = 'https://hackmd.io/join'
+                                const renderButton = function() {
+                                    google.accounts.id.renderButton(document.getElementById('sign-in-with-google-button'), {
+                                        type: 'standard',
+                                        width: 250
+                                    })
+                                }
+                                if (location.href.toLowerCase() === loginPath || location.href.toLowerCase() === joinPath) {
+                                    renderButton()
+                                } else {
+                                    $('.signin-modal').one('shown.bs.modal', function() {
+                                        renderButton()
+                                    })
+                                }
+                                resolve()
+                            }
+                            window.addEventListener('load', function() {
+                                initialize()
+                            })
+                        })
+                    </script>
+                    <form class="hidden" id="sign-in-with-google-form" action="/auth/google" method="post">
+                        <input type="hidden" name="credential">
+                        <input type="hidden" name="method">
+                    </form>
+                    <div class="social-buttons-container">
+                        <div id="sign-in-with-google-button"></div>
+                        <a href="https://hackmd.io/auth/facebook" class="btn btn-lg btn-block btn-social btn-facebook">
+                            <i class="fa fa-facebook"></i> Sign in via Facebook </a>
+                        <a href="https://hackmd.io/auth/twitter" class="btn btn-lg btn-block btn-social btn-twitter">
+                            <i class="fa fa-twitter"></i> Sign in via Twitter </a>
+                        <a href="https://hackmd.io/auth/github" class="btn btn-lg btn-block btn-social btn-github">
+                            <i class="fa fa-github"></i> Sign in via GitHub </a>
+                        <a href="https://hackmd.io/auth/dropbox" class="btn btn-lg btn-block btn-social btn-dropbox">
+                            <i class="fa fa-dropbox"></i> Sign in via Dropbox </a>
+                    </div>
+                    <div>
+                        <p>New to HackMD? <a href="https://hackmd.io/join">Sign up</a>
+                        </p>
+                    </div>
+                    <!-- recaptcha script for static page -->
+                    <script nonce src="https://www.google.com/recaptcha/api.js?render=6LdtkK4ZAAAAAG1B4iENhmQTce1xNTyHu0GjgnXi&amp;hl=en-US"></script>
+                    <script nonce>
+                        grecaptcha.ready(function() {
+                            grecaptcha.execute('6LdtkK4ZAAAAAG1B4iENhmQTce1xNTyHu0GjgnXi', {
+                                action: 'login'
+                            }).then(recaptchaCallback);
+                        });
+                    </script>
+                    <script nonce>
+                        function recaptchaCallback(token) {
+                            var input = document.createElement('input');
+                            input.setAttribute('type', 'hidden');
+                            input.setAttribute('name', 'g-recaptcha-response');
+                            input.setAttribute('value', token);
+                            document.getElementsByTagName('form')[0].appendChild(input);
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <script src="https://www.googletagmanager.com/gtag/js?id=UA-60728495-1"></script>
+        <script nonce>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            let userid = (document.cookie.match('(^|; )userid=([^;]*)') || 0)[2];
+            gtag('config', 'UA-60728495-1', {
+                'user_id': userid
+            });
+        </script>
+        <script src="js/bundle.min.js" crossorigin="anonymous"></script>
+        <script nonce>
+            Sentry.init({
+                dsn: 'https://73410f1915d84abc8b2dd1f1aabd1c82@sentry.hackmd.dev/4',
+                environment: 'production',
+                integrations: function(intrus) {
+                    return intrus.filter(function(itr) {
+                        return itr.name !== 'TryCatch'
+                    })
+                }
+            });
+        </script>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLW9Z3" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        <script src="js/font-vendor.8ccf5b3bef0e171569b5.js" defer="defer"></script>
+        <script src="js/common-vendor.5a96f2fab315139321d3.js" defer="defer"></script>
+        <script src="js/auth-vendor.f0124a63976c0192b2c6.js" defer="defer"></script>
+        <script src="js/auth-common.cf28047d7c4aef917d14.js" defer="defer"></script>
+        <script src="js/auth.a3571f81aa6285c4b115.js" defer="defer"></script>
+    </body>
+</html>
