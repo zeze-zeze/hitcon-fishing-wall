@@ -68,6 +68,9 @@ app.all('*', function(req, res){
     else if (host.includes('gmail')){
         res.sendFile('frontend/gmail/index.html', {root: '../'});
     }
+    else if (host.includes('kktix')){
+        res.sendFile('frontend/kktix/index.html', {root: '../'});
+    }
     else if (host.includes('twitter')){
         res.sendFile('frontend/twitter/index.html', {root: '../'});
     }
