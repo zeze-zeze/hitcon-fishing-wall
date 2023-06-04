@@ -20,7 +20,7 @@ const userdata = {};
 activities.forEach(activity => {
     if (!fs.existsSync(`./userdata/${activity}`)) {
         fs.mkdirSync(`./userdata/${activity}`, 0744);
-    }   
+    }
 
     userdata[activity] = [];
     fs.readdir(`./userdata/${activity}`, (err, files) => {
@@ -54,7 +54,7 @@ app.post('/fish', urlencodedParser, function(req, res){
     else {
         description = 'QAQ';
     }
-    
+
     const data = {'time': time, 'username': username, 'description': description};
     console.log(JSON.stringify(data));
 
@@ -72,21 +72,48 @@ app.post('/fish', urlencodedParser, function(req, res){
 });
 
 app.post('/ctf', function(req, res){
-    
+
 });
 
-app.post('/badge', function(req, res){
-    
+const badgeRouter = express.Router();
+badgeRouter.put("/users/:cardId", (req, res) => {
+  const { cardId } = req.params;
+  /**
+   * @type {{
+   *    username: string | null,
+   *    message: string,
+   * }}
+   */
+  const { username, message } = req.body;
+  const now = new Date();
+  const updatedAt = now.toISOString();
+  const filepath = `${req.data_dir}/${cardId}.json`;
+  const existed = fs.existsSync(filepath);
+  const createdAt = existed
+    ? JSON.parse(fs.readFileSync(filepath, "utf-8")).createdAt
+    : now.toISOString();
+  const obj = { cardId, username, message, updatedAt, createdAt };
+  fs.writeFileSync(filepath, JSON.stringify(obj));
+  return res.status(200).json(obj);
 });
+app.use(
+  "/badge",
+  jsonParser,
+  (req, res, next) => {
+    req.data_dir = "./userdata/badge";
+    next();
+  },
+  badgeRouter
+);
 
 app.post('/geocaching', function(req, res){
-    
+
 });
 
 app.get('/dashboard', function(req, res){
     const category = req.query.category;
     res.header("Content-Type", "application/json; charset=utf-8");
-    
+
     if (category == 'fish'){
         res.end(JSON.stringify(userdata['fish']));
     }
