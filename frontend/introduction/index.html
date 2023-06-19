@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"> 
-    <link rel="stylesheet" href="./entrance/index.css">
-    <link rel="icon" type="image/x-icon" href="./images/sheep.png">
-    <title>HITCON EVENT</title>
-  </head>
-  <body>
-    
-    <div class="neon">
-      <h1 class="notice">
-        活動組釣魚牆資安宣導
-      </h1>
-    </div>
-  </body>
-</html> 
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="./entrance/glitch.css">
+        <link rel="icon" type="image/x-icon" href="./images/sheep.png">
+        <title>HITCON EVENT</title>
+    </head>
+    <style>
+        .translate {
+            --tw-bg-opacity: 1;
+            background-color: rgb(54 54 54/var(--tw-bg-opacity));
+            color: aliceblue;
+        }
+    </style>
+    <body>
+        <div>
+            <a class="translate" href="./eng/index.html">ENG</a>
+            <h1 class="glitch">
+                <span aria-hidden="true">歡迎來到釣魚牆</span>歡迎來到釣魚牆<span aria-hidden="true">歡迎來到釣魚牆</span>
+            </h1>
+            <p>介紹</p>
+            <p>本活動純屬教育性質，目的在於期望提升 HITCON 與會者對 WiFi 安全性的資安意識。誤入釣魚 WiFi 的參與者們，我們將把你們的帳號去識別化後放到 dashboard 上，並於 HITCON CMT 2023 結束後將資料刪除不留備份。</p>
+            <p>活動方式</p>
+            <p> 釣魚牆偽造 HITCON 官方 WiFi 以及一些登入頁面，前端收集登入驗證資料，後端負責接收並處理這些資料，同時進行帳戶的去識別化，並將其顯示在 dashboard 上。 <br>釣魚牆的 dashboard 一共有三個欄位，時間 (time)、使用者 (username)、敘述 (description)，可以指定任意使用者並更改其敘述，方法如下： <code> curl -X POST http:// <dashboard ip>: <dashboard port>/fish -d "username= <username>&description= <description>" </code>
+            </p>
+            <p>宣導事項</p>
+            <p>WiFi 能夠讀取封包資訊，例如瀏覽網站以及輸入內容，請在連線前辨別 WiFi 的名稱是否與官方提供的名稱一致，並在登入網頁後查看該網站的憑證是否正確，以此辨別是否使用到不安全的連線。 </p>
+            <p>結語</p>
+            <p>希望能讓大家更加了解釣魚牆的運作方式，並提高資訊安全意識。若有任何進一步的問題或疑慮，請隨時向工作人員詢問。</p>
+            <p>官方 WIFI</p>
+            <p> 最後，請記得連線時使用官方提供的 WiFi，不要再不小心走進釣魚牆囉 (^з^)-☆ SSID: HITCON2023 Password: xxxxxx </p>
+        </div>
+    </body>
+</html>
