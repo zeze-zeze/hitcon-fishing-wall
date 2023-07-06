@@ -37,10 +37,10 @@ ip netns exec phishns iptables -t nat -D PREROUTING -p tcp -m tcp --dport 443 -j
 pkill -f "socat TCP-LISTEN:80,fork,reuseaddr TCP4:10.198.0.1:5080"
 pkill -f "socat TCP-LISTEN:443,fork,reuseaddr TCP4:10.198.0.1:5443"
 
-pkill -f "server.js"
+pkill -f "backend/server.js"
 
 ### dashboard
 pkill -f "socat UNIX-LISTEN:/tmp/wall.sock,fork TCP4:127.0.0.1:5002"
 pkill -f "socat TCP-LISTEN:5002,fork,reuseaddr UNIX-CONNECT:/tmp/wall.sock"
 
-pkill -f "./dashboard/server.js"
+pkill -f "dashboard/server.js"

@@ -26,10 +26,10 @@ brctl addif br_phish veth_ph
 iptables -A FORWARD -i br_phish -j ACCEPT
 
 ## DHCP
-ip netns exec phishns node dhcp_server/dhcp_server.js &
+ip netns exec phishns node ./setup/dhcp_server/dhcp_server.js &
 
 ## DNS
-ip netns exec phishns node dns_server/dns_server.js &
+ip netns exec phishns node ./setup/dns_server/dns_server.js &
 
 ## phishing site
 ### redirect to phishing site port
@@ -38,10 +38,10 @@ ip netns exec phishns iptables -t nat -A PREROUTING -p tcp -m tcp --dport 443 -j
 ip netns exec phishns socat TCP-LISTEN:80,fork,reuseaddr TCP4:10.198.0.1:5080 &
 ip netns exec phishns socat TCP-LISTEN:443,fork,reuseaddr TCP4:10.198.0.1:5443 &
 
-ip netns exec phishns node ../backend/server.js &
+ip netns exec phishns node ./setup/backend/server.js &
 
 ### dashboard
 socat UNIX-LISTEN:/tmp/wall.sock,fork TCP4:127.0.0.1:5002 &
 ip netns exec phishns socat TCP-LISTEN:5002,fork,reuseaddr UNIX-CONNECT:/tmp/wall.sock &
 
-node ./dashboard/server.js &
+node ./setup/dashboard/server.js &
