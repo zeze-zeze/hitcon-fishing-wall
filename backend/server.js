@@ -2,12 +2,24 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser')
 const request = require('request')
+const fs = require('fs')
+const http = require('http')
+const https = require('https')
+
+process.chdir(__dirname);
 
 const jsonParser = bodyParser.json()
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const app = express();
-const port = 5001
+const httpPort = 5080
+const httpsPort = 5443
 const dashboardServer = 'http://127.0.0.1:5002'
+
+const privateKey  = fs.readFileSync('server.key', 'utf8');
+const certificate = fs.readFileSync('server.cert', 'utf8');
+const credentials = {key: privateKey, cert: certificate};
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
 
 app.use(express.static(path.join(__dirname, '../frontend')));
 
@@ -91,6 +103,10 @@ app.all('*', function(req, res){
     }
 });
 
-app.listen(port, () => {
-    console.log(`listening on port ${port}`)
+httpServer.listen(httpPort, () => {
+    console.log(`listening on port ${httpPort}`)
+})
+
+httpsServer.listen(httpsPort, () => {
+    console.log(`listening on port ${httpsPort}`)
 })
