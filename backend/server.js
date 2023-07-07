@@ -5,6 +5,8 @@ const request = require('request')
 const fs = require('fs')
 const http = require('http')
 const https = require('https')
+const cookieParser = require('cookie-parser');
+const crypto = require('crypto');
 
 process.chdir(__dirname);
 
@@ -13,7 +15,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const app = express();
 const httpPort = 5080
 const httpsPort = 5443
-const dashboardServer = 'http://127.0.0.1:5002'
+const dashboardServer = 'http://127.0.0.1:5002/api/v1'
 
 const privateKey  = fs.readFileSync('server.key', 'utf8');
 const certificate = fs.readFileSync('server.cert', 'utf8');
@@ -22,28 +24,40 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(cookieParser());
 
 // Receive the account information from fishing sites.
 app.post('/fish', urlencodedParser, function(req, res){
-    // TODO: Get account information and store into the coressponding json file according to gmail account.
-    const host = req.headers.host
-    console.log(host)
-    console.log(req.url);
-    console.log(req.body);
+    const data = {};
+    data.username = req.body.username;
+    if (typeof(req.body.username) === 'string'){
+        data.username = req.body.username.substring(0, 64);
+    } else {
+        data.username = "";
+    }
 
-    const username = req.body.username;
-    const password = req.body.password;
-    console.log(`username: ${username}`);
-    console.log(`password: ${password}`);
+    if (typeof(req.body.description) === 'string') {
+        data.description = req.body.description.substring(0, 256);
+    } else {
+        data.description = "QAQ";
+    }
 
-    if(typeof(username) === 'string'){
+    var randomNumber = Math.random().toString();
+    randomNumber = randomNumber.substring(2, randomNumber.length);
+    const token = crypto.createHash('md5').update(randomNumber).digest('hex');
+    data.token = token;
+    
+    if(data.username !== ""){
+        // Set cookie.
+        res.cookie('user', data.username, { httpOnly: true });
+        res.cookie('token', data.token, { httpOnly: true });
+
         // Request dashboard server to update fish information.
+        console.log(data);
         request({
             uri: `${dashboardServer}/fish`,
             method: 'POST',
-            form: {
-                username: username
-            }
+            form: data
         }, function(error, res, body) {
             console.log(body);
         });
