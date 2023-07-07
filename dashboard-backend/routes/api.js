@@ -18,7 +18,11 @@ activities.forEach((activity) => {
     fs.mkdirSync(`./userdata/${activity}`, 0744);
   }
 
-  userdata[activity] = [];
+  if (activity === "fish") {
+    userdata[activity] = {};
+  } else {
+    userdata[activity] = [];
+  }
   fs.readdir(`./userdata/${activity}`, (err, files) => {
     console.log(files);
     files.forEach((file) => {
@@ -28,7 +32,13 @@ activities.forEach((activity) => {
           return;
         }
         console.log(JSON.parse(data));
-        userdata[activity].push(JSON.parse(data));
+
+        if (activity === "fish") {
+          const username = JSON.parse(data).username;
+          userdata[activity][username] = JSON.parse(data);
+        } else {
+          userdata[activity].push(JSON.parse(data));
+        }
       });
     });
   });
@@ -39,25 +49,50 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
   console.log(host);
   console.log(req.url);
   console.log(req.body);
-  const date = new Date();
-  const time = "" + date.toLocaleTimeString();
-  const username = req.body.username;
 
-  var description;
-  if (typeof req.body.description === "string") {
-    description = req.body.description;
+  if (typeof(req.body.username) !== "string" || req.body.username === "") {
+    res.end("Invalid username");
+    return;
+  }
+
+  const data = { username: req.body.username.substring(0, 64), token: req.body.token };
+
+  if (!fs.existsSync(`./userdata/fish/${data.username}.json`)) {
+    const date = new Date();
+    const time = "" + date.toLocaleTimeString();
+  
+    if (typeof(req.body.description) === "string") {
+      data.description = req.body.description.substring(0, 256);
+    } else {
+      data.description = "QAQ";
+    }
+    
+    data.time = time;
+    console.log(JSON.stringify(data));
+    userdata["fish"][data.username] = data;
   } else {
-    description = "QAQ";
-  }
+    // Check token.
+    if (data.token !== userdata["fish"][data.username]["token"]) {
+      res.end("Invalid token");
+      return;
+    }
 
-  const data = { time: time, username: username, description: description };
-  console.log(JSON.stringify(data));
+    // Time remains the same.
+    data.time = userdata["fish"][data.username]["time"];
 
-  if (!fs.existsSync(`./userdata/fish/${username}.json`)) {
-    userdata["fish"].push(data);
+    // Update description.
+    if (typeof(req.body.description) === "string" && req.body.description !== "") {
+      data.description = req.body.description.substring(0, 256);
+    } else {
+      data.description = userdata["fish"][data.username]["description"];
+    }
+
+    // Update data.
+    userdata["fish"][data.username] = data;
   }
+  
   fs.writeFile(
-    `./userdata/fish/${username}.json`,
+    `./userdata/fish/${data.username}.json`,
     JSON.stringify(data),
     (err) => {
       if (err) {
