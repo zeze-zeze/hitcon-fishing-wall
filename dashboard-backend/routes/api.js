@@ -55,7 +55,9 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
     return;
   }
 
-  const data = { username: req.body.username.substring(0, 64), token: req.body.token };
+  const data = {};
+  data.username = req.body.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
+  data.token = req.body.token;
 
   if (!fs.existsSync(`./userdata/fish/${data.username}.json`)) {
     const date = new Date();

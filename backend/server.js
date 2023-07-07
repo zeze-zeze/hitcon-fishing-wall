@@ -31,7 +31,7 @@ app.post('/fish', urlencodedParser, function(req, res){
     const data = {};
     data.username = req.body.username;
     if (typeof(req.body.username) === 'string'){
-        data.username = req.body.username.substring(0, 64);
+        data.username = req.body.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
         data.username = "";
     }
