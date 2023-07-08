@@ -59,18 +59,23 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
   data.username = req.body.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
   data.token = req.body.token;
 
+  // Check if the user has already been submitted.
   if (!fs.existsSync(`./userdata/fish/${data.username}.json`)) {
+    // Insert time.
     const date = new Date();
     const time = "" + date.toLocaleTimeString();
-  
+    data.time = time;
+
+    // Check description.
     if (typeof(req.body.description) === "string") {
       data.description = req.body.description.substring(0, 256);
     } else {
       data.description = "QAQ";
     }
     
-    data.time = time;
-    console.log(JSON.stringify(data));
+    data.flagCount = 0;
+    
+    // Insert data.
     userdata["fish"][data.username] = data;
   } else {
     // Check token.
@@ -78,21 +83,30 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
       res.end("Invalid token");
       return;
     }
-
+    
     // Time remains the same.
     data.time = userdata["fish"][data.username]["time"];
-
+    
     // Update description.
     if (typeof(req.body.description) === "string" && req.body.description !== "") {
       data.description = req.body.description.substring(0, 256);
     } else {
       data.description = userdata["fish"][data.username]["description"];
     }
+    
+    // Update flagCount.
+    if (Number(req.body.flagCount) > userdata["fish"][data.username]["flagCount"]) {
+      data.flagCount = Number(req.body.flagCount);
+    } else {
+      data.flagCount = userdata["fish"][data.username]["flagCount"];
+    }
 
     // Update data.
     userdata["fish"][data.username] = data;
   }
   
+  // Write to file.
+  console.log(data);
   fs.writeFile(
     `./userdata/fish/${data.username}.json`,
     JSON.stringify(data),
@@ -103,6 +117,7 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
     }
   );
 
+  // Return data.
   res.header("Content-Type", "application/json; charset=utf-8");
   res.end(JSON.stringify(data));
 });

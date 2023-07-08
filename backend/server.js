@@ -42,15 +42,21 @@ app.post('/fish', urlencodedParser, function(req, res){
         data.description = "QAQ";
     }
 
-    var randomNumber = Math.random().toString();
-    randomNumber = randomNumber.substring(2, randomNumber.length);
-    const token = crypto.createHash('md5').update(randomNumber).digest('hex');
-    data.token = token;
+    if (req.cookies.token === undefined) {
+        var randomNumber = Math.random().toString();
+        randomNumber = randomNumber.substring(2, randomNumber.length);
+        const token = crypto.createHash('md5').update(randomNumber).digest('hex');
+        data.token = token;
+    } else {
+        data.token = req.cookies.token;
+    }
+
+    data.flagCount = 0;
     
-    if(data.username !== ""){
+    if (data.username !== "") {
         // Set cookie.
-        res.cookie('user', data.username, { httpOnly: true });
-        res.cookie('token', data.token, { httpOnly: true });
+        res.cookie('username', data.username);
+        res.cookie('token', data.token);
 
         // Request dashboard server to update fish information.
         console.log(data);
@@ -59,12 +65,14 @@ app.post('/fish', urlencodedParser, function(req, res){
             method: 'POST',
             form: data
         }, function(error, res, body) {
-            console.log(body);
+            if (error) {
+                console.log(error);
+            }
         });
     }
 
     // Redirect to introduction page.
-    res.redirect('introduction')
+    res.redirect('introduction');
 });
 
 // Introduce hitcon fishing wall.
@@ -77,8 +85,65 @@ app.get('/introduction', function(req, res){
 });
 
 // Receive flags.
-app.get('/flag', function(req, res){
-    // TODO (optional): Get flag from frontend and store into the corresponding json file.
+app.post('/flag', urlencodedParser, function(req, res){
+    // Check if the username and token in cookies are valid.
+    if (typeof(req.cookies.username) !== "string" || typeof(req.cookies.token) !== "string"){
+        res.end("Invalid username or token.");
+        return;
+    }
+
+    // Check if the flags in cookies are valid.
+    var flags;
+    try {
+        if (req.cookies.flags && Array.isArray(JSON.parse(req.cookies.flags))) {
+            flags = JSON.parse(req.cookies.flags);
+        } else {
+            flags = [];
+        }
+    } catch {
+        res.end("Invalid flags.");
+        return;
+    }
+
+    // Check if the flag is valid.
+    const answers = ["FLAG{y0u_f0und_f4c3book}", "FLAG{YoU_F0uNd_Gm41L}", "FLAG{y0u_f0und_kktix}", "FLAG{y0u_f0und_tw1tt3r}", "FLAG{y0u_f0und_g1thub}"];
+    if (typeof(req.body.flag) === "string" && !answers.includes(req.body.flag)){
+        res.end("Wrong flag.");
+        return;
+    } else if (flags.includes(req.body.flag)){
+        res.end("Duplicate flag.");
+        return;
+    }
+    flags.push(req.body.flag);
+    res.cookie('flags', JSON.stringify(flags));
+
+    // Count the number of the valid flags.
+    var flagCount = 0;
+    answers.forEach(answer => {
+        if (flags.includes(answer)){
+            flagCount += 1;
+        }
+    });
+
+    // Request dashboard server to update flag information.
+    const data = {};
+    data.username = req.cookies.username;
+    data.token = req.cookies.token;
+    data.description = "";
+    data.flagCount = flagCount;
+    console.log(data);
+    request({
+        uri: `${dashboardServer}/fish`,
+        method: 'POST',
+        form: data
+    }, function(error, res, body) {
+        if (error) {
+            console.log(error);
+        }
+    });
+
+    // Redirect to introduction page.
+    res.redirect('introduction')
 });
 
 // Display all fishing sites.
