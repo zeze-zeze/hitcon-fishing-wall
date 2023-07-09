@@ -1,0 +1,27 @@
+{
+    "dashboardServer": "http://127.0.0.1:5002",
+    "dashboardFishApi": "/api/v1/fish",
+    "httpListenPort": 5080,
+    "httpsListenPort": 5443,
+    "frontendPath": "../frontend",
+    "flagAnswers": [
+        "FLAG{y0u_f0und_f4c3book}",
+        "FLAG{YoU_F0uNd_Gm41L}",
+        "FLAG{yOU_FouND_kKtIx}",
+        "FLAG{You_fOUnD_tw17t3r}",
+        "FLAG{y0U_f0uNd_g1thub}",
+        "FLAG{You_FouNd_lINk3D1n}",
+        "FLAG{yOu_fOUnD_In5t4gRAm}",
+        "FLAG{YoU_F0UNd_H4cKmd}"
+    ],
+    "phishingSites": [
+        "facebook",
+        "gmail",
+        "kktix",
+        "twitter",
+        "github",
+        "linkedin",
+        "instagram",
+        "hackmd"
+    ]
+}
