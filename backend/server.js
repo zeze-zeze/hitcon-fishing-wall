@@ -7,15 +7,17 @@ const http = require('http')
 const https = require('https')
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
+const config = require('config');
 
 process.chdir(__dirname);
 
 const jsonParser = bodyParser.json()
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const app = express();
-const httpPort = 5080
-const httpsPort = 5443
-const dashboardServer = 'http://127.0.0.1:5002/api/v1'
+const httpPort = config.get('httpListenPort');
+const httpsPort = config.get('httpsListenPort');
+const dashboardServer = config.get('dashboardServer');
+const dashboardFishApi = config.get('dashboardFishApi');
 
 const privateKey  = fs.readFileSync('server.key', 'utf8');
 const certificate = fs.readFileSync('server.cert', 'utf8');
@@ -23,7 +25,8 @@ const credentials = {key: privateKey, cert: certificate};
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
-app.use(express.static(path.join(__dirname, '../frontend')));
+const frontendPath = config.get('frontendPath');
+app.use(express.static(path.join(__dirname, frontendPath)));
 app.use(cookieParser());
 
 // Receive the account information from fishing sites.
@@ -61,7 +64,7 @@ app.post('/fish', urlencodedParser, function(req, res){
         // Request dashboard server to update fish information.
         console.log(data);
         request({
-            uri: `${dashboardServer}/fish`,
+            uri: `${dashboardServer+dashboardFishApi}`,
             method: 'POST',
             form: data
         }, function(error, res, body) {
@@ -106,7 +109,7 @@ app.post('/flag', urlencodedParser, function(req, res){
     }
 
     // Check if the flag is valid.
-    const answers = ["FLAG{y0u_f0und_f4c3book}", "FLAG{YoU_F0uNd_Gm41L}", "FLAG{y0u_f0und_kktix}", "FLAG{y0u_f0und_tw1tt3r}", "FLAG{y0u_f0und_g1thub}"];
+    const answers = config.get('flagAnswers');
     if (typeof(req.body.flag) === "string" && !answers.includes(req.body.flag)){
         res.end("Wrong flag.");
         return;
@@ -133,7 +136,7 @@ app.post('/flag', urlencodedParser, function(req, res){
     data.flagCount = flagCount;
     console.log(data);
     request({
-        uri: `${dashboardServer}/fish`,
+        uri: `${dashboardServer+dashboardFishApi}`,
         method: 'POST',
         form: data
     }, function(error, res, body) {
@@ -148,38 +151,20 @@ app.post('/flag', urlencodedParser, function(req, res){
 
 // Display all fishing sites.
 app.all('*', function(req, res){
-    // TODO: Redirect to fishing sites based on the request url.
-    const host = req.headers.host
+    const host = req.headers.host;
+    const url = req.url;
     console.log(host)
     console.log(req.url);
+
+    const phishingSites = config.get('phishingSites');
     
-    if (host.includes('facebook')){
-        res.sendFile('frontend/facebook/index.html', {root: '../'});
-    }
-    else if (host.includes('gmail')){
-        res.sendFile('frontend/gmail/index.html', {root: '../'});
-    }
-    else if (host.includes('kktix')){
-        res.sendFile('frontend/kktix/index.html', {root: '../'});
-    }
-    else if (host.includes('twitter')){
-        res.sendFile('frontend/twitter/index.html', {root: '../'});
-    }
-    else if (host.includes('github')){
-        res.sendFile('frontend/github/index.html', {root: '../'});
-    }
-    else if (host.includes('linkedin')){
-        res.sendFile('frontend/linkedin/index.html', {root: '../'});
-    }
-    else if (host.includes('instagram')){
-        res.sendFile('frontend/instagram/index.html', {root: '../'});
-    }
-    else if (host.includes('hackmd')){
-        res.sendFile('frontend/hackmd/index.html', {root: '../'});
-    }
-    else{
-        res.sendFile('frontend/hitcon/index.html', {root: '../'});
-    }
+    phishingSites.forEach(phishingSite => {
+        if (host.includes(phishingSite) || url.includes(phishingSite)){
+            res.sendFile(`frontend/${phishingSite}/index.html`, {root: '../'});
+        }
+    });
+
+    res.sendFile('frontend/hitcon/index.html', {root: '../'});
 });
 
 httpServer.listen(httpPort, () => {
