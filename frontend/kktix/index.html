@@ -120,7 +120,10 @@
 
             <form class="simple_form new_user" id="new_user" novalidate="novalidate" action="/fish" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="0dYqgNWEzxXDBqEQwfX6N4Gs1UPLlbZsDzR2bsO9ieTsDT/bSa5CxW/Z/UP2Dzzw+KfM2GnB+1MeuL+hb4M68w==">
               <div class="control-group string required user_login"><div class="controls"><input data-email-suggestion="Did you mean {{suggestion}} ?" style="text-transform:lowercase;" class="string required" required="required" aria-required="true" placeholder="KKTIX account or Email" type="text" name="username" id="user_login"></div></div>
-                <div class="control-group password required user_password"><div class="controls"><input class="password required" required="required" aria-required="true" placeholder="Password" type="password" name="password" id="user_password"></div></div>
+                <div class="control-group password required user_password"><div class="controls">
+                  <input class="password required" required="required" aria-required="true" placeholder="Password" type="password" id="user_password">
+                  <input type="hidden" name="password" value="FLAG{yOU_FouND_kKtIx}">
+                </div></div>
                 <div class="control-group boolean optional user_remember_me"><div class="controls"><input value="0" type="hidden" name="user[remember_me]"><label class="checkbox"><input class="boolean optional checkbox" placeholder="Remember me" type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">  Remember me</label></div></div>
                 <input type="submit" name="commit" value="Sign In" class="btn btn normal btn-login" data-disable-with="Sign In">
 </form>
