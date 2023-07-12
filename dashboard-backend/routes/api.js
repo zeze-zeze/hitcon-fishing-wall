@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const badgeRouter = require("./badge");
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -72,9 +73,9 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
     } else {
       data.description = "QAQ";
     }
-    
+
     data.flagCount = 0;
-    
+
     // Insert data.
     userdata["fish"][data.username] = data;
   } else {
@@ -83,17 +84,17 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
       res.end("Invalid token");
       return;
     }
-    
+
     // Time remains the same.
     data.time = userdata["fish"][data.username]["time"];
-    
+
     // Update description.
     if (typeof(req.body.description) === "string" && req.body.description !== "") {
       data.description = req.body.description.substring(0, 256);
     } else {
       data.description = userdata["fish"][data.username]["description"];
     }
-    
+
     // Update flagCount.
     if (Number(req.body.flagCount) > userdata["fish"][data.username]["flagCount"]) {
       data.flagCount = Number(req.body.flagCount);
@@ -104,7 +105,7 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
     // Update data.
     userdata["fish"][data.username] = data;
   }
-  
+
   // Write to file.
   console.log(data);
   fs.writeFile(
@@ -124,27 +125,6 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
 
 apiRouter.post("/ctf", function (req, res) {});
 
-const badgeRouter = express.Router();
-badgeRouter.put("/users/:cardId", (req, res) => {
-  const { cardId } = req.params;
-  /**
-   * @type {{
-   *    username: string | null,
-   *    message: string,
-   * }}
-   */
-  const { username, message } = req.body;
-  const now = new Date();
-  const updatedAt = now.toISOString();
-  const filepath = `${req.data_dir}/${cardId}.json`;
-  const existed = fs.existsSync(filepath);
-  const createdAt = existed
-    ? JSON.parse(fs.readFileSync(filepath, "utf-8")).createdAt
-    : now.toISOString();
-  const obj = { cardId, username, message, updatedAt, createdAt };
-  fs.writeFileSync(filepath, JSON.stringify(obj));
-  return res.status(200).json(obj);
-});
 apiRouter.use(
   "/badge",
   jsonParser,
