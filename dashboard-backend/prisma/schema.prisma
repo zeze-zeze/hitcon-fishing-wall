@@ -11,9 +11,10 @@ datasource db {
 }
 
 model Card {
-  id       Int    @id @default(autoincrement())
-  uid      String @unique
+  id       Int          @id @default(autoincrement())
+  uid      String       @unique
   username String
+  messages BadgeEmoji[]
 }
 
 model BadgePopcat {
@@ -37,4 +38,5 @@ model BadgeEmoji {
   content   String
   timestamp DateTime
   cardUid   String
+  card      Card     @relation(fields: [cardUid], references: [uid])
 }
