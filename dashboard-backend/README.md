@@ -1,5 +1,26 @@
 # Dashboard Backend
 
+## Quick Start
+
+```sh
+# remove existing database
+rm prisma/dev.db
+
+# set db path environment variable
+# windows
+# set DATABASE_URL="file:./dev.db"
+# linux
+export DATABASE_URL="file:./dev.db"
+
+# create db
+npm run db:init
+
+# start dev server
+npm run dev
+# or with production environment
+# npm run start
+```
+
 ## Environment
 
 Make sure the environment variables are set, or create `.env` file in the this directory, which will be loaded automatically.
