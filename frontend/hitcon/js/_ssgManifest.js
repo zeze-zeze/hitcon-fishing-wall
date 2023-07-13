@@ -1,1 +1,1 @@
-self.__SSG_MANIFEST=new Set(["/","/[locale]"]),self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB();
+self.__SSG_MANIFEST=new Set(["/","/[locale]","/[locale]/agenda","/[locale]/agenda/[id]","/[locale]/events","/[locale]/landing","/[locale]/location","/[locale]/sponsor","/[locale]/team","/agenda","/agenda/[id]","/events","/landing","/location","/sponsor","/team"]),self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB();
