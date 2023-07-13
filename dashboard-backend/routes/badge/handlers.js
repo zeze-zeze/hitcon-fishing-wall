@@ -24,13 +24,32 @@ async function createOrUpdateBadgeInfo({ uid, username }) {
  * }[]>}
  */
 async function getEmojiWithUser() {
-  // prisma doesn't have left join function...
-  return await prisma.$queryRaw`
-    SELECT Card.username, emoji.content, emoji.timestamp
-    FROM BadgeEmoji as emoji
-    LEFT JOIN Card
-    ON emoji.cardUid=Card.uid
-    ORDER BY emoji.timestamp ASC`;
+  const data = await prisma.badgeEmoji.findMany({
+    select: {
+      content: true,
+      timestamp: true,
+      card: {
+        select: {
+          username: true,
+        },
+      },
+    },
+    orderBy: {
+      timestamp: "asc",
+    },
+  });
+
+  return data.map((i) => ({
+    username: i.card.username,
+    content: i.content,
+    timestamp: i.timestamp,
+  }));
+  // return await prisma.$queryRaw`
+  //   SELECT Card.username, emoji.content, emoji.timestamp
+  //   FROM BadgeEmoji as emoji
+  //   LEFT JOIN Card
+  //   ON emoji.cardUid=Card.uid
+  //   ORDER BY emoji.timestamp ASC`;
 }
 
 /**
@@ -79,6 +98,7 @@ async function createOrUpdatePopcat({ cardUid, score }) {
  * }[]>}
  */
 async function getPopcatWithUser() {
+  // prisma doesn't have left join function...
   return await prisma.$queryRaw`
     SELECT Card.username, popcat.score, popcat.updatedAt
     FROM BadgePopcat as popcat

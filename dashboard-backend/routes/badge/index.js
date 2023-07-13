@@ -88,12 +88,28 @@ router.post(
     if (isNaN(timestamp)) {
       return res.status(400).json({ error: "Invalid timestamp" });
     }
-    const record = await createEmojiRecord({
-      cardUid: cardId,
-      content,
-      timestamp: new Date(timestamp),
-    });
-    res.status(201).json(record);
+    try {
+      const record = await createEmojiRecord({
+        cardUid: cardId,
+        content,
+        timestamp: new Date(timestamp),
+      });
+      res.status(201).json(record);
+    } catch (error) {
+      /** @type {string} */
+      const errorType = error.constructor.name;
+      if (errorType.startsWith("PrismaClient")) {
+        const errorMsg = { error: errorType };
+        if ("code" in error) errorMsg.code = error.code;
+        if (error.code === "P2003") {
+          errorMsg.message = "Card not registered";
+        }
+        res.status(400).json(errorMsg);
+      } else {
+        console.error(error);
+        res.status(500).send();
+      }
+    }
   }
 );
 
