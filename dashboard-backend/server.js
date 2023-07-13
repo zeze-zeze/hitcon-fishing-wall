@@ -8,7 +8,9 @@ const frontendDir = path.join(__dirname, "./dist");
 const app = express();
 
 if (NODE_ENV == "development") {
+  app.use("/docs", express.static(path.join(__dirname, "docs")));
   app.use((req, res, next) => {
+    if (req.url === "/favicon.ico") return next();
     console.log(req.url);
     next();
   });
