@@ -11,8 +11,7 @@ datasource db {
 }
 
 model Card {
-  id       Int          @id @default(autoincrement())
-  uid      String       @unique
+  uid      Bytes        @id
   username String
   messages BadgeEmoji[]
 }
@@ -20,7 +19,7 @@ model Card {
 model BadgePopcat {
   id        Int      @id @default(autoincrement())
   score     Float
-  cardUid   String   @unique
+  cardUid   Bytes    @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -28,7 +27,7 @@ model BadgePopcat {
 model BadgeDino {
   id        Int      @id @default(autoincrement())
   score     Float
-  cardUid   String   @unique
+  cardUid   Bytes    @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -37,6 +36,6 @@ model BadgeEmoji {
   id        Int      @id @default(autoincrement())
   content   String
   timestamp DateTime
-  cardUid   String
+  cardUid   Bytes
   card      Card     @relation(fields: [cardUid], references: [uid])
 }

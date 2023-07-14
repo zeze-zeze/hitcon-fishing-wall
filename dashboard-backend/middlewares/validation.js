@@ -50,19 +50,48 @@ const SchemaValidator =
     if (parameters === undefined) {
       return next();
     }
-    // only validate body currently
+    // only validate body and url parameters currently
+    const errors = [];
     const bodyParams = parameters.find((p) => p.in === "body");
-    if (bodyParams === undefined) {
-      return next();
+    if (bodyParams !== undefined) {
+      const validate = ajv.compile(bodyParams.schema);
+      const valid = validate(req.body);
+      if (!valid) errors.push(...validate.errors);
     }
-    const validate = ajv.compile(bodyParams.schema);
-    const valid = validate(req.body);
-    if (!valid) {
-      const error = ajv.errorsText(validate.errors);
+    const pathParams = parameters.filter((i) => i.in === "path");
+    if (pathParams.length > 0) {
+      pathParams.forEach(({ name, required, ...p }) => {
+        // p.type === 'string'
+        const validate = ajv.compile(p);
+        const valid = validate(req.params[name]);
+        if (!valid)
+          errors.push(
+            ...validate.errors.map((i) => ({ ...i, instancePath: `/${name}` }))
+          );
+      });
+    }
+    if (errors.length > 0) {
+      const error = ajv.errorsText(errors);
       res.status(400).json({ error });
     } else {
       next();
     }
   };
 
-module.exports = { SchemaValidator };
+/**
+ * Convert hex string to bytes (Buffer)
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ */
+function computeCardUidPath(req, res, next) {
+  /* #swagger.parameters['cardUid'] = {
+    in: 'path',
+    pattern: '[0-9a-fA-F]{8}',
+  } */
+  if (req.computed === undefined) req.computed = {};
+  req.computed.cardUid = Buffer.from(req.params.cardUid, "hex");
+  next();
+}
+
+module.exports = { SchemaValidator, computeCardUidPath };

@@ -1,29 +1,25 @@
 const express = require("express");
-const { SchemaValidator } = require("../../middlewares/validation");
-const { Auth } = require("../../middlewares/auth");
+const {
+  SchemaValidator,
+  computeCardUidPath,
+} = require("../../middlewares/validation");
+const { apiKeyAuth } = require("../../middlewares/auth");
 const {
   getEmojiWithUser,
   createOrUpdatePopcat,
   getPopcatWithUser,
   createEmojiRecord,
   createOrUpdateBadgeInfo,
+  getDinoWithUser,
+  createOrUpdateDino,
 } = require("./handlers");
-const { API_KEY } = require("../../common/env");
 
 const router = express.Router();
 
-// https://github.com/davibaltar/swagger-autogen/issues/213
-const _auth = Auth(API_KEY);
-const auth = (req, res, next) => {
-  /* #swagger.security = [{
-    "apiKeyAuth": []
-  }] */
-  return _auth(req, res, next);
-};
-
 router.put(
-  "/:cardId",
-  auth,
+  "/:cardUid",
+  apiKeyAuth,
+  computeCardUidPath,
   SchemaValidator("register_badge"),
   async (req, res) => {
     // #swagger.operationId = 'register_badge'
@@ -33,9 +29,9 @@ router.put(
         $username: "HITCON",
       }
     } */
-    const { cardId } = req.params;
+    const { cardUid } = req.computed;
     const { username } = req.body;
-    const record = await createOrUpdateBadgeInfo({ uid: cardId, username });
+    const record = await createOrUpdateBadgeInfo({ uid: cardUid, username });
     res.status(201).json(record);
   }
 );
@@ -46,20 +42,48 @@ router.get("/popcat", async (req, res) => {
 });
 
 router.put(
-  "/popcat/:cardId",
-  auth,
+  "/popcat/:cardUid",
+  apiKeyAuth,
+  computeCardUidPath,
   SchemaValidator("put_badge_popcat"),
   async (req, res) => {
     // #swagger.operationId = 'put_badge_popcat'
     /*  #swagger.parameters['body'] = {
       in: 'body',
       schema: {
-        $score: 10.0,
+        $score: 10.5,
       }
     } */
-    const { cardId } = req.params;
+    const { cardUid } = req.computed;
     const { score } = req.body;
-    const record = await createOrUpdatePopcat({ cardUid: cardId, score });
+    const record = await createOrUpdatePopcat({ cardUid, score });
+    res.status(201).json(record);
+  }
+);
+
+router.get("/dino", async (req, res) => {
+  const record = await getDinoWithUser();
+  res.json(record);
+});
+
+router.put(
+  "/dino/:cardUid",
+  apiKeyAuth,
+  computeCardUidPath,
+  SchemaValidator("put_badge_dino"),
+  async (req, res) => {
+    /*
+      #swagger.operationId = 'put_badge_dino'
+      #swagger.parameters['body'] = {
+        in: 'body',
+        schema: {
+          $score: 10.5,
+        }
+      }
+     */
+    const { cardUid } = req.computed;
+    const { score } = req.body;
+    const record = await createOrUpdateDino({ cardUid, score });
     res.status(201).json(record);
   }
 );
@@ -70,8 +94,9 @@ router.get("/emoji", async (req, res) => {
 });
 
 router.post(
-  "/emoji/:cardId",
-  auth,
+  "/emoji/:cardUid",
+  apiKeyAuth,
+  computeCardUidPath,
   SchemaValidator("post_badge_emoji"),
   async (req, res) => {
     // #swagger.operationId = 'post_badge_emoji'
@@ -82,7 +107,7 @@ router.post(
         $timestamp: "2023-01-01",
       }
     } */
-    const { cardId } = req.params;
+    const { cardUid } = req.computed;
     const { content } = req.body;
     const timestamp = Date.parse(req.body.timestamp);
     if (isNaN(timestamp)) {
@@ -90,7 +115,7 @@ router.post(
     }
     try {
       const record = await createEmojiRecord({
-        cardUid: cardId,
+        cardUid,
         content,
         timestamp: new Date(timestamp),
       });

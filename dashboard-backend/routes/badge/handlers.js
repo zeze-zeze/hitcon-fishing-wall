@@ -1,12 +1,17 @@
 const { prisma } = require("../../common");
 
+/**
+ * @param {{
+ *   uid: Buffer,
+ *   username: string,
+ * }}
+ */
 async function createOrUpdateBadgeInfo({ uid, username }) {
   return await prisma.card.upsert({
     where: {
       uid,
     },
     update: {
-      uid,
       username,
     },
     create: {
@@ -54,7 +59,7 @@ async function getEmojiWithUser() {
 
 /**
  * @param {{
- * cardUid: string,
+ * cardUid: Buffer,
  * content: string,
  * timestamp: string,
  * }}
@@ -71,7 +76,7 @@ async function createEmojiRecord({ cardUid, content, timestamp }) {
 
 /**
  * @param {{
- *   cardUid: string,
+ *   cardUid: Buffer,
  *   score: number,
  * }}
  */
@@ -107,10 +112,49 @@ async function getPopcatWithUser() {
     ORDER BY popcat.score DESC, popcat.updatedAt ASC`;
 }
 
+/**
+ * @returns {Promise<{
+ *   username: string,
+ *   score: number,
+ *   updatedAt: Date,
+ * }[]>}
+ */
+async function getDinoWithUser() {
+  return await prisma.$queryRaw`
+   SELECT Card.username, dino.score, dino.updatedAt
+   FROM BadgeDino as dino
+   LEFT JOIN Card
+   ON dino.cardUid=Card.uid
+   ORDER BY dino.score DESC, dino.updatedAt ASC`;
+}
+
+/**
+ * @param {{
+ *   cardUid: Buffer,
+ *   score: number,
+ * }}
+ */
+async function createOrUpdateDino({ cardUid, score }) {
+  return await prisma.badgeDino.upsert({
+    where: {
+      cardUid,
+    },
+    update: {
+      score,
+    },
+    create: {
+      cardUid,
+      score,
+    },
+  });
+}
+
 module.exports = {
   createOrUpdateBadgeInfo,
   getEmojiWithUser,
   createEmojiRecord,
   getPopcatWithUser,
   createOrUpdatePopcat,
+  getDinoWithUser,
+  createOrUpdateDino,
 };
