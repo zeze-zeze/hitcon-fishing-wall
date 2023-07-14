@@ -3,6 +3,15 @@
 ## Quick Start
 
 ```sh
+# build frontend
+cd ../dashboard-frontend
+yarn
+yarn build
+cd ../dashboard-backend
+
+# install backend dependency
+npm install
+
 # remove existing database
 rm prisma/dev.db
 
