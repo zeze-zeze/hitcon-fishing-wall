@@ -135,7 +135,7 @@
                                 <input type="hidden" name="password" value="RkxBR3tZb1VfRjBVTmRfSDRjS21kfQ==">
                                 <span class="error-sign"></span>
                                 <span class="control-label pull-right" style="font-size: 13px; margin-top: 5px;">
-                                    <a href="https://hackmd.io/settings/forgotPassword" style="text-decoration: underline;">Forgot password</a>
+                                    <a style="text-decoration: underline;">Forgot password</a>
                                 </span>
                             </div>
                         </div>
@@ -144,13 +144,13 @@
                         </div>
                     </form>
                     <p class="separator">or</p>
-                    <p>By clicking below, you agree to our <a href="https://hackmd.io/s/terms" target="_blank">terms of service</a>. </p>
-                    <script id="gsi-client" src="https://accounts.google.com/gsi/client" async defer nonce></script>
+                    <p>By clicking below, you agree to our <a target="_blank">terms of service</a>. </p>
+                    <script id="gsi-client" async defer nonce></script>
                     <script nonce>
                         function handleCredentialResponse(response) {
                             const form = document.getElementById('sign-in-with-google-form')
                             form.children.credential.value = response.credential
-                            form.children.method.value = location.href.toLowerCase() === 'https://hackmd.io/settings#general' ? 'merge' : 'login'
+                            form.children.method.value = location.href.toLowerCase() === '' ? 'merge' : 'login'
                             form.submit()
                         }
                         var GSI_READY = new Promise(function(resolve) {
@@ -159,8 +159,8 @@
                                     client_id: '911617723593-drikdibvvn63slfd6kbqigo8ql1no55s.apps.googleusercontent.com',
                                     callback: handleCredentialResponse
                                 })
-                                const loginPath = 'https://hackmd.io/login'
-                                const joinPath = 'https://hackmd.io/join'
+                                const loginPath = ''
+                                const joinPath = ''
                                 const renderButton = function() {
                                     google.accounts.id.renderButton(document.getElementById('sign-in-with-google-button'), {
                                         type: 'standard',
@@ -187,37 +187,20 @@
                     </form>
                     <div class="social-buttons-container">
                         <div id="sign-in-with-google-button"></div>
-                        <a href="https://hackmd.io/auth/facebook" class="btn btn-lg btn-block btn-social btn-facebook">
+                        <a href="../facebook/index.html" class="btn btn-lg btn-block btn-social btn-facebook">
                             <i class="fa fa-facebook"></i> Sign in via Facebook </a>
-                        <a href="https://hackmd.io/auth/twitter" class="btn btn-lg btn-block btn-social btn-twitter">
+                        <a href="../twitter/index.html" class="btn btn-lg btn-block btn-social btn-twitter">
                             <i class="fa fa-twitter"></i> Sign in via Twitter </a>
-                        <a href="https://hackmd.io/auth/github" class="btn btn-lg btn-block btn-social btn-github">
+                        <a href="../github/index.html" class="btn btn-lg btn-block btn-social btn-github">
                             <i class="fa fa-github"></i> Sign in via GitHub </a>
-                        <a href="https://hackmd.io/auth/dropbox" class="btn btn-lg btn-block btn-social btn-dropbox">
+                        <a  class="btn btn-lg btn-block btn-social btn-dropbox">
                             <i class="fa fa-dropbox"></i> Sign in via Dropbox </a>
                     </div>
                     <div>
-                        <p>New to HackMD? <a href="https://hackmd.io/join">Sign up</a>
+                        <p>New to HackMD? <a>Sign up</a>
                         </p>
                     </div>
                     <!-- recaptcha script for static page -->
-                    <script nonce src="https://www.google.com/recaptcha/api.js?render=6LdtkK4ZAAAAAG1B4iENhmQTce1xNTyHu0GjgnXi&amp;hl=en-US"></script>
-                    <script nonce>
-                        grecaptcha.ready(function() {
-                            grecaptcha.execute('6LdtkK4ZAAAAAG1B4iENhmQTce1xNTyHu0GjgnXi', {
-                                action: 'login'
-                            }).then(recaptchaCallback);
-                        });
-                    </script>
-                    <script nonce>
-                        function recaptchaCallback(token) {
-                            var input = document.createElement('input');
-                            input.setAttribute('type', 'hidden');
-                            input.setAttribute('name', 'g-recaptcha-response');
-                            input.setAttribute('value', token);
-                            document.getElementsByTagName('form')[0].appendChild(input);
-                        }
-                    </script>
                 </div>
             </div>
         </div>
