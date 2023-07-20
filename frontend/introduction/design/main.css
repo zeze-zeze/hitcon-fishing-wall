@@ -1,0 +1,44 @@
+body {
+  min-height: 90vh;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-family: sans-serif;
+  display: inline-block;
+  margin-left: 25%;
+  margin-right: 25%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.title{
+  font-size: 2vh;
+  background-color: #e5ccaf;
+  padding: 1%; 
+  border-radius: 5px; 
+  width: max-content;
+  opacity: 70%;
+  color: #222;
+  text-align: center;
+}
+
+.content {
+  font-size: 1.8vh;
+}
+
+.titleeng{
+  font-size: 2vh;
+  background-color: #bfcad6;
+  padding: 1%; 
+  border-radius: 5px; 
+  width: max-content;
+  opacity: 70%;
+  color: #222;
+}
+
+.flag {
+  opacity: 0.5;
+  padding: 10px; 
+  border-radius: 5px; 
+  width: 30%;
+}
