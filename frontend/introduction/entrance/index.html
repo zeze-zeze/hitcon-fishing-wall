@@ -31,19 +31,23 @@
         <p class="title">活動方式</p>
         <p class="content">釣魚牆偽造 HITCON 官方 WiFi 以及一些登入頁面，前端收集登入驗證資料，後端負責接收並處理這些資料，同時進行帳戶的去識別化，並將其顯示在 dashboard 上。 <br>釣魚牆的 dashboard 一共有三個欄位，時間 (time)、使用者 (username)、敘述 (description)，可以指定任意使用者並更改其敘述，方法如下：
             <br>
-            <code class="content"> curl -X POST http:// <dashboard ip>: <dashboard port>/fish -d "username= <username>&description= <description>" </code>
+            <code class="content"> curl -X POST http://<dashboard ip>:<dashboard port>/fish -d "username= <username>&token=<token>&description= <description>"</code>
         </p>
         <br>
         <p class="title">宣導事項</p>
-        <p class="content">WiFi 能夠讀取封包資訊，例如瀏覽網站以及輸入內容，請在連線前辨別 WiFi 的名稱是否與官方提供的名稱一致，並在登入網頁後查看該網站的憑證是否正確，以此辨別是否使用到不安全的連線。 </p>
+        <p class="content">WiFi 能夠讀取封包資訊，例如瀏覽網站以及輸入內容，請在連線前辨別 WiFi 的名稱是否與官方提供的名稱一致，並在登入網頁後查看該網站的憑證是否正確，以此辨別是否使用到不安全的連線。</p>
         <br>
         <p class="title">結語</p>
         <p class="content">希望能讓大家更加了解釣魚牆的運作方式，並提高資訊安全意識。若有任何進一步的問題或疑慮，請隨時向工作人員詢問。</p>
         <br>
         <p class="title">官方 WIFI</p>
-        <p class="content"> 最後，請記得連線時使用官方提供的 WiFi ，不要再不小心走進釣魚牆囉 (^з^)-☆ SSID: HITCON2023 Password: xxxxxx </p>
+        <p class="content">請記得連線時使用官方提供的 WiFi ，不要再不小心走進釣魚牆囉 (^з^)-☆ SSID: HITCON2023 Password: xxxxxx</p>
+        <br>
+        <p class="title">送出 Flag</p>
+        <p class="content">最後，找到我們藏起來的 Flag 了嗎？</p>
         <form action="/flag" method="post">
-            <input class="flag" name="flag" placeholder="請輸入 Flag" />
+            <input class="flag" name="flag" placeholder="請輸入 Flag"/>
+            <input class="flagsubmit" type="submit">
         </form>
     </body>
 </html>
