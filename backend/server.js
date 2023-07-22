@@ -39,12 +39,6 @@ app.post('/fish', urlencodedParser, function(req, res){
         data.username = "";
     }
 
-    if (typeof(req.body.description) === 'string') {
-        data.description = req.body.description.substring(0, 256);
-    } else {
-        data.description = "QAQ";
-    }
-
     if (req.cookies.token === undefined) {
         var randomNumber = Math.random().toString();
         randomNumber = randomNumber.substring(2, randomNumber.length);
@@ -53,8 +47,6 @@ app.post('/fish', urlencodedParser, function(req, res){
     } else {
         data.token = req.cookies.token;
     }
-
-    data.flagCount = 0;
     
     if (data.username !== "") {
         // Set cookie.
@@ -75,6 +67,38 @@ app.post('/fish', urlencodedParser, function(req, res){
     }
 
     // Redirect to introduction page.
+    res.redirect('introduction');
+});
+
+app.post('/description', urlencodedParser, function(req, res){
+    if (typeof(req.cookies.username) !== "string" || typeof(req.cookies.token) !== "string"){
+        res.end("Invalid username or token.");
+        return;
+    }
+
+    if (typeof(req.body.description) === 'string') {
+        data.description = req.body.description.substring(0, 256);
+    }
+
+    const username = req.cookies.username;
+    const token = req.cookies.token;
+    const description = req.body.description;
+    const data = {
+        username: username,
+        token: token,
+        description: description
+    };
+
+    request({
+        uri: `${dashboardServer+dashboardFishApi}`,
+        method: 'POST',
+        form: data
+    }, function(error, res, body) {
+        if (error) {
+            console.log(error);
+        }
+    });
+
     res.redirect('introduction');
 });
 
@@ -146,14 +170,14 @@ app.post('/flag', urlencodedParser, function(req, res){
     });
 
     // Redirect to introduction page.
-    res.redirect('introduction')
+    res.redirect('introduction');
 });
 
 // Display all fishing sites.
 app.all('*', function(req, res){
     const host = req.headers.host;
     const url = req.url;
-    console.log(host)
+    console.log(host);
     console.log(req.url);
 
     const phishingSites = config.get('phishingSites');

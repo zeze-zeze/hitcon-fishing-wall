@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const badgeRouter = require("./badge");
+const wallRouter = require("./wall");
 const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -122,6 +123,16 @@ apiRouter.post("/fish", urlencodedParser, function (req, res) {
   res.header("Content-Type", "application/json; charset=utf-8");
   res.end(JSON.stringify(data));
 });
+
+apiRouter.use(
+  "/wall",
+  jsonParser,
+  (req, res, next) => {
+    req.data_dir = "./userdata/wall";
+    next();
+  },
+  wallRouter
+);
 
 apiRouter.post("/ctf", function (req, res) {});
 

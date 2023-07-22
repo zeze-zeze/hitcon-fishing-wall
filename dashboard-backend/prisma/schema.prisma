@@ -39,3 +39,11 @@ model BadgeEmoji {
   cardUid   Bytes
   card      Card     @relation(fields: [cardUid], references: [uid])
 }
+
+model WallFish {
+  username    string @id
+  time        String
+  token       String
+  description String
+  flagCount   Int
+}
