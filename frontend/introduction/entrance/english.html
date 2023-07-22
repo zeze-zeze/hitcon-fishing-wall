@@ -26,12 +26,12 @@
     <body>
         <a href="./index.html">中文</a>
         <p class="titleeng">Introduction</p>
-        <p class="content">Our primary objective is to improve the participants' awareness of security measures. Rest assured that your login credentials will be anonymized and securely uploaded to our dashboard. After HITCON CMT 2023 ends, all data will be permanently deleted with no backups retained. </p>
+        <p class="content">Our primary objective is to improve the participants' awareness of security measures. Rest assured that your login credentials will be anonymized and securely uploaded to our dashboard. After HITCON CMT 2023 ends, all data will be permanently deleted with no backups retained.</p>
         <br>
         <p class="titleeng">Event</p>
         <p class="content">The Phishing Wall activity involves the fabrication of official HITCON WiFi networks and several login web pages.  We collect login credentials using the front end and process the data through the back end. Simultaneously, we de-identify the credentials and display them on our dashboard. The dashboard includes three columns: time, username, and description. To modify the description, please use the following command:
             <br>
-            <code class="content"> curl -X POST http:// <dashboard ip>: <dashboard port>/fish -d "username= <username>&description= <description>" </code>
+            <code class="content"> curl -X POST http://<dashboard ip>:<dashboard port>/fish -d "username= <username>&token=<token>&description= <description>" </code>
         </p>
         <br>
         <p class="titleeng">Security Precautions</p>
@@ -41,9 +41,13 @@
         <p class="content">We aim to provide a better understanding of how the Phishing Wall operates and to raise awareness of information security. If you have any further questions or concerns, please feel free to approach our staff at any time.</p>
         <br>
         <p class="titleeng">Official WiFi</p>
-        <p class="content">Lastly, we'd strongly suggest you use the officially provided WiFi to ensure a secure connection. Let's take extra caution and avoid any unintended encounters with our Phishing Wall. (^з^)-☆ SSID: HITCON2023 Password: xxxxxx </p>
+        <p class="content">We'd strongly suggest you use the officially provided WiFi to ensure a secure connection. Let's take extra caution and avoid any unintended encounters with our Phishing Wall. (^з^)-☆ SSID: HITCON2023 Password: xxxxxx</p>
+        <br>
+        <p class="titleeng">Submit Flag</p>
+        <p class="content">Lastly, did you find our flags?</p>
         <form action="/flag" method="post">
-            <input class="flag" name="flag" placeholder="請輸入 Flag" />
+            <input class="flag" name="flag" placeholder="Enter Flag"/>
+            <input class="flagsubmit" type="submit">
         </form>
     </body>
 </html>

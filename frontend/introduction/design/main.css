@@ -42,3 +42,12 @@ body {
   border-radius: 5px; 
   width: 30%;
 }
+
+.flagsubmit {
+  opacity: 0.5;
+  padding: 10px; 
+  border-radius: 5px;
+  background-color: #4c545d;
+  color: #ffffff;
+  width: fit-content;
+}
