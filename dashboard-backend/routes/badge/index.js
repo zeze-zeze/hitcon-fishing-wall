@@ -15,6 +15,7 @@ const {
 } = require("./handlers");
 
 const router = express.Router();
+router.use(express.json());
 
 router.put(
   "/:cardUid",
