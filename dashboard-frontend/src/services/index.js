@@ -4,8 +4,16 @@ const instance = axios.create({
 });
 
 const api = {
-  async getAllBadge() {
-    const resp = await instance.get("/dashboard?category=badge");
+  async getAllPopcat() {
+    const resp = await instance.get("/badge/popcat");
+    return resp.data;
+  },
+  async getAllDino() {
+    const resp = await instance.get("/badge/dino");
+    return resp.data;
+  },
+  async getAllEmoji() {
+    const resp = await instance.get("/badge/emoji");
     return resp.data;
   },
   async getAllCtf() {
@@ -13,7 +21,7 @@ const api = {
     return resp.data;
   },
   async getAllFish() {
-    const resp = await instance.get("/dashboard?category=fish");
+    const resp = await instance.get("/wall/fish");
     return resp.data;
   },
   async getAllGeocaching() {

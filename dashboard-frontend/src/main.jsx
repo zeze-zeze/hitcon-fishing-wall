@@ -2,11 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import Root, { RootIndex } from "./pages/Root";
-import FishPage from "./pages/Fish";
-import BadgePage from "./pages/Badge";
 import CtfPage from "./pages/CTF";
+import DinoPage from "./pages/Dino";
+import EmojiPage from "./pages/Emoji";
+import FishPage from "./pages/Fish";
 import GeocachingPage from "./pages/Geocaching";
+import PopcatPage from "./pages/Popcat";
+import Root, { RootIndex } from "./pages/Root";
 
 const router = createBrowserRouter([
   {
@@ -22,8 +24,16 @@ const router = createBrowserRouter([
         element: <FishPage />,
       },
       {
-        path: "badge",
-        element: <BadgePage />,
+        path: "popcat",
+        element: <PopcatPage />,
+      },
+      {
+        path: "dino",
+        element: <DinoPage />,
+      },
+      {
+        path: "emoji",
+        element: <EmojiPage />,
       },
       {
         path: "ctf",

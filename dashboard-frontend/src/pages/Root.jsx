@@ -1,16 +1,8 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-
-const navigation = [
-  { name: "Dashboard", href: "/" },
-  { name: "Fish", href: "/fish" },
-  { name: "CTF", href: "/ctf" },
-  { name: "Badge", href: "/badge" },
-  { name: "Geocaching", href: "/geocaching" },
-];
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import hitconLogo from "../assets/hitcon-logo.svg";
+import { navigation } from "./routes";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -35,12 +27,11 @@ export default function Root() {
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="h-8 w-8"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Your Company"
-                      />
+                    <div className="block md:hidden px-4 text-base font-medium text-white">
+                      {
+                        navigation.find((i) => i.href === location.pathname)
+                          .name
+                      }
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
@@ -87,7 +78,7 @@ export default function Root() {
                 </div>
               </div>
 
-              <Disclosure.Panel className="md:hidden">
+              <Disclosure.Panel className="md:hidden border-solid border-t border-gray-700">
                 {({ close }) => (
                   <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                     {navigation.map((item) => (
@@ -123,12 +114,19 @@ export default function Root() {
             </h1>
           </div>
         </header> */}
-        <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            {/* Your content */}
-            <Outlet />
+        <div className="block md:flex">
+          <div>
+            <img src={hitconLogo} className="w-52 mx-2" />
           </div>
-        </main>
+          <main className="grow">
+            <div className="mx-auto max-w-7xl">
+              {/* Your content */}
+              <div className="bg-stone-300/50 rounded-lg m-4 p-1 overflow-x-auto">
+                <Outlet />
+              </div>
+            </div>
+          </main>
+        </div>
       </div>
     </>
   );
