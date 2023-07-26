@@ -21,20 +21,29 @@ export default function Root() {
         ```
       */}
       <div className="min-h-full">
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav">
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
+                <div className="flex h-16 items-center justify-between my-2">
                   <div className="flex items-center">
-                    <div className="block md:hidden px-4 text-base font-medium text-white">
+                    <div className="flex-shrink-0">
+                      <Link to="/">
+                        <img
+                          className="w-28"
+                          src={hitconLogo}
+                          alt="HITCON CMT 2023"
+                        />
+                      </Link>
+                    </div>
+                    <div className="block md:hidden px-4 text-lg font-medium text-black">
                       {
                         navigation.find((i) => i.href === location.pathname)
                           .name
                       }
                     </div>
                     <div className="hidden md:block">
-                      <div className="ml-10 flex items-baseline space-x-4">
+                      <div className="ml-10 p-2 flex items-baseline space-x-1 bg-stone-300/50 rounded-2xl backdrop-blur-sm">
                         {navigation.map((item) => (
                           // <Link to={`contacts/1`}>Your Name</Link>
                           <Link
@@ -42,9 +51,9 @@ export default function Root() {
                             to={item.href}
                             className={classNames(
                               location.pathname === item.href
-                                ? "bg-gray-900 text-white"
-                                : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                              "rounded-md px-3 py-2 text-sm font-medium"
+                                ? "bg-gray-100 text-black"
+                                : "text-zinc-700 hover:bg-gray-200 hover:text-black",
+                              "rounded-xl px-3 py-2 text-sm font-medium"
                             )}
                             aria-current={
                               location.pathname === item.href
@@ -60,7 +69,7 @@ export default function Root() {
                   </div>
                   <div className="-mr-2 flex md:hidden">
                     {/* Mobile menu button */}
-                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-200 p-2 text-gray-600 hover:bg-gray-300 hover:text-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-gray-200">
                       <span className="sr-only">Open main menu</span>
                       {open ? (
                         <XMarkIcon
@@ -78,7 +87,7 @@ export default function Root() {
                 </div>
               </div>
 
-              <Disclosure.Panel className="md:hidden border-solid border-t border-gray-700">
+              <Disclosure.Panel className="md:hidden border-solid border-t border-b border-zinc-400 backdrop-blur-sm shadow-lg">
                 {({ close }) => (
                   <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                     {navigation.map((item) => (
@@ -88,8 +97,8 @@ export default function Root() {
                         to={item.href}
                         className={classNames(
                           location.pathname === item.href
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            ? "bg-gray-100 text-black"
+                            : "text-zinc-700 hover:bg-gray-200 hover:text-black",
                           "block rounded-md px-3 py-2 text-base font-medium"
                         )}
                         aria-current={
@@ -114,19 +123,14 @@ export default function Root() {
             </h1>
           </div>
         </header> */}
-        <div className="block md:flex">
-          <div>
-            <img src={hitconLogo} className="w-52 mx-2" />
-          </div>
-          <main className="grow">
-            <div className="mx-auto max-w-7xl">
-              {/* Your content */}
-              <div className="bg-stone-300/50 rounded-lg m-4 p-1 overflow-x-auto">
-                <Outlet />
-              </div>
+        <main>
+          <div className="mx-auto max-w-7xl">
+            {/* Your content */}
+            <div className="bg-stone-300/50 rounded-lg m-4 p-1 overflow-x-auto">
+              <Outlet />
             </div>
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
     </>
   );
