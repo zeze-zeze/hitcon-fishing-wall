@@ -15,9 +15,9 @@ apiRouter.post("/geocaching", function (req, res) {});
 apiRouter.get("/dashboard", function (req, res) {
   const category = req.query.category;
 
-  if (category == "ctf") {
+  if (category === "ctf") {
     res.json([]);
-  } else if (category == "geocaching") {
+  } else if (category === "geocaching") {
     res.json([]);
   } else {
     res.json({ error: "unknown category" });
