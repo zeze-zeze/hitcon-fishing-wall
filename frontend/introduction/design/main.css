@@ -11,11 +11,11 @@ body {
   padding-bottom: 5%;
 }
 
-.title{
-  font-size: 2vh;
+.title {
+  font-size: 3vh;
   background-color: #e5ccaf;
-  padding: 1%; 
-  border-radius: 5px; 
+  padding: 1%;
+  border-radius: 5px;
   width: max-content;
   opacity: 70%;
   color: #222;
@@ -23,29 +23,29 @@ body {
 }
 
 .content {
-  font-size: 1.8vh;
+  font-size: 2.5vh;
 }
 
-.titleeng{
-  font-size: 2vh;
+.titleeng {
+  font-size: 3vh;
   background-color: #bfcad6;
-  padding: 1%; 
-  border-radius: 5px; 
+  padding: 1%;
+  border-radius: 5px;
   width: max-content;
   opacity: 70%;
   color: #222;
 }
 
-.flag {
+.input {
   opacity: 0.5;
-  padding: 10px; 
-  border-radius: 5px; 
+  padding: 10px;
+  border-radius: 5px;
   width: 30%;
 }
 
-.flagsubmit {
+.submit {
   opacity: 0.5;
-  padding: 10px; 
+  padding: 10px;
   border-radius: 5px;
   background-color: #4c545d;
   color: #ffffff;
