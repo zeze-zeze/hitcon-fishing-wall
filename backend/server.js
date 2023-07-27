@@ -17,7 +17,9 @@ const app = express();
 const httpPort = config.get('httpListenPort');
 const httpsPort = config.get('httpsListenPort');
 const dashboardServer = config.get('dashboardServer');
-const dashboardFishApi = config.get('dashboardFishApi');
+const dashboardWallFishApi = config.get('dashboardWallFishApi');
+const dashboardWallDescriptionApi = config.get('dashboardWallDescriptionApi');
+const dashboardWallFlagApi = config.get('dashboardWallFlagApi');
 
 const privateKey  = fs.readFileSync('server.key', 'utf8');
 const certificate = fs.readFileSync('server.cert', 'utf8');
@@ -32,19 +34,13 @@ app.use(cookieParser());
 // Receive the account information from fishing sites.
 app.post('/fish', urlencodedParser, function(req, res){
     const data = {};
-    data.username = req.body.username;
     if (typeof(req.body.username) === 'string'){
         data.username = req.body.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
         data.username = "";
     }
 
-    if (typeof(req.body.description) === 'string') {
-        data.description = req.body.description.substring(0, 256);
-    } else {
-        data.description = "QAQ";
-    }
-
+    // If the token is not in cookies, generate a new token. Otherwise, use the duplicate token.
     if (req.cookies.token === undefined) {
         var randomNumber = Math.random().toString();
         randomNumber = randomNumber.substring(2, randomNumber.length);
@@ -53,20 +49,19 @@ app.post('/fish', urlencodedParser, function(req, res){
     } else {
         data.token = req.cookies.token;
     }
-
-    data.flagCount = 0;
     
     if (data.username !== "") {
-        // Set cookie.
+        // Set cookie for username and token.
         res.cookie('username', data.username);
         res.cookie('token', data.token);
 
-        // Request dashboard server to update fish information.
+        // Request dashboard server to insert new fish.
+        console.log(dashboardServer+dashboardWallFishApi);
         console.log(data);
         request({
-            uri: `${dashboardServer+dashboardFishApi}`,
+            uri: `${dashboardServer+dashboardWallFishApi}`,
             method: 'POST',
-            form: data
+            json: data
         }, function(error, res, body) {
             if (error) {
                 console.log(error);
@@ -78,21 +73,57 @@ app.post('/fish', urlencodedParser, function(req, res){
     res.redirect('introduction');
 });
 
-// Introduce hitcon fishing wall.
-app.get('/introduction', function(req, res){
-    // TODO: 科普惡意 wifi 的危害以及辨認方法
-    // TODO: 告知綿羊這個 wifi 不會偷其他的東西，並且綿羊牆是匿名的，請綿羊放心
-    // TODO: 請他去連官方提供的 wifi
-    // TODO: 告知他釣魚牆的相關資訊，e.g. 位置、釣魚牆統計資料
-    res.sendFile('frontend/introduction/index.html', {root: '../'});
+app.post('/description', urlencodedParser, function(req, res){
+    const data = {};
+    if (typeof(req.cookies.username) === 'string'){
+        data.username = req.cookies.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
+    } else {
+        data.username = "";
+    }
+
+    if (typeof(req.cookies.token) === 'string'){
+        data.token = req.cookies.token.substring(0, 32);
+    } else {
+        data.token = "";
+    }
+
+    if (typeof(req.body.description) === 'string') {
+        data.description = req.body.description.substring(0, 256);
+    } else {
+        data.description = "";
+    }
+
+    if (data.username !== "" && data.token !== "" && data.description !== "") {
+        // Request dashboard server to update description.
+        console.log(data);
+        request({
+            uri: `${dashboardServer+dashboardWallDescriptionApi}`,
+            method: 'POST',
+            json: data
+        }, function(error, res, body) {
+            if (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    // Redirect to introduction page.
+    res.redirect('introduction');
 });
 
 // Receive flags.
 app.post('/flag', urlencodedParser, function(req, res){
-    // Check if the username and token in cookies are valid.
-    if (typeof(req.cookies.username) !== "string" || typeof(req.cookies.token) !== "string"){
-        res.end("Invalid username or token.");
-        return;
+    const data = {};
+    if (typeof(req.cookies.username) === 'string'){
+        data.username = req.cookies.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
+    } else {
+        data.username = "";
+    }
+
+    if (typeof(req.cookies.token) === 'string'){
+        data.token = req.cookies.token.substring(0, 32);
+    } else {
+        data.token = "";
     }
 
     // Check if the flags in cookies are valid.
@@ -127,18 +158,14 @@ app.post('/flag', urlencodedParser, function(req, res){
             flagCount += 1;
         }
     });
+    data.flagCount = flagCount;
 
     // Request dashboard server to update flag information.
-    const data = {};
-    data.username = req.cookies.username;
-    data.token = req.cookies.token;
-    data.description = "";
-    data.flagCount = flagCount;
     console.log(data);
     request({
-        uri: `${dashboardServer+dashboardFishApi}`,
+        uri: `${dashboardServer+dashboardWallFlagApi}`,
         method: 'POST',
-        form: data
+        json: data
     }, function(error, res, body) {
         if (error) {
             console.log(error);
@@ -148,6 +175,17 @@ app.post('/flag', urlencodedParser, function(req, res){
     // Redirect to introduction page.
     res.redirect('introduction')
 });
+
+
+// Introduce hitcon fishing wall.
+app.get('/introduction', function(req, res){
+    // TODO: 科普惡意 wifi 的危害以及辨認方法
+    // TODO: 告知綿羊這個 wifi 不會偷其他的東西，並且綿羊牆是匿名的，請綿羊放心
+    // TODO: 請他去連官方提供的 wifi
+    // TODO: 告知他釣魚牆的相關資訊，e.g. 位置、釣魚牆統計資料
+    res.sendFile('frontend/introduction/index.html', {root: '../'});
+});
+
 
 // Display all fishing sites.
 app.all('*', function(req, res){

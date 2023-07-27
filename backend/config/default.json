@@ -1,6 +1,8 @@
 {
-    "dashboardServer": "http://127.0.0.1:5002",
-    "dashboardFishApi": "/api/v1/fish",
+    "dashboardServer": "http://192.168.126.131:5002",
+    "dashboardWallFishApi": "/api/v1/wall/fish",
+    "dashboardWallDescriptionApi": "/api/v1/wall/description",
+    "dashboardWallFlagApi": "/api/v1/wall/flag",
     "httpListenPort": 5080,
     "httpsListenPort": 5443,
     "frontendPath": "../frontend",
