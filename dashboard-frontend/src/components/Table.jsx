@@ -9,7 +9,7 @@ export default function Table({ headers, data }) {
   return (
     <table className="border-collapse table-auto w-full text-sm">
       <thead>
-        <tr className="border-b border-zinc-900 font-medium text-left text-lg">
+        <tr className="text-center border-b border-zinc-900 font-medium text-lg">
           {headers.map((header) => (
             <th
               key={header}
@@ -21,7 +21,7 @@ export default function Table({ headers, data }) {
       </thead>
       <tbody>
         {data.map((row, i) => (
-          <tr key={i} className="border-b border-zinc-400">
+          <tr key={i} className="text-center border-b border-zinc-400">
             {row.map((cell, j) => (
               <td key={j} className="p-2 pl-4">
                 {cell}

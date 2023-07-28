@@ -17,6 +17,7 @@ const app = express();
 const httpPort = config.get('httpListenPort');
 const httpsPort = config.get('httpsListenPort');
 const dashboardServer = config.get('dashboardServer');
+const dashboardApiKey = config.get('dashboardApiKey');
 const dashboardWallFishApi = config.get('dashboardWallFishApi');
 const dashboardWallDescriptionApi = config.get('dashboardWallDescriptionApi');
 const dashboardWallFlagApi = config.get('dashboardWallFlagApi');
@@ -52,8 +53,8 @@ app.post('/fish', urlencodedParser, function(req, res){
     
     if (data.username !== "") {
         // Set cookie for username and token.
-        res.cookie('username', data.username);
-        res.cookie('token', data.token);
+        res.cookie('username', data.username, {maxAge : 72 * 60 * 60 * 1000});
+        res.cookie('token', data.token, {maxAge : 72 * 60 * 60 * 1000});
 
         // Request dashboard server to insert new fish.
         console.log(dashboardServer+dashboardWallFishApi);
@@ -61,7 +62,10 @@ app.post('/fish', urlencodedParser, function(req, res){
         request({
             uri: `${dashboardServer+dashboardWallFishApi}`,
             method: 'POST',
-            json: data
+            json: data,
+            headers: {
+                'X-API-KEY': dashboardApiKey,
+            },
         }, function(error, res, body) {
             if (error) {
                 console.log(error);
@@ -99,7 +103,10 @@ app.post('/description', urlencodedParser, function(req, res){
         request({
             uri: `${dashboardServer+dashboardWallDescriptionApi}`,
             method: 'POST',
-            json: data
+            json: data,
+            headers: {
+                'X-API-KEY': dashboardApiKey,
+            },
         }, function(error, res, body) {
             if (error) {
                 console.log(error);
@@ -165,7 +172,10 @@ app.post('/flag', urlencodedParser, function(req, res){
     request({
         uri: `${dashboardServer+dashboardWallFlagApi}`,
         method: 'POST',
-        json: data
+        json: data,
+        headers: {
+            'X-API-KEY': dashboardApiKey,
+        },
     }, function(error, res, body) {
         if (error) {
             console.log(error);

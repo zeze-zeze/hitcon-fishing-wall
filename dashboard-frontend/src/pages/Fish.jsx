@@ -8,7 +8,7 @@ export default function FishPage() {
   useEffect(() => {
     api.getAllFish().then((data) => {
       data = jsonToTable({
-        headers: ["time", "username", "description"],
+        headers: ["time", "username", "description", "flagCount"],
         data,
       });
       setData(data);
@@ -16,9 +16,8 @@ export default function FishPage() {
   }, []);
   return (
     <div>
-      <Table headers={["time", "username", "description"]} data={data} />
+      <Table headers={["time", "username", "description", "flagCount"]} data={data} />
       <h2 className="text-lg m-4">Table Data</h2>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }
