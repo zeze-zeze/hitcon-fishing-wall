@@ -64,6 +64,27 @@
         <input class="input" name="description" placeholder="description..." maxlength="256" />
         <input class="submit" type="submit" value="submit">
     </form>
+    <script>
+        var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
+        if (params.has("description")) {
+            console.log(params);
+            if (params.get("description") == 0) {
+                document.write("<span style='color: #A3E635'>Success!</span>");
+            }
+            else if (params.get("description") == 1) {
+                document.write("<span style='color: red'>Invalid username.</span>");
+            }
+            else if (params.get("description") == 2) {
+                document.write("<span style='color: red'>Invalid token.</span>");
+            }
+            else if (params.get("description") == 3) {
+                document.write("<span style='color: red'>Invalid description.</span>");
+            }
+            else if (params.get("description") == -1) {
+                document.write("<span style='color: red'>Unknown error.</span>");
+            }
+        }
+    </script>
     </p>
     <br>
     <p class="title">Submit Flag</p>
@@ -74,6 +95,30 @@
         <input class="input" name="flag" placeholder="flag..." maxlength="100" />
         <input class="submit" type="submit" value="submit">
     </form>
+    <script>
+        var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
+        if (params.has("flag")) {
+            console.log(params);
+            if (params.get("flag") == 0) {
+                document.write("<span style='color: #A3E635'>Success!</span>");
+            }
+            else if (params.get("flag") == 1) {
+                document.write("<span style='color: red'>Wrong flag.</span>");
+            }
+            else if (params.get("flag") == 2) {
+                document.write("<span style='color: red'>Duplicate flag.</span>");
+            }
+            else if (params.get("flag") == 3) {
+                document.write("<span style='color: red'>Invalid username.</span>");
+            }
+            else if (params.get("flag") == 4) {
+                document.write("<span style='color: red'>Invalid token.</span>");
+            }
+            else if (params.get("flag") == -1) {
+                document.write("<span style='color: red'>Unknown error.</span>");
+            }
+        }
+    </script>
     <br>
 </body>
 
