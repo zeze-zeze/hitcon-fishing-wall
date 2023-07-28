@@ -79,18 +79,21 @@ app.post('/description', urlencodedParser, function(req, res){
         data.username = req.cookies.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
         data.username = "";
+        res.redirect('introduction/entrance?description=1');
     }
 
     if (typeof(req.cookies.token) === 'string'){
         data.token = req.cookies.token.substring(0, 32);
     } else {
         data.token = "";
+        res.redirect('introduction/entrance?description=2');
     }
 
     if (typeof(req.body.description) === 'string') {
         data.description = req.body.description.substring(0, 256);
     } else {
         data.description = "";
+        res.redirect('introduction/entrance?description=3');
     }
 
     if (data.username !== "" && data.token !== "" && data.description !== "") {
@@ -102,13 +105,16 @@ app.post('/description', urlencodedParser, function(req, res){
             json: data
         }, function(error, res, body) {
             if (error) {
+                err = error
                 console.log(error);
             }
         });
+        
+        res.redirect('introduction/entrance?description=0');
     }
 
     // Redirect to introduction page.
-    res.redirect('introduction');
+    res.redirect('introduction/entrance?description=-1');
 });
 
 // Receive flags.
@@ -118,12 +124,14 @@ app.post('/flag', urlencodedParser, function(req, res){
         data.username = req.cookies.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
         data.username = "";
+        res.redirect('introduction/entrance?flag=3');
     }
 
     if (typeof(req.cookies.token) === 'string'){
         data.token = req.cookies.token.substring(0, 32);
     } else {
         data.token = "";
+        res.redirect('introduction/entrance?flag=4');
     }
 
     // Check if the flags in cookies are valid.
@@ -142,10 +150,10 @@ app.post('/flag', urlencodedParser, function(req, res){
     // Check if the flag is valid.
     const answers = config.get('flagAnswers');
     if (typeof(req.body.flag) === "string" && !answers.includes(req.body.flag)){
-        res.end("Wrong flag.");
+        res.redirect('introduction/entrance?flag=1');
         return;
     } else if (flags.includes(req.body.flag)){
-        res.end("Duplicate flag.");
+        res.redirect('introduction/entrance?flag=2');
         return;
     }
     flags.push(req.body.flag);
@@ -173,16 +181,12 @@ app.post('/flag', urlencodedParser, function(req, res){
     });
 
     // Redirect to introduction page.
-    res.redirect('introduction')
+    res.redirect('introduction/entrance?flag=0');
 });
 
 
 // Introduce hitcon fishing wall.
 app.get('/introduction', function(req, res){
-    // TODO: 科普惡意 wifi 的危害以及辨認方法
-    // TODO: 告知綿羊這個 wifi 不會偷其他的東西，並且綿羊牆是匿名的，請綿羊放心
-    // TODO: 請他去連官方提供的 wifi
-    // TODO: 告知他釣魚牆的相關資訊，e.g. 位置、釣魚牆統計資料
     res.sendFile('frontend/introduction/index.html', {root: '../'});
 });
 

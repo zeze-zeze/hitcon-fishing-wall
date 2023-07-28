@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@500&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./design/slide.css">
-        <link rel="icon" type="image/x-icon" href="./images/sheep.png">
-        <title>HITCON EVENT</title>
-    </head>
-    <body>
-      <a href="./entrance/index.html">
-        <h2 class="hero glitch layers"  data-text="Welcome to Phishing Wall">
-          <span id="words">Welcome to Phishing Wall</span>
-        </h2>
-        <script type="text/javascript">
-          (function () {
-            var words = ["Welcome to Phishing Wall"],
-            i = 0;
-            setInterval(function(){ $('#words').fadeOut(function(){
-                $(this).html(words[(i = (i + 1) % words.length)]).fadeIn();
-              }); }, 3000)
-          })();
-          setTimeout(function(){ window.location.href = "./entrance/index.html"; }, 6000);
-        </script>
-      </a>
-    </body>
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tektur:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./design/slide.css">
+  <link rel="icon" type="image/x-icon" href="./images/sheep.png">
+  <title>HITCON EVENT</title>
+</head>
+
+<body>
+  <a href="./entrance/index.html">
+    <h2 class="hero glitch layers" data-text="Welcome to Phishing Wall">
+      <span id="words">Welcome to Phishing Wall</span>
+    </h2>
+    <script type="text/javascript">
+      (function () {
+        var words = ["Welcome to Phishing Wall"],
+          i = 0;
+        setInterval(function () {
+          $('#words').fadeOut(function () {
+            $(this).html(words[(i = (i + 1) % words.length)]).fadeIn();
+          });
+        }, 3000)
+      })();
+      setTimeout(function () { window.location.href = "./entrance/index.html"; }, 3000);
+    </script>
+  </a>
+</body>
+
 </html>
