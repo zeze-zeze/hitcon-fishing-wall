@@ -14,7 +14,7 @@ export default function Table({ headers, data }) {
             <th
               key={header}
             >
-              <div className="bg-lime-400 rounded-lg m-1 px-2 pt-2 py-2">{header}</div>
+              <div className="bg-lime-400 rounded-lg m-1 p-2">{header}</div>
             </th>
           ))}
         </tr>
