@@ -16,7 +16,11 @@ export default function FishPage() {
   }, []);
   return (
     <div>
-      <Table headers={["time", "username", "description", "flagCount"]} data={data} />
+      <Table
+        headers={["time", "username", "description", "flagCount"]}
+        data={data}
+        widthClasses={["w-3/12", "w-3/12", "w-5/12", "w-1/12"]}
+      />
       <h2 className="text-lg m-4">Table Data</h2>
     </div>
   );
