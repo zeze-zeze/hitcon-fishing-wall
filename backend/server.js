@@ -22,9 +22,9 @@ const dashboardWallFishApi = config.get('dashboardWallFishApi');
 const dashboardWallDescriptionApi = config.get('dashboardWallDescriptionApi');
 const dashboardWallFlagApi = config.get('dashboardWallFlagApi');
 
-const privateKey  = fs.readFileSync('server.key', 'utf8');
+const privateKey = fs.readFileSync('server.key', 'utf8');
 const certificate = fs.readFileSync('server.cert', 'utf8');
-const credentials = {key: privateKey, cert: certificate};
+const credentials = { key: privateKey, cert: certificate };
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
@@ -33,9 +33,9 @@ app.use(express.static(path.join(__dirname, frontendPath)));
 app.use(cookieParser());
 
 // Receive the account information from fishing sites.
-app.post('/fish', urlencodedParser, function(req, res){
+app.post('/fish', urlencodedParser, function (req, res) {
     const data = {};
-    if (typeof(req.body.username) === 'string'){
+    if (typeof (req.body.username) === 'string') {
         data.username = req.body.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
         data.username = "";
@@ -50,23 +50,23 @@ app.post('/fish', urlencodedParser, function(req, res){
     } else {
         data.token = req.cookies.token;
     }
-    
+
     if (data.username !== "") {
         // Set cookie for username and token.
-        res.cookie('username', data.username, {maxAge : 72 * 60 * 60 * 1000});
-        res.cookie('token', data.token, {maxAge : 72 * 60 * 60 * 1000});
+        res.cookie('username', data.username, { maxAge: 72 * 60 * 60 * 1000 });
+        res.cookie('token', data.token, { maxAge: 72 * 60 * 60 * 1000 });
 
         // Request dashboard server to insert new fish.
-        console.log(dashboardServer+dashboardWallFishApi);
+        console.log(dashboardServer + dashboardWallFishApi);
         console.log(data);
         request({
-            uri: `${dashboardServer+dashboardWallFishApi}`,
+            uri: `${dashboardServer + dashboardWallFishApi}`,
             method: 'POST',
             json: data,
             headers: {
                 'X-API-KEY': dashboardApiKey,
             },
-        }, function(error, res, body) {
+        }, function (error, res, body) {
             if (error) {
                 console.log(error);
             }
@@ -77,23 +77,23 @@ app.post('/fish', urlencodedParser, function(req, res){
     res.redirect('introduction');
 });
 
-app.post('/description', urlencodedParser, function(req, res){
+app.post('/description', urlencodedParser, function (req, res) {
     const data = {};
-    if (typeof(req.cookies.username) === 'string'){
+    if (typeof (req.cookies.username) === 'string') {
         data.username = req.cookies.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
         data.username = "";
         res.redirect('introduction/entrance?description=1');
     }
 
-    if (typeof(req.cookies.token) === 'string'){
+    if (typeof (req.cookies.token) === 'string') {
         data.token = req.cookies.token.substring(0, 32);
     } else {
         data.token = "";
         res.redirect('introduction/entrance?description=2');
     }
 
-    if (typeof(req.body.description) === 'string') {
+    if (typeof (req.body.description) === 'string') {
         data.description = req.body.description.substring(0, 64);
     } else {
         data.description = "";
@@ -104,19 +104,19 @@ app.post('/description', urlencodedParser, function(req, res){
         // Request dashboard server to update description.
         console.log(data);
         request({
-            uri: `${dashboardServer+dashboardWallDescriptionApi}`,
+            uri: `${dashboardServer + dashboardWallDescriptionApi}`,
             method: 'POST',
             json: data,
             headers: {
                 'X-API-KEY': dashboardApiKey,
             },
-        }, function(error, res, body) {
+        }, function (error, res, body) {
             if (error) {
                 err = error
                 console.log(error);
             }
         });
-        
+
         res.redirect('introduction/entrance?description=0');
     }
 
@@ -125,16 +125,16 @@ app.post('/description', urlencodedParser, function(req, res){
 });
 
 // Receive flags.
-app.post('/flag', urlencodedParser, function(req, res){
+app.post('/flag', urlencodedParser, function (req, res) {
     const data = {};
-    if (typeof(req.cookies.username) === 'string'){
+    if (typeof (req.cookies.username) === 'string') {
         data.username = req.cookies.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
         data.username = "";
         res.redirect('introduction/entrance?flag=3');
     }
 
-    if (typeof(req.cookies.token) === 'string'){
+    if (typeof (req.cookies.token) === 'string') {
         data.token = req.cookies.token.substring(0, 32);
     } else {
         data.token = "";
@@ -156,10 +156,10 @@ app.post('/flag', urlencodedParser, function(req, res){
 
     // Check if the flag is valid.
     const answers = config.get('flagAnswers');
-    if (typeof(req.body.flag) === "string" && !answers.includes(req.body.flag)){
+    if (typeof (req.body.flag) === "string" && !answers.includes(req.body.flag)) {
         res.redirect('introduction/entrance?flag=1');
         return;
-    } else if (flags.includes(req.body.flag)){
+    } else if (flags.includes(req.body.flag)) {
         res.redirect('introduction/entrance?flag=2');
         return;
     }
@@ -169,7 +169,7 @@ app.post('/flag', urlencodedParser, function(req, res){
     // Count the number of the valid flags.
     var flagCount = 0;
     answers.forEach(answer => {
-        if (flags.includes(answer)){
+        if (flags.includes(answer)) {
             flagCount += 1;
         }
     });
@@ -178,13 +178,13 @@ app.post('/flag', urlencodedParser, function(req, res){
     // Request dashboard server to update flag information.
     console.log(data);
     request({
-        uri: `${dashboardServer+dashboardWallFlagApi}`,
+        uri: `${dashboardServer + dashboardWallFlagApi}`,
         method: 'POST',
         json: data,
         headers: {
             'X-API-KEY': dashboardApiKey,
         },
-    }, function(error, res, body) {
+    }, function (error, res, body) {
         if (error) {
             console.log(error);
         }
@@ -196,27 +196,27 @@ app.post('/flag', urlencodedParser, function(req, res){
 
 
 // Introduce hitcon fishing wall.
-app.get('/introduction', function(req, res){
-    res.sendFile('frontend/introduction/index.html', {root: '../'});
+app.get('/introduction', function (req, res) {
+    res.sendFile('frontend/introduction/index.html', { root: '../' });
 });
 
 
 // Display all fishing sites.
-app.all('*', function(req, res){
+app.all('*', function (req, res) {
     const host = req.headers.host;
     const url = req.url;
     console.log(host)
     console.log(req.url);
 
     const phishingSites = config.get('phishingSites');
-    
+
     phishingSites.forEach(phishingSite => {
-        if (host.includes(phishingSite) || url.includes(phishingSite)){
-            res.sendFile(`frontend/${phishingSite}/index.html`, {root: '../'});
+        if (host.includes(phishingSite) || url.includes(phishingSite)) {
+            res.sendFile(`frontend/${phishingSite}/index.html`, { root: '../' });
         }
     });
 
-    res.sendFile('frontend/hitcon/index.html', {root: '../'});
+    res.sendFile('frontend/hitcon/index.html', { root: '../' });
 });
 
 httpServer.listen(httpPort, () => {
