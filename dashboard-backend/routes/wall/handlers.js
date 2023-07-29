@@ -18,7 +18,6 @@ async function getFish() {
     select: {
       username: true,
       time: true,
-      token: true,
       description: true,
       flagCount: true,
     },

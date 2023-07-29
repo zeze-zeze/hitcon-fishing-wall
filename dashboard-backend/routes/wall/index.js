@@ -7,6 +7,7 @@ const {
   getFishFlagCount,
   updateFishFlagCount,
 } = require("./handlers");
+const { apiKeyAuth } = require("../../middlewares/auth");
 
 const router = express.Router();
 router.use(express.json());
@@ -16,7 +17,7 @@ router.get("/fish", async (req, res) => {
   res.json(data);
 });
 
-router.post("/fish", SchemaValidator("post_fish"), async (req, res) => {
+router.post("/fish", apiKeyAuth, SchemaValidator("post_fish"), async (req, res) => {
   /*
     #swagger.operationId = 'post_fish'
     #swagger.parameters['body'] = {
@@ -72,6 +73,7 @@ router.post("/fish", SchemaValidator("post_fish"), async (req, res) => {
 
 router.post(
   "/description",
+  apiKeyAuth,
   SchemaValidator("post_description"),
   async (req, res) => {
     /*
@@ -132,7 +134,7 @@ router.post(
   }
 );
 
-router.post("/flag", SchemaValidator("post_flag"), async (req, res) => {
+router.post("/flag", apiKeyAuth, SchemaValidator("post_flag"), async (req, res) => {
   /*
     #swagger.operationId = 'post_flag'
     #swagger.parameters['body'] = {
