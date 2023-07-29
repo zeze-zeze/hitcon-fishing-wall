@@ -94,7 +94,7 @@ app.post('/description', urlencodedParser, function(req, res){
     }
 
     if (typeof(req.body.description) === 'string') {
-        data.description = req.body.description.substring(0, 256);
+        data.description = req.body.description.substring(0, 64);
     } else {
         data.description = "";
         res.redirect('introduction/entrance?description=3');
