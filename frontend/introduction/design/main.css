@@ -47,7 +47,24 @@ body {
   opacity: 0.5;
   padding: 10px;
   border-radius: 5px;
-  background-color: #4c545d;
-  color: #ffffff;
+  background-color: #FFBB77;
+  color: #222;
   width: fit-content;
+}
+
+body {
+  background: #BFAF92;
+}
+
+.lang {
+  --tw-bg-opacity: 1;
+  background-color: rgb(54 54 54/var(--tw-bg-opacity));
+  color: aliceblue;
+  font-size: large;
+  padding: 10px;
+  border-radius: 5px;
+  width: max-content;
+  opacity: 70%;
+  float: right;
+  text-decoration: none;
 }

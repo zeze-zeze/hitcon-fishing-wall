@@ -2,7 +2,7 @@ const express = require("express");
 const { SchemaValidator } = require("../../middlewares/validation");
 const {
   getFish,
-  createOrUpdateFish,
+  createFish,
   updateFishDescription,
   getFishFlagCount,
   updateFishFlagCount,
@@ -50,7 +50,7 @@ router.post("/fish", apiKeyAuth, SchemaValidator("post_fish"), async (req, res) 
   const description = "";
 
   try {
-    const record = await createOrUpdateFish({
+    const record = await createFish({
       username,
       token,
       description,
@@ -62,7 +62,7 @@ router.post("/fish", apiKeyAuth, SchemaValidator("post_fish"), async (req, res) 
     if (errorType.startsWith("PrismaClient")) {
       const errorMsg = { error: errorType };
       if ("code" in error) errorMsg.code = error.code;
-      errorMsg.message = "Create or update fish failed";
+      errorMsg.message = "Create fish failed";
       res.status(400).json(errorMsg);
     } else {
       console.error(error);

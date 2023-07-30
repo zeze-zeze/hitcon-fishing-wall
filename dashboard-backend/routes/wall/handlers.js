@@ -31,18 +31,9 @@ async function getFish() {
   });
 }
 
-async function createOrUpdateFish({ username, token, description, flagCount }) {
-  return await prisma.WallFish.upsert({
-    where: {
-      username,
-      token,
-    },
-    update: {
-      username,
-      description,
-      flagCount,
-    },
-    create: {
+async function createFish({ username, token, description, flagCount }) {
+  return await prisma.WallFish.create({
+    data: {
       username,
       token,
       description,
@@ -77,7 +68,7 @@ async function updateFishFlagCount({ username, token, flagCount }) {
 
 module.exports = {
   getFish,
-  createOrUpdateFish,
+  createFish,
   getFishFlagCount,
   updateFishDescription,
   updateFishFlagCount,
