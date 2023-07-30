@@ -67,6 +67,8 @@ app.post('/fish', urlencodedParser, async function (req, res) {
             .then((response) => response.json())
             .then((data) => {
                 return data;
+            }).catch((e) => {
+                return { "message": "Unknown error" }
             });
     }
 
@@ -128,7 +130,9 @@ app.post('/description', urlencodedParser, async function (req, res) {
             .then((response) => response.json())
             .then((data) => {
                 return data;
-            });
+            }).catch((e) => {
+                return { "message": "Unknown error" }
+            });;
     }
 
     // Set the error message.
@@ -218,7 +222,9 @@ app.post('/flag', urlencodedParser, async function (req, res) {
             .then((response) => response.json())
             .then((data) => {
                 return data;
-            });
+            }).catch((e) => {
+                return { "message": "Unknown error" }
+            });;
     }
 
     // Set the error message.
