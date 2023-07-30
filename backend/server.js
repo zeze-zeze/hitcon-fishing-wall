@@ -33,8 +33,11 @@ app.use(express.static(path.join(__dirname, frontendPath)));
 app.use(cookieParser());
 
 // Receive the account information from fishing sites.
-app.post('/fish', urlencodedParser, function (req, res) {
+app.post('/fish', urlencodedParser, async function (req, res) {
     const data = {};
+    var err, msg;
+
+    // Check the username.
     if (typeof (req.body.username) === 'string') {
         data.username = req.body.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
@@ -52,81 +55,111 @@ app.post('/fish', urlencodedParser, function (req, res) {
     }
 
     if (data.username !== "") {
+        // Request dashboard server to insert new fish.
+        err = await fetch(`${dashboardServer + dashboardWallFishApi}`, {
+            method: "POST",
+            headers: {
+                "X-API-KEY": dashboardApiKey,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                return data;
+            });
+    }
+
+    // Set the error message.
+    if (data.username === "") {
+        msg = 2;
+    }
+    else if (err.message === "Create fish failed") {
+        msg = 1;
+    }
+    else if (!err.message) {
         // Set cookie for username and token.
         res.cookie('username', data.username, { maxAge: 72 * 60 * 60 * 1000 });
         res.cookie('token', data.token, { maxAge: 72 * 60 * 60 * 1000 });
 
-        // Request dashboard server to insert new fish.
-        console.log(dashboardServer + dashboardWallFishApi);
-        console.log(data);
-        request({
-            uri: `${dashboardServer + dashboardWallFishApi}`,
-            method: 'POST',
-            json: data,
-            headers: {
-                'X-API-KEY': dashboardApiKey,
-            },
-        }, function (error, res, body) {
-            if (error) {
-                console.log(error);
-            }
-        });
+        msg = 0;
+    }
+    else {
+        msg = -1;
     }
 
     // Redirect to introduction page.
-    res.redirect('introduction');
+    res.redirect('introduction/entrance?username=' + msg.toString());
 });
 
-app.post('/description', urlencodedParser, function (req, res) {
+app.post('/description', urlencodedParser, async function (req, res) {
     const data = {};
+    var err, msg;
+
+    // Check the username, token and description.
     if (typeof (req.cookies.username) === 'string') {
         data.username = req.cookies.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
         data.username = "";
-        res.redirect('introduction/entrance?description=1');
     }
 
     if (typeof (req.cookies.token) === 'string') {
         data.token = req.cookies.token.substring(0, 32);
     } else {
         data.token = "";
-        res.redirect('introduction/entrance?description=2');
     }
 
     if (typeof (req.body.description) === 'string') {
         data.description = req.body.description.substring(0, 64);
     } else {
         data.description = "";
-        res.redirect('introduction/entrance?description=3');
     }
 
     if (data.username !== "" && data.token !== "" && data.description !== "") {
         // Request dashboard server to update description.
-        console.log(data);
-        request({
-            uri: `${dashboardServer + dashboardWallDescriptionApi}`,
-            method: 'POST',
-            json: data,
+        err = await fetch(`${dashboardServer + dashboardWallDescriptionApi}`, {
+            method: "POST",
             headers: {
-                'X-API-KEY': dashboardApiKey,
+                "X-API-KEY": dashboardApiKey,
+                "Content-Type": "application/json",
             },
-        }, function (error, res, body) {
-            if (error) {
-                err = error
-                console.log(error);
-            }
-        });
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                return data;
+            });
+    }
 
-        res.redirect('introduction/entrance?description=0');
+    // Set the error message.
+    if (data.username === "") {
+        msg = 1;
+    }
+    else if (data.token === "") {
+        msg = 2;
+    }
+    else if (data.description === "") {
+        msg = 3;
+    }
+    else if (err.message === "Fish not found") {
+        msg = 4;
+    }
+    else if (!err.message) {
+        msg = 0;
+    }
+    else {
+        msg = -1;
     }
 
     // Redirect to introduction page.
-    res.redirect('introduction/entrance?description=-1');
+    res.redirect('introduction/entrance?description=' + msg.toString());
 });
 
 // Receive flags.
-app.post('/flag', urlencodedParser, function (req, res) {
+app.post('/flag', urlencodedParser, async function (req, res) {
     const data = {};
+    var err, msg;
+
     if (typeof (req.cookies.username) === 'string') {
         data.username = req.cookies.username.substring(0, 64).replace(/\0/g, '').replace(/\//g, '');
     } else {
@@ -158,13 +191,10 @@ app.post('/flag', urlencodedParser, function (req, res) {
     const answers = config.get('flagAnswers');
     if (typeof (req.body.flag) === "string" && !answers.includes(req.body.flag)) {
         res.redirect('introduction/entrance?flag=1');
-        return;
     } else if (flags.includes(req.body.flag)) {
         res.redirect('introduction/entrance?flag=2');
-        return;
     }
     flags.push(req.body.flag);
-    res.cookie('flags', JSON.stringify(flags));
 
     // Count the number of the valid flags.
     var flagCount = 0;
@@ -175,23 +205,38 @@ app.post('/flag', urlencodedParser, function (req, res) {
     });
     data.flagCount = flagCount;
 
-    // Request dashboard server to update flag information.
-    console.log(data);
-    request({
-        uri: `${dashboardServer + dashboardWallFlagApi}`,
-        method: 'POST',
-        json: data,
-        headers: {
-            'X-API-KEY': dashboardApiKey,
-        },
-    }, function (error, res, body) {
-        if (error) {
-            console.log(error);
-        }
-    });
+    if (data.username !== "" && data.token !== "") {
+        // Request dashboard server to update flag information.
+        err = await fetch(`${dashboardServer + dashboardWallFlagApi}`, {
+            method: "POST",
+            headers: {
+                "X-API-KEY": dashboardApiKey,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                return data;
+            });
+    }
+
+    // Set the error message.
+    if (err.message === "Fish not found") {
+        msg = 5;
+    }
+    else if (!err.message) {
+        // Set cookie for flags.
+        res.cookie('flags', JSON.stringify(flags));
+
+        msg = 0;
+    }
+    else {
+        msg = -1;
+    }
 
     // Redirect to introduction page.
-    res.redirect('introduction/entrance?flag=0');
+    res.redirect('introduction/entrance?flag=' + msg.toString());
 });
 
 
