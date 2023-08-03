@@ -18,6 +18,7 @@ The HITCON Fishing Wall is an interactive activity organized during HITCON to ra
     * token
     * description
     * flag count
+* change description
 * submit flags
 * dashboard
 
