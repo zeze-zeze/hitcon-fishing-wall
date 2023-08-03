@@ -1,24 +1,10 @@
-import { useEffect, useState } from "react";
-import Table from "../components/Table";
-import { jsonToTable } from "../lib";
-import api from "../services";
-
 export default function CtfPage() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    api.getAllCtf().then((data) => {
-      data = jsonToTable({
-        headers: ["h1", "h2", "h3"],
-        data,
-      });
-      setData(data);
-    });
-  }, []);
   return (
-    <div>
-      <Table headers={["h1", "h2", "h3"]} data={data} />
-      <h2 className="text-lg m-4">Table Data</h2>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+    <div className="absolute inset-0 h-[calc(100vh-6rem)]">
+      <iframe
+        className="w-full h-full"
+        src="https://rectf.hitcon2023.online/scoreboard"
+      />
     </div>
   );
 }
