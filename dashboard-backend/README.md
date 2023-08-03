@@ -27,7 +27,7 @@ npm run db:init
 # start dev server
 # windodws
 # npm run dev:win
-#linux
+# linux
 npm run dev
 # or with production environment
 # npm run start
