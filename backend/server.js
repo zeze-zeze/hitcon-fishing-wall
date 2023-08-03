@@ -256,8 +256,6 @@ app.get('/introduction', function (req, res) {
 app.all('*', function (req, res) {
     const host = req.headers.host;
     const url = req.url;
-    console.log(host)
-    console.log(req.url);
 
     const phishingSites = config.get('phishingSites');
 
