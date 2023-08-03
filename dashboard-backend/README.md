@@ -25,6 +25,9 @@ export DATABASE_URL="file:./dev.db"
 npm run db:init
 
 # start dev server
+# windodws
+# npm run dev:win
+# linux
 npm run dev
 # or with production environment
 # npm run start
