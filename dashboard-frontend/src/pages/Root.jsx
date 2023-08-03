@@ -123,7 +123,7 @@ export default function Root() {
             </h1>
           </div>
         </header> */}
-        <main>
+        <main className="relative">
           <div className="mx-auto max-w-7xl">
             {/* Your content */}
             <div className="bg-stone-300/50 rounded-lg m-4 p-1 overflow-x-auto">
