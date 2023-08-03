@@ -1,5 +1,5 @@
 {
-    "dashboardServer": "http://127.0.0.1:5002",
+    "dashboardServer": "http://127.0.0.1:8001",
     "dashboardApiKey": "xxx",
     "dashboardWallFishApi": "/api/v1/wall/fish",
     "dashboardWallDescriptionApi": "/api/v1/wall/description",
