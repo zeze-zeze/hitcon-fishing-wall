@@ -56,6 +56,15 @@ To update database after modifing the schema file:
 - Remove old `prisma/dev.db`
 - Run `npx prisma db push` to create database file
 
+## Deploy
+```
+cd dashboard-frontend
+yarn build
+
+cd ../dashboard-backend
+podman run --rm -it -e PORT=8000 -e DATABASE_URL="file:/dev.db" -p 8000:8000 -v "`pwd`:/app" -w /app node:18-alpine sh -c "npm run db:init && npm run dev"
+```
+
 ## Docs
 
 `docs/swagger.json` is updated automatically when dev server is running.
