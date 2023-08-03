@@ -26,7 +26,6 @@ export default function FishPage() {
         data={data}
         widthClasses={["w-4/12", "w-2/12", "w-5/12", "w-1/12"]}
       />
-      <h2 className="text-lg m-4">Table Data</h2>
     </div>
   );
 }
