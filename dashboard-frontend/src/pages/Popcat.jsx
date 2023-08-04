@@ -22,8 +22,6 @@ export default function PopcatPage() {
   return (
     <div>
       <Table headers={["Username", "Score", "Timestamp"]} data={data} />
-      <h2 className="text-lg m-4">Table Data</h2>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }

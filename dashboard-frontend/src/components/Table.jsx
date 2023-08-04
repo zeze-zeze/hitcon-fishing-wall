@@ -10,7 +10,7 @@
  */
 export default function Table({ headers, data, widthClasses = [] }) {
   return (
-    <table className="border-collapse table-auto w-full text-sm">
+    <table className="border-collapse table-auto w-full text-sm mb-2">
       <thead>
         <tr className="text-center border-b border-zinc-900 font-medium text-lg">
           {headers.map((header, i) => (

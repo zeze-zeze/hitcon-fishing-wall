@@ -16,16 +16,12 @@ const api = {
     const resp = await instance.get("/badge/emoji");
     return resp.data;
   },
-  async getAllCtf() {
-    const resp = await instance.get("/dashboard?category=ctf");
-    return resp.data;
-  },
   async getAllFish() {
     const resp = await instance.get("/wall/fish");
     return resp.data;
   },
   async getAllGeocaching() {
-    const resp = await instance.get("/dashboard?category=geocaching");
+    const resp = await instance.get("/treasure-hunt/stats");
     return resp.data;
   },
 };
