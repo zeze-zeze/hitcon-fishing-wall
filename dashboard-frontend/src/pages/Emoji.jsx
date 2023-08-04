@@ -22,8 +22,6 @@ export default function EmojiPage() {
   return (
     <div>
       <Table headers={["Content", "Username", "Timestamp"]} data={data} />
-      <h2 className="text-lg m-4">Table Data</h2>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 }

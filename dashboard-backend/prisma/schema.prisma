@@ -47,3 +47,13 @@ model WallFish {
   description String
   flagCount   Int
 }
+
+model TreasureStats {
+  id        Int      @id @default(autoincrement())
+  level_0   Int
+  level_1   Int
+  level_2   Int
+  level_3   Int
+  finished  Int
+  createdAt DateTime @default(now())
+}

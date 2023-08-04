@@ -19,43 +19,6 @@
     }
   },
   "paths": {
-    "/api/v1/ctf": {
-      "post": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/geocaching": {
-      "post": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/v1/dashboard": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "category",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/v1/wall/fish": {
       "get": {
         "description": "",
@@ -472,6 +435,80 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/treasure-hunt/stats": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "operationId": "post_treasure_stats",
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "level_0": {
+                  "type": "number",
+                  "example": 0
+                },
+                "level_1": {
+                  "type": "number",
+                  "example": 0
+                },
+                "level_2": {
+                  "type": "number",
+                  "example": 0
+                },
+                "level_3": {
+                  "type": "number",
+                  "example": 0
+                },
+                "finished": {
+                  "type": "number",
+                  "example": 0
+                }
+              },
+              "required": [
+                "level_0",
+                "level_1",
+                "level_2",
+                "level_3",
+                "finished"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
