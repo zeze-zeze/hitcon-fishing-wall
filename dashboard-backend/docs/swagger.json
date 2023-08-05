@@ -257,6 +257,62 @@
         }
       }
     },
+    "/api/v1/badge/popcat/all": {
+      "put": {
+        "description": "",
+        "operationId": "put_all_popcat",
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "card_uid": {
+                    "type": "string",
+                    "pattern": "[0-9a-fA-F]{8}"
+                  },
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "card_uid",
+                  "score"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/badge/popcat/{cardUid}": {
       "put": {
         "description": "",
@@ -320,6 +376,62 @@
         }
       }
     },
+    "/api/v1/badge/dino/all": {
+      "put": {
+        "description": "",
+        "operationId": "put_all_dino",
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "card_uid": {
+                    "type": "string",
+                    "pattern": "[0-9a-fA-F]{8}"
+                  },
+                  "score": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "card_uid",
+                  "score"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v1/badge/dino/{cardUid}": {
       "put": {
         "description": "",
@@ -381,6 +493,66 @@
             "description": "OK"
           }
         }
+      }
+    },
+    "/api/v1/badge/emoji/all": {
+      "put": {
+        "description": "",
+        "operationId": "put_all_emoji",
+        "parameters": [
+          {
+            "name": "X-API-KEY",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "card_uid": {
+                    "type": "string",
+                    "pattern": "[0-9a-fA-F]{8}"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "timestamp": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "card_uid",
+                  "content",
+                  "timestamp"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/api/v1/badge/emoji/{cardUid}": {

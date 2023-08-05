@@ -1,4 +1,18 @@
+const { Prisma } = require("@prisma/client");
 const { prisma } = require("../../common");
+
+// join function
+// https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access#tagged-template-helpers
+// https://github.com/blakeembrey/sql-template-tag/blob/main/src/index.ts#L98
+// blob literals
+// https://stackoverflow.com/questions/20133602/sqlite3-trigger-to-convert-hex-text-into-binary-blob-equivalent
+// https://www.sqlite.org/lang_expr.html#litvalue
+async function checkNonExistentUids({ uids }) {
+  const result = await prisma.$queryRaw`SELECT column1 AS uid
+  FROM (VALUES (${Prisma.join(uids, "),(")}))
+  EXCEPT SELECT uid FROM Card`;
+  return result;
+}
 
 /**
  * @param {{
@@ -21,57 +35,20 @@ async function createOrUpdateBadgeInfo({ uid, username }) {
   });
 }
 
-/**
- * @returns {Promise<{
- *   username: string,
- *   content: string,
- *   timestamp: Date,
- * }[]>}
- */
-async function getEmojiWithUser() {
-  const data = await prisma.badgeEmoji.findMany({
-    select: {
-      content: true,
-      timestamp: true,
-      card: {
-        select: {
-          username: true,
-        },
-      },
-    },
-    orderBy: {
-      timestamp: "asc",
-    },
-  });
-
-  return data.map((i) => ({
-    username: i.card.username,
-    content: i.content,
-    timestamp: i.timestamp,
-  }));
-  // return await prisma.$queryRaw`
-  //   SELECT Card.username, emoji.content, emoji.timestamp
-  //   FROM BadgeEmoji as emoji
-  //   LEFT JOIN Card
-  //   ON emoji.cardUid=Card.uid
-  //   ORDER BY emoji.timestamp ASC`;
-}
-
-/**
- * @param {{
- * cardUid: Buffer,
- * content: string,
- * timestamp: string,
- * }}
- */
-async function createEmojiRecord({ cardUid, content, timestamp }) {
-  return await prisma.badgeEmoji.create({
-    data: {
-      cardUid,
-      content,
-      timestamp,
-    },
-  });
+// https://github.com/prisma/prisma/issues/10710#issuecomment-1198906656
+async function deleteAndCreatePopcats(data) {
+  const result = await prisma.$transaction([
+    prisma.badgePopcat.deleteMany({}),
+    ...data.map((row) =>
+      prisma.badgePopcat.create({
+        data: row,
+      })
+    ),
+  ]);
+  return {
+    delete_count: result[0].count,
+    insert_count: result.length - 1,
+  };
 }
 
 /**
@@ -128,6 +105,21 @@ async function getDinoWithUser() {
    ORDER BY dino.score DESC, dino.updatedAt ASC`;
 }
 
+async function deleteAndCreateDinos(data) {
+  const result = await prisma.$transaction([
+    prisma.badgeDino.deleteMany({}),
+    ...data.map((row) =>
+      prisma.badgeDino.create({
+        data: row,
+      })
+    ),
+  ]);
+  return {
+    delete_count: result[0].count,
+    insert_count: result.length - 1,
+  };
+}
+
 /**
  * @param {{
  *   cardUid: Buffer,
@@ -149,12 +141,84 @@ async function createOrUpdateDino({ cardUid, score }) {
   });
 }
 
+/**
+ * @returns {Promise<{
+ *   username: string,
+ *   content: string,
+ *   timestamp: Date,
+ * }[]>}
+ */
+async function getEmojiWithUser() {
+  const data = await prisma.badgeEmoji.findMany({
+    select: {
+      content: true,
+      timestamp: true,
+      card: {
+        select: {
+          username: true,
+        },
+      },
+    },
+    orderBy: {
+      timestamp: "asc",
+    },
+  });
+
+  return data.map((i) => ({
+    username: i.card.username,
+    content: i.content,
+    timestamp: i.timestamp,
+  }));
+  // return await prisma.$queryRaw`
+  //   SELECT Card.username, emoji.content, emoji.timestamp
+  //   FROM BadgeEmoji as emoji
+  //   LEFT JOIN Card
+  //   ON emoji.cardUid=Card.uid
+  //   ORDER BY emoji.timestamp ASC`;
+}
+
+async function deleteAndCreateEmoji(data) {
+  const result = await prisma.$transaction([
+    prisma.badgeEmoji.deleteMany({}),
+    ...data.map((row) =>
+      prisma.badgeEmoji.create({
+        data: row,
+      })
+    ),
+  ]);
+  return {
+    delete_count: result[0].count,
+    insert_count: result.length - 1,
+  };
+}
+
+/**
+ * @param {{
+ * cardUid: Buffer,
+ * content: string,
+ * timestamp: string,
+ * }}
+ */
+async function createEmojiRecord({ cardUid, content, timestamp }) {
+  return await prisma.badgeEmoji.create({
+    data: {
+      cardUid,
+      content,
+      timestamp,
+    },
+  });
+}
+
 module.exports = {
   createOrUpdateBadgeInfo,
-  getEmojiWithUser,
-  createEmojiRecord,
+  checkNonExistentUids,
+  deleteAndCreatePopcats,
   getPopcatWithUser,
   createOrUpdatePopcat,
   getDinoWithUser,
+  deleteAndCreateDinos,
   createOrUpdateDino,
+  getEmojiWithUser,
+  deleteAndCreateEmoji,
+  createEmojiRecord,
 };
