@@ -5,5 +5,5 @@ export const navigation = [
   { name: "Popcat", href: "/popcat" },
   { name: "Dino", href: "/dino" },
   { name: "Emoji", href: "/emoji" },
-  { name: "Geocaching", href: "/geocaching" },
+  { name: "Geocaching", href: "/treasure-hunt" },
 ];
