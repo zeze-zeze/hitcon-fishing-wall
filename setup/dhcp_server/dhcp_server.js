@@ -7,7 +7,6 @@ var s = dhcpd.createServer({
   ],
   forceOptions: ['hostname'], // Options that need to be sent, even if they were not requested
   static: {
-   "ea:c8:73:de:30:28": "10.198.0.1"
   },
   // Option settings
   netmask: '255.255.0.0',
@@ -16,7 +15,7 @@ var s = dhcpd.createServer({
   ],
   dns: ["10.198.0.1"],
   server: '10.198.0.1', // This is us
-  hostname: function() {return '2023hitcon' + i++; }
+  hostname: function () { return '2023hitcon' + i++; }
 });
 
 s.listen();

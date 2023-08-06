@@ -7,9 +7,9 @@ const http = require('http')
 const https = require('https')
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
-const config = require('config');
 
 process.chdir(__dirname);
+const config = require('config');
 
 const jsonParser = bodyParser.json()
 const urlencodedParser = bodyParser.urlencoded({ extended: false })

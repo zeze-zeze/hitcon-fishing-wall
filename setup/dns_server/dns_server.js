@@ -2,7 +2,6 @@ const dns = require('native-dns');
 const server = dns.createServer();
 
 server.on('request', function (request, response) {
-    console.log(request)
     response.answer.push(dns.A({
         name: request.question[0].name,
         address: '10.198.0.1',
