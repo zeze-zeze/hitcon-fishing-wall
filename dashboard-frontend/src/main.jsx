@@ -6,7 +6,7 @@ import CtfPage from "./pages/CTF";
 import DinoPage from "./pages/Dino";
 import EmojiPage from "./pages/Emoji";
 import FishPage from "./pages/Fish";
-import GeocachingPage from "./pages/Geocaching";
+import TreasureHuntPage from "./pages/TreasureHunt";
 import PopcatPage from "./pages/Popcat";
 import Root, { RootIndex } from "./pages/Root";
 
@@ -40,8 +40,8 @@ const router = createBrowserRouter([
         element: <CtfPage />,
       },
       {
-        path: "geocaching",
-        element: <GeocachingPage />,
+        path: "treasure-hunt",
+        element: <TreasureHuntPage />,
       },
     ],
   },

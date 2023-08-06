@@ -20,7 +20,7 @@ const api = {
     const resp = await instance.get("/wall/fish");
     return resp.data;
   },
-  async getAllGeocaching() {
+  async getAllTreasureHunt() {
     const resp = await instance.get("/treasure-hunt/stats");
     return resp.data;
   },

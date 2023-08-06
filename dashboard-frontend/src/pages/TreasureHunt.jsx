@@ -2,10 +2,10 @@ import { ResponsiveLine } from "@nivo/line";
 import { useEffect, useState } from "react";
 import api from "../services";
 
-export default function GeocachingPage() {
+export default function TreasureHuntPage() {
   const [data, setData] = useState([]);
   useEffect(() => {
-    api.getAllGeocaching().then((tsdata) => {
+    api.getAllTreasureHunt().then((tsdata) => {
       const data = ["level_0", "level_1", "level_2", "level_3", "finished"].map(
         (lineKey) => ({
           id: lineKey,
