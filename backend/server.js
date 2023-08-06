@@ -224,7 +224,7 @@ app.post('/flag', urlencodedParser, async function (req, res) {
                 return data;
             }).catch((e) => {
                 return { "message": "Unknown error" }
-            });;
+            });
     }
 
     // Set the error message.

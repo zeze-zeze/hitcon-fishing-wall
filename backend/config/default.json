@@ -1,6 +1,6 @@
 {
     "dashboardServer": "http://127.0.0.1:8001",
-    "dashboardApiKey": "xxx",
+    "dashboardApiKey": "<API_KEY>",
     "dashboardWallFishApi": "/api/v1/wall/fish",
     "dashboardWallDescriptionApi": "/api/v1/wall/description",
     "dashboardWallFlagApi": "/api/v1/wall/flag",
