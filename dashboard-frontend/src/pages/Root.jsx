@@ -22,7 +22,7 @@ export default function Root() {
       */}
       <div className="min-h-full">
         <Disclosure as="nav">
-          {({ open }) => (
+          {({ open, close }) => (
             <>
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-16 items-center justify-between my-2">
@@ -33,13 +33,14 @@ export default function Root() {
                           className="w-28"
                           src={hitconLogo}
                           alt="HITCON CMT 2023"
+                          onClick={close}
                         />
                       </Link>
                     </div>
                     <div className="block md:hidden px-4 text-lg font-medium text-black">
                       {
                         navigation.find((i) => i.href === location.pathname)
-                          .name
+                          ?.name
                       }
                     </div>
                     <div className="hidden md:block">
@@ -138,8 +139,17 @@ export default function Root() {
 
 export function RootIndex() {
   return (
-    <div>
-      <h1 className="text-lg">HITCON CMT 2023 Dashboard</h1>
+    <div className="container mx-auto p-2 md:p-4">
+      <div className="max-w-screen-sm mx-auto">
+        <img src={hitconLogo} />
+      </div>
+      <div className="space-y-4">
+        <p>
+          大家好！今年 HITCON
+          為大家準備了數個精彩的活動。從專為新手量身訂造的大地遊戲，到考驗資安專家技藝的Re:CTF比賽，再到令人瘋狂的Badge大亂鬥。不論你是誰，這裡都能找到最適合你的活動。
+        </p>
+        <p>趕緊投身其中，挑戰遊戲，刷上排行榜吧！</p>
+      </div>
     </div>
   );
 }
