@@ -14,7 +14,7 @@ export default function EmojiPage() {
       }).map(([txt, user, time]) => [
         txt,
         user,
-        moment(time).format("YYYY-MM-DD HH:mm:ss"),
+        moment(time).format("MM-DD HH:mm:ss"),
       ]);
       setData(data);
     });

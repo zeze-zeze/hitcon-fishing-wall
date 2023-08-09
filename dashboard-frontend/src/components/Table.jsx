@@ -5,10 +5,16 @@
  *   headers: string[],
  *   data: any[][],
  *   widthClasses: string[],
+ *   holders: string[],
  * }} props
  * @returns
  */
-export default function Table({ headers, data, widthClasses = [] }) {
+export default function Table({
+  headers,
+  data,
+  widthClasses = [],
+  holders = [],
+}) {
   return (
     <table className="border-collapse table-auto w-full text-sm mb-2">
       <thead>
@@ -26,7 +32,11 @@ export default function Table({ headers, data, widthClasses = [] }) {
             {row.map((cell, j) => (
               <td key={j} className="p-2 relative">
                 <span className="absolute truncate right-3 left-3">{cell}</span>
-                <span className="invisible">a</span>
+                <span className="invisible">
+                  {typeof holders[j] === "string" && holders[j].length > 0
+                    ? holders[j]
+                    : "a"}
+                </span>
               </td>
             ))}
           </tr>
