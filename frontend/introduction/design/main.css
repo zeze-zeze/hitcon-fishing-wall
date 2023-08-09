@@ -3,7 +3,6 @@ body {
   display: grid;
   place-items: center;
   color: white;
-  font-family: sans-serif;
   display: inline-block;
   margin-left: 25%;
   margin-right: 25%;
@@ -13,27 +12,31 @@ body {
 
 .title {
   font-size: 3vh;
+  font-family: 'Bebas Neue', sans-serif;
   background-color: #e5ccaf;
   padding: 1%;
   border-radius: 5px;
   width: max-content;
   opacity: 70%;
+  font-weight: 900;
   color: #222;
   text-align: center;
 }
 
-.content {
-  font-size: 2.5vh;
-}
-
 .titleeng {
   font-size: 3vh;
+  font-family: 'Bebas Neue', sans-serif;
   background-color: #bfcad6;
   padding: 1%;
   border-radius: 5px;
   width: max-content;
   opacity: 70%;
   color: #222;
+}
+
+.content {
+  font-size: 2.5vh;
+  font-family: 'Roboto', sans-serif;
 }
 
 .input {
@@ -52,10 +55,6 @@ body {
   width: fit-content;
 }
 
-body {
-  background: #BFAF92;
-}
-
 .lang {
   --tw-bg-opacity: 1;
   background-color: rgb(54 54 54/var(--tw-bg-opacity));
@@ -66,5 +65,11 @@ body {
   width: max-content;
   opacity: 70%;
   float: right;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+}
+
+.dashboard {
+  color: rgb(12, 81, 142);
   text-decoration: none;
 }
