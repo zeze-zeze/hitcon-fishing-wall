@@ -19,6 +19,11 @@ export default function EmojiPage() {
       setData(data);
     });
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }, [data]);
+
   return (
     <div>
       <Table headers={["Content", "Username", "Timestamp"]} data={data} />

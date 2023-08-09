@@ -1,6 +1,7 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import ScrollToTop from "react-scroll-to-top";
 import hitconLogo from "../assets/hitcon-logo.svg";
 import { navigation } from "./routes";
 
@@ -131,6 +132,12 @@ export default function Root() {
               <Outlet />
             </div>
           </div>
+          <ScrollToTop
+            smooth
+            className="scroll-to-top grid place-content-center"
+            width="24"
+            height="24"
+          />
         </main>
       </div>
     </>
