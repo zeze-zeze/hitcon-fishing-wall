@@ -1,127 +1,128 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="../design/main.css">
-    <link rel="icon" type="image/x-icon" href="./images/sheep.png">
-    <title>HITCON EVENT</title>
-</head>
-<style>
-
-</style>
-
-<body>
-    <a class="lang" href="./english.html">ENG</a>
-    <p class="title">釣魚牆介紹</p>
-    <p class="content">本活動純屬教育性質，目的在於期望提升 HITCON 與會者對 WiFi 安全性的資安意識。我們將把釣魚 WiFi 的會眾輸入的帳號放到 <a
-            href="http://10.198.0.6:15000/fish">dashboard</a> 上，並於 HITCON CMT
-        2023 結束後將資料刪除不留備份。</p>
-    <script>
-        var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
-        if (params.has("username")) {
-            console.log(params);
-            if (params.get("username") == 0) {
-
-            }
-            else if (params.get("username") == 1) {
-                document.write("<span style='color: red'>Duplicate username.</span>");
-            }
-            else if (params.get("username") == 2) {
-                document.write("<span style='color: red'>Invalid username.</span>");
-            }
-            else if (params.get("username") == -1) {
-                document.write("<span style='color: red'>Unknown error.</span>");
-            }
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../design/main.css">
+        <link rel="icon" type="image/x-icon" href="./images/sheep.png"> 
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+        <title>HITCON EVENT</title>
+    </head>
+    <style>
+        body {
+            background: #b7a990;
         }
-    </script>
-    <br>
-    <p class="title">資安宣導</p>
-    <p class="content">
-        1. 不使用來路不明的 WiFi。
+    </style>
+    <body>
+        <a class="lang" href="./english.html">ENG</a>
+        <p class="title">釣魚牆介紹</p>
+        <p class="content">本活動純屬教育性質，目的在於期望提升 HITCON 與會者對 WiFi 安全性的資安意識。我們把釣魚 WiFi 參與者的帳號放在 
+            <a class="dashboard" href="http://10.198.0.6:15000/fish">dashboard</a> 上，並於 HITCON CMT
+            2023 結束後將資料刪除不留備份。
+        </p>
+        <script>
+            var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
+            if (params.has("username")) {
+                console.log(params);
+                if (params.get("username") == 0) {
+            
+                }
+                else if (params.get("username") == 1) {
+                    document.write("<span style='color: red'>Duplicate username.</span>");
+                }
+                else if (params.get("username") == 2) {
+                    document.write("<span style='color: red'>Invalid username.</span>");
+                }
+                else if (params.get("username") == -1) {
+                    document.write("<span style='color: red'>Unknown error.</span>");
+                }
+            }
+        </script>
         <br>
-        2. 檢查網址與憑證是否正確以辨認釣魚網站。
+        <p class="title">資安宣導</p>
+        <p class="content">
+            1. 不使用來路不明的 WiFi。
+            <br>
+            2. 檢查網址與憑證是否正確，以辨認釣魚網站。
+            <br>
+            3. 開啟二階段驗證 (2FA) 以增加帳號安全性。
+        </p>
         <br>
-        3. 開啟二階段驗證 (2FA) 以增加帳號安全性。
-    </p>
-    <br>
-    <p class="title">官方 WiFi</p>
-    <p class="content">
-        請記得連線時使用 HITCON 官方提供的 WiFi，別再不小心走進釣魚牆囉！
-        <br />
-        <br />
-        SSID: HITCON 2023
-        <br />
-        Password: xxxxxx
-    </p>
-    <br>
-    <p class="title">更改 Description</p>
-    <p class="content">輸入下方欄位更改 description，可以更改使用者的敘述，簡短填寫任何你想說的話。更改的使用者敘述會是你最後登入釣魚網站的使用者名稱。
+        <p class="title">官方 WiFi</p>
+        <p class="content">
+            請記得連線時使用 HITCON 官方提供的 WiFi，別再不小心走進釣魚牆囉！
+            <br />
+            <br />
+            SSID: HITCON 2023
+            <br />
+            Password: xxxxxx
+        </p>
         <br>
-    <form action="/description" method="post">
-        <input class="input" name="description" placeholder="description..." maxlength="64" />
-        <input class="submit" type="submit">
-    </form>
-    <script>
-        var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
-        if (params.has("description")) {
-            console.log(params);
-            if (params.get("description") == 0) {
-                document.write("<span style='color: #A3E635'>Success!</span>");
+        <p class="title">更改 Description</p>
+        <p class="content">輸入下方欄位更改 description，可以更改使用者的敘述，簡短填寫任何你想說的話。更改的使用者敘述會是你最後登入釣魚網站的使用者名稱。
+            <br>
+        <form action="/description" method="post">
+            <input class="input" name="description" placeholder="description..." maxlength="64" />
+            <input class="submit" type="submit">
+        </form>
+        <script>
+            var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
+            if (params.has("description")) {
+                console.log(params);
+                if (params.get("description") == 0) {
+                    document.write("<span style='color: #A3E635'>Success!</span>");
+                }
+                else if (params.get("description") == 1) {
+                    document.write("<span style='color: red'>Invalid username.</span>");
+                }
+                else if (params.get("description") == 2) {
+                    document.write("<span style='color: red'>Invalid token.</span>");
+                }
+                else if (params.get("description") == 3) {
+                    document.write("<span style='color: red'>Invalid description.</span>");
+                }
+                else if (params.get("description") == 4) {
+                    document.write("<span style='color: red'>Incorrect username or token.</span>");
+                }
+                else if (params.get("description") == -1) {
+                    document.write("<span style='color: red'>Unknown error.</span>");
+                }
             }
-            else if (params.get("description") == 1) {
-                document.write("<span style='color: red'>Invalid username.</span>");
+        </script>
+        </p>
+        <br>
+        <p class="title">提交 Flag</p>
+        <p class="content">最後，為了證明我們沒有搜集參與者的密碼，我們把 flag 藏在各釣魚網站中，找到它們後提交於下方欄位。提交 flag 的使用者名稱會是最後登入釣魚網站的使用者名稱/信箱。</p>
+        <form action="/flag" method="post">
+            <input class="input" name="flag" placeholder="flag..." maxlength="100" />
+            <input class="submit" type="submit">
+        </form>
+        <script>
+            var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
+            if (params.has("flag")) {
+                console.log(params);
+                if (params.get("flag") == 0) {
+                    document.write("<span style='color: #A3E635'>Success!</span>");
+                }
+                else if (params.get("flag") == 1) {
+                    document.write("<span style='color: red'>Wrong flag.</span>");
+                }
+                else if (params.get("flag") == 2) {
+                    document.write("<span style='color: red'>Duplicate flag.</span>");
+                }
+                else if (params.get("flag") == 3) {
+                    document.write("<span style='color: red'>Invalid username.</span>");
+                }
+                else if (params.get("flag") == 4) {
+                    document.write("<span style='color: red'>Invalid token.</span>");
+                }
+                else if (params.get("flag") == 5) {
+                    document.write("<span style='color: red'>Incorrect username or token.</span>");
+                }
+                else if (params.get("flag") == -1) {
+                    document.write("<span style='color: red'>Unknown error.</span>");
+                }
             }
-            else if (params.get("description") == 2) {
-                document.write("<span style='color: red'>Invalid token.</span>");
-            }
-            else if (params.get("description") == 3) {
-                document.write("<span style='color: red'>Invalid description.</span>");
-            }
-            else if (params.get("description") == 4) {
-                document.write("<span style='color: red'>Incorrect username or token.</span>");
-            }
-            else if (params.get("description") == -1) {
-                document.write("<span style='color: red'>Unknown error.</span>");
-            }
-        }
-    </script>
-    </p>
-    <br>
-    <p class="title">提交 Flag</p>
-    <p class="content">最後為了證明會眾的密碼並沒有被蒐集，我們把 flag 藏在各釣魚網站中，找到它們後提交於下方欄位。提交 flag 的使用者會是你最後登入釣魚網站的使用者名稱。</p>
-    <form action="/flag" method="post">
-        <input class="input" name="flag" placeholder="flag..." maxlength="100" />
-        <input class="submit" type="submit">
-    </form>
-    <script>
-        var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
-        if (params.has("flag")) {
-            console.log(params);
-            if (params.get("flag") == 0) {
-                document.write("<span style='color: #A3E635'>Success!</span>");
-            }
-            else if (params.get("flag") == 1) {
-                document.write("<span style='color: red'>Wrong flag.</span>");
-            }
-            else if (params.get("flag") == 2) {
-                document.write("<span style='color: red'>Duplicate flag.</span>");
-            }
-            else if (params.get("flag") == 3) {
-                document.write("<span style='color: red'>Invalid username.</span>");
-            }
-            else if (params.get("flag") == 4) {
-                document.write("<span style='color: red'>Invalid token.</span>");
-            }
-            else if (params.get("flag") == 5) {
-                document.write("<span style='color: red'>Incorrect username or token.</span>");
-            }
-            else if (params.get("flag") == -1) {
-                document.write("<span style='color: red'>Unknown error.</span>");
-            }
-        }
-    </script>
-    <br>
-</body>
-
+        </script>
+        <br>
+    </body>
 </html>

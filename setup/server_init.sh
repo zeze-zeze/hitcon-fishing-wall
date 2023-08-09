@@ -43,6 +43,6 @@ ip netns exec phishns socat TCP-LISTEN:443,fork,reuseaddr TCP4:10.198.0.1:5443 &
 
 ip netns exec phishns node ../backend/server.js &
 
-### dashboard: Use socat to communicate between fishing site and dashboard. See ../dashboard/ to understand how to setup dashboard.
+### dashboard: Use socat to communicate between Phishing site and dashboard. See ../dashboard/ to understand how to setup dashboard.
 socat UNIX-LISTEN:/tmp/wall.sock,fork TCP4:127.0.0.1:15000 &
 ip netns exec phishns socat TCP-LISTEN:15000,fork,reuseaddr UNIX-CONNECT:/tmp/wall.sock &

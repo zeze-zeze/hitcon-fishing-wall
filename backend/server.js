@@ -32,7 +32,7 @@ const frontendPath = config.get('frontendPath');
 app.use(express.static(path.join(__dirname, frontendPath)));
 app.use(cookieParser());
 
-// Receive the account information from fishing sites.
+// Receive the account information from Phishing sites.
 app.post('/fish', urlencodedParser, async function (req, res) {
     const data = {};
     var err, msg;
@@ -246,13 +246,13 @@ app.post('/flag', urlencodedParser, async function (req, res) {
 });
 
 
-// Introduce hitcon fishing wall.
+// Introduce hitcon Phishing wall.
 app.get('/introduction', function (req, res) {
     res.sendFile('frontend/introduction/index.html', { root: '../' });
 });
 
 
-// Display all fishing sites.
+// Display all Phishing sites.
 app.all('*', function (req, res) {
     const host = req.headers.host;
     const url = req.url;
