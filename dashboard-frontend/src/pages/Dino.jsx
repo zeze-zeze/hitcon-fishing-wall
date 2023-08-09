@@ -14,7 +14,7 @@ export default function DinoPage() {
       }).map(([name, score, time]) => [
         name === null ? "Anonymous" : name,
         score,
-        moment(time).format("YYYY-MM-DD HH:mm:ss"),
+        moment(time).format("MM-DD HH:mm:ss"),
       ]);
       setData(data);
     });
