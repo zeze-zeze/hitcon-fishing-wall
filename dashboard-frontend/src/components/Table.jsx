@@ -28,7 +28,10 @@ export default function Table({
       </thead>
       <tbody>
         {data.map((row, i) => (
-          <tr key={i} className="text-center border-b border-zinc-400">
+          <tr
+            key={i}
+            className="text-center border-b border-zinc-400 hover:bg-zinc-100/30"
+          >
             {row.map((cell, j) => (
               <td key={j} className="p-2 relative">
                 <span className="absolute truncate right-3 left-3">{cell}</span>
