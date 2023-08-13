@@ -55,19 +55,15 @@ async function deleteAndCreatePopcats(data) {
  * @param {{
  *   cardUid: Buffer,
  *   score: number,
+ *   timestamp: Date,
  * }}
  */
-async function createOrUpdatePopcat({ cardUid, score }) {
-  return await prisma.badgePopcat.upsert({
-    where: {
-      cardUid,
-    },
-    update: {
-      score,
-    },
-    create: {
+async function createPopcatRecord({ cardUid, score, timestamp }) {
+  return await prisma.badgePopcat.create({
+    data: {
       cardUid,
       score,
+      timestamp,
     },
   });
 }
@@ -76,33 +72,81 @@ async function createOrUpdatePopcat({ cardUid, score }) {
  * @returns {Promise<{
  *   username: string,
  *   score: number,
- *   updatedAt: Date,
+ *   timestamp: Date,
  * }[]>}
  */
 async function getPopcatWithUser() {
   // prisma doesn't have left join function...
   return await prisma.$queryRaw`
-    SELECT Card.username, popcat.score, popcat.updatedAt
-    FROM BadgePopcat as popcat
+    SELECT Card.username, popcat.score, popcat.timestamp
+    FROM BadgePopcat AS popcat
     LEFT JOIN Card
     ON popcat.cardUid=Card.uid
-    ORDER BY popcat.score DESC, popcat.updatedAt ASC`;
+    ORDER BY popcat.score DESC, popcat.timestamp ASC`;
+}
+
+/**
+ * @param {{
+ *   date: string,
+ * }}
+ * @returns {Promise<{
+ *   username: string,
+ *   score: number,
+ *   timestamp: Date,
+ * }[]>}
+ */
+async function getPopcatRank({ date }) {
+  // prisma doesn't have left join function...
+  const from = `${date}T00:00:00+08:00`;
+  const to = `${date}T24:00:00+08:00`;
+  return await prisma.$queryRaw`
+    SELECT Card.username, max(popcat.score) AS score, popcat.timestamp
+    FROM BadgePopcat AS popcat
+    LEFT JOIN Card
+    ON popcat.cardUid=Card.uid
+    WHERE popcat.timestamp/1000 BETWEEN unixepoch(${from}) and unixepoch(${to})
+    GROUP BY popcat.cardUid
+    ORDER BY score DESC, popcat.timestamp ASC`;
 }
 
 /**
  * @returns {Promise<{
  *   username: string,
  *   score: number,
- *   updatedAt: Date,
+ *   timestamp: Date,
  * }[]>}
  */
 async function getDinoWithUser() {
   return await prisma.$queryRaw`
-   SELECT Card.username, dino.score, dino.updatedAt
-   FROM BadgeDino as dino
+   SELECT Card.username, dino.score, dino.timestamp
+   FROM BadgeDino AS dino
    LEFT JOIN Card
    ON dino.cardUid=Card.uid
-   ORDER BY dino.score DESC, dino.updatedAt ASC`;
+   ORDER BY dino.score DESC, dino.timestamp ASC`;
+}
+
+/**
+ * @param {{
+ *   date: string,
+ * }}
+ * @returns {Promise<{
+ *   username: string,
+ *   score: number,
+ *   timestamp: Date,
+ * }[]>}
+ */
+async function getDinoRank({ date }) {
+  // prisma doesn't have left join function...
+  const from = `${date}T00:00:00+08:00`;
+  const to = `${date}T24:00:00+08:00`;
+  return await prisma.$queryRaw`
+   SELECT Card.username, max(dino.score) AS score, dino.timestamp
+   FROM BadgeDino AS dino
+   LEFT JOIN Card
+   ON dino.cardUid=Card.uid
+   WHERE dino.timestamp/1000 BETWEEN unixepoch(${from}) and unixepoch(${to})
+   GROUP BY dino.cardUid
+   ORDER BY score DESC, dino.timestamp ASC`;
 }
 
 async function deleteAndCreateDinos(data) {
@@ -124,19 +168,15 @@ async function deleteAndCreateDinos(data) {
  * @param {{
  *   cardUid: Buffer,
  *   score: number,
+ *   timestamp: Date,
  * }}
  */
-async function createOrUpdateDino({ cardUid, score }) {
-  return await prisma.badgeDino.upsert({
-    where: {
-      cardUid,
-    },
-    update: {
-      score,
-    },
-    create: {
+async function createDinoRecord({ cardUid, score, timestamp }) {
+  return await prisma.badgeDino.create({
+    data: {
       cardUid,
       score,
+      timestamp,
     },
   });
 }
@@ -214,11 +254,13 @@ module.exports = {
   checkNonExistentUids,
   deleteAndCreatePopcats,
   getPopcatWithUser,
-  createOrUpdatePopcat,
+  createPopcatRecord,
   getDinoWithUser,
   deleteAndCreateDinos,
-  createOrUpdateDino,
+  createDinoRecord,
   getEmojiWithUser,
   deleteAndCreateEmoji,
   createEmojiRecord,
+  getPopcatRank,
+  getDinoRank,
 };
