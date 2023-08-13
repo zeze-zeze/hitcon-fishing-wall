@@ -1,0 +1,19 @@
+FROM node:18-alpine as builder
+COPY . /app
+WORKDIR /app/dashboard-frontend
+RUN yarn install
+RUN yarn build
+
+WORKDIR /app/dashboard-backend
+RUN npm install
+
+FROM node:18-alpine
+COPY --from=builder /app/dashboard-backend /app
+WORKDIR /app
+
+ENV DATABASE_URL="file:/db/prod.db"
+ENV NODE_ENV="production"
+ENV PORT="5000"
+# if API_KEY is not set, it will be a generated random value
+ENV API_KEY=
+CMD ["/bin/sh", "-c", "npm run db:init && npm run start"]
