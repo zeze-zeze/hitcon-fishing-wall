@@ -26,3 +26,14 @@ The HITCON Phishing Wall is an interactive activity organized during HITCON to r
 1. Modify the configuration to suit your specific requirements.
 2. Follow the [setup](./setup) instructions to establish the desired environment.
 3. Once you connect to the Wi-Fi network or join the LAN, open your web browser, and you will be automatically redirected to a phishing site.
+
+## Deploy Dashboard
+
+Remember to set `API_KEY` with `docker run`, or it will be random
+
+```sh
+docker build -t dashboard-prod -f Dockerfile.dashboard-prod .
+docker run -p 127.0.0.1:5000:5000 -e API_KEY="" dashboard-prod
+```
+
+You can mount `/db` in container to store database in host
