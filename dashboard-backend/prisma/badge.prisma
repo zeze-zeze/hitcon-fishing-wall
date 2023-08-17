@@ -19,3 +19,21 @@ model PopcatRecord {
 
   @@map("popcat-record")
 }
+
+model DinorunRecord {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  cardUid String   @map("card_uid")
+  time    DateTime
+  score   Int
+
+  @@map("dinorun-record")
+}
+
+model EmojiRecord {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  cardUid   String   @map("card_uid")
+  timestamp DateTime @map("time")
+  content   String   @map("msg")
+
+  @@map("emoji-record")
+}

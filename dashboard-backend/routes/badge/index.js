@@ -6,7 +6,6 @@ const {
 } = require("../../middlewares/validation");
 const { apiKeyAuth } = require("../../middlewares/auth");
 const {
-  getEmojiWithUser,
   checkNonExistentUids,
   getPopcatWithUser,
   createEmojiRecord,
@@ -16,9 +15,10 @@ const {
   deleteAndCreateDinos,
   deleteAndCreateEmoji,
   createPopcatRecord,
-  getPopcatRank,
-  getDinoRank,
   createDinoRecord,
+  getPopcatRankBadge,
+  getEmojiBadge,
+  getDinoRankBadge,
 } = require("./handlers");
 
 const router = express.Router();
@@ -64,7 +64,8 @@ router.get(
     const date = req.query.date
       ? req.query.date
       : moment().tz("Asia/Taipei").format("YYYY-MM-DD");
-    const record = await getPopcatRank({ date });
+    // const record = await getPopcatRank({ date });
+    const record = await getPopcatRankBadge({ date });
     res.json(record);
   }
 );
@@ -172,7 +173,8 @@ router.get("/dino/rank", SchemaValidator("get_dino_rank"), async (req, res) => {
   const date = req.query.date
     ? req.query.date
     : moment().tz("Asia/Taipei").format("YYYY-MM-DD");
-  const record = await getDinoRank({ date });
+  // const record = await getDinoRank({ date });
+  const record = await getDinoRankBadge({ date });
   res.json(record);
 });
 
@@ -265,7 +267,8 @@ router.post(
 );
 
 router.get("/emoji", async (req, res) => {
-  const data = await getEmojiWithUser();
+  // const data = await getEmojiWithUser();
+  const data = await getEmojiBadge();
   res.json(data);
 });
 
