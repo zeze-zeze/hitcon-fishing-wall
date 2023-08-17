@@ -270,7 +270,7 @@ app.all('*', function (req, res) {
     });
 
     res.writeHead(302, {
-        'Location': 'https://captiveportal.hitcon.org/login'
+        'Location': 'https://captiveportal.hitcon2023.online/login'
     });
     res.end();
 });
