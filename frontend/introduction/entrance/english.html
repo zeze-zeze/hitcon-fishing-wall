@@ -1,109 +1,114 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="../design/main.css">
-        <link rel="icon" type="image/x-icon" href="../images/sheep.png">
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-        <title>HITCON EVENT</title>
-    </head>
-    <style>
-        body {
-            background: #BFAF92;
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../design/main.css">
+    <link rel="icon" type="image/x-icon" href="../images/sheep.png">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <title>HITCON EVENT</title>
+</head>
+<style>
+    body {
+        background: #BFAF92;
+    }
+</style>
+
+<body>
+    <a class="lang" href="./index.html">中文</a>
+    <p class="titleeng">Introduction</p>
+    <p class="content">This activity is purely educational, aimed at raising HITCON attendees' awareness of WiFi
+        security. We will display the user accounts of Phishing WiFi participants on to the
+        <a class="dashboard" href="http://10.198.0.6:15000/fish">dashboard</a> . We will delete all data with no backups
+        at the end of HITCON CMT 2023.
+    </p>
+    <br>
+    <p class="titleeng">Security Precautions</p>
+    <p class="content">
+        1. Avoid using untrusted WiFi networks.
+        <br>
+        2. Verify the URL and certificates to identify phishing websites.
+        <br>
+        3. Enable Two-Factor Authentication (2FA) to enhance account security.
+    </p>
+    <br>
+    <p class="titleeng">Official WiFi</p>
+    <p class="content">
+        Please connect to the official WiFi provided by HITCON and avoid stepping into our phishing trap.
+        <br />
+        <br />
+        SSID: HITCON CMT 2023 via KlickKlack
+        <br />
+        Password: 20230818
+    </p>
+    <br>
+    <p class="titleeng">Alter Description</p>
+    <p class="content">Modify the description in the field below to update your user's statement. Write anything
+        you'd like to say briefly. The changed user description will be displayed as your username on the phishing
+        website upon
+        logging in.
+        <br>
+    <form action="/description" method="post">
+        <input class="input" name="description" placeholder="description..." maxlength="64" />
+        <input class="submit" type="submit" value="submit">
+    </form>
+    <script>
+        var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
+        if (params.has("description")) {
+            console.log(params);
+            if (params.get("description") == 0) {
+                document.write("<span style='color: #A3E635'>Success!</span>");
+            }
+            else if (params.get("description") == 1) {
+                document.write("<span style='color: red'>Invalid username.</span>");
+            }
+            else if (params.get("description") == 2) {
+                document.write("<span style='color: red'>Invalid token.</span>");
+            }
+            else if (params.get("description") == 3) {
+                document.write("<span style='color: red'>Invalid description.</span>");
+            }
+            else if (params.get("description") == -1) {
+                document.write("<span style='color: red'>Unknown error.</span>");
+            }
         }
-    </style>
-    <body>
-        <a class="lang" href="./index.html">中文</a>
-        <p class="titleeng">Introduction</p>
-        <p class="content">This activity is purely educational, aimed at raising HITCON attendees' awareness of WiFi
-            security. We will display the user accounts of Phishing WiFi participants on to the
-            <a class="dashboard" href="http://10.198.0.6:15000/fish">dashboard</a> . We will delete all data with no backups
-            at the end of HITCON CMT 2023.
-        </p>
-        <br>
-        <p class="titleeng">Security Precautions</p>
-        <p class="content">
-            1. Avoid using untrusted WiFi networks.
-            <br>
-            2. Verify the URL and certificates to identify phishing websites.
-            <br>
-            3. Enable Two-Factor Authentication (2FA) to enhance account security.
-        </p>
-        <br>
-        <p class="titleeng">Official WiFi</p>
-        <p class="content">
-            Please connect to the official WiFi provided by HITCON and avoid stepping into our phishing trap.
-            <br />
-            <br />
-            SSID: HITCON 2023
-            <br />
-            Password: xxxxxx
-        </p>
-        <br>
-        <p class="titleeng">Alter Description</p>
-        <p class="content">Modify the description in the field below to update your user's statement. Write anything
-            you'd like to say briefly. The changed user description will be displayed as your username on the phishing website upon
-            logging in.
-            <br>
-        <form action="/description" method="post">
-            <input class="input" name="description" placeholder="description..." maxlength="64" />
-            <input class="submit" type="submit" value="submit">
-        </form>
-        <script>
-            var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
-            if (params.has("description")) {
-                console.log(params);
-                if (params.get("description") == 0) {
-                    document.write("<span style='color: #A3E635'>Success!</span>");
-                }
-                else if (params.get("description") == 1) {
-                    document.write("<span style='color: red'>Invalid username.</span>");
-                }
-                else if (params.get("description") == 2) {
-                    document.write("<span style='color: red'>Invalid token.</span>");
-                }
-                else if (params.get("description") == 3) {
-                    document.write("<span style='color: red'>Invalid description.</span>");
-                }
-                else if (params.get("description") == -1) {
-                    document.write("<span style='color: red'>Unknown error.</span>");
-                }
+    </script>
+    </p>
+    <br>
+    <p class="titleeng">Submit Flag</p>
+    <p class="content">To ensure you that participants' passwords were not collected, we hid the flags in all phishing
+        websites. Find them and submit in the input box below. The username for flag submitting will be the last
+        username/email used on phishing website.
+    </p>
+    <form action="/flag" method="post">
+        <input class="input" name="flag" placeholder="flag..." maxlength="100" />
+        <input class="submit" type="submit" value="submit">
+    </form>
+    <script>
+        var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
+        if (params.has("flag")) {
+            console.log(params);
+            if (params.get("flag") == 0) {
+                document.write("<span style='color: #A3E635'>Success!</span>");
             }
-        </script>
-        </p>
-        <br>
-        <p class="titleeng">Submit Flag</p>
-        <p class="content">To ensure you that participants' passwords were not collected, we hid the flags in all phishing
-            websites. Find them and submit in the input box below. The username for flag submitting will be the last username/email used on phishing website.
-        </p>
-        <form action="/flag" method="post">
-            <input class="input" name="flag" placeholder="flag..." maxlength="100" />
-            <input class="submit" type="submit" value="submit">
-        </form>
-        <script>
-            var params = new URLSearchParams(window.location.href.substring(window.location.href.indexOf('?')));
-            if (params.has("flag")) {
-                console.log(params);
-                if (params.get("flag") == 0) {
-                    document.write("<span style='color: #A3E635'>Success!</span>");
-                }
-                else if (params.get("flag") == 1) {
-                    document.write("<span style='color: red'>Wrong flag.</span>");
-                }
-                else if (params.get("flag") == 2) {
-                    document.write("<span style='color: red'>Duplicate flag.</span>");
-                }
-                else if (params.get("flag") == 3) {
-                    document.write("<span style='color: red'>Invalid username.</span>");
-                }
-                else if (params.get("flag") == 4) {
-                    document.write("<span style='color: red'>Invalid token.</span>");
-                }
-                else if (params.get("flag") == -1) {
-                    document.write("<span style='color: red'>Unknown error.</span>");
-                }
+            else if (params.get("flag") == 1) {
+                document.write("<span style='color: red'>Wrong flag.</span>");
             }
-        </script>
-        <br>
-    </body>
+            else if (params.get("flag") == 2) {
+                document.write("<span style='color: red'>Duplicate flag.</span>");
+            }
+            else if (params.get("flag") == 3) {
+                document.write("<span style='color: red'>Invalid username.</span>");
+            }
+            else if (params.get("flag") == 4) {
+                document.write("<span style='color: red'>Invalid token.</span>");
+            }
+            else if (params.get("flag") == -1) {
+                document.write("<span style='color: red'>Unknown error.</span>");
+            }
+        }
+    </script>
+    <br>
+</body>
+
 </html>

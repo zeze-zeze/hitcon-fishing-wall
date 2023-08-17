@@ -1,9 +1,25 @@
 var dhcpd = require('dhcp');
 var i = 0;
+
+dhcpd.addOption(114, {
+  Length: 32,
+  Value: 'https://captiveportal.hitcon.org'
+});
+
+dhcpd.addOption(103, {
+  Length: 32,
+  Value: 'https://captiveportal.hitcon.org'
+});
+
+dhcpd.addOption(37, {
+  Length: 32,
+  Value: 'https://captiveportal.hitcon.org'
+});
+
 var s = dhcpd.createServer({
   // System settings
   range: [
-    "10.198.0.50", "10.198.254.254"
+    '10.198.0.50', '10.198.254.254'
   ],
   forceOptions: ['hostname'], // Options that need to be sent, even if they were not requested
   static: {
@@ -13,7 +29,7 @@ var s = dhcpd.createServer({
   router: [
     '10.198.0.1'
   ],
-  dns: ["10.198.0.1"],
+  dns: ['10.198.0.1'],
   server: '10.198.0.1', // This is us
   hostname: function () { return '2023hitcon' + i++; }
 });
