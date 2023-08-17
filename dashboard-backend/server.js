@@ -2,18 +2,29 @@ const express = require("express");
 const path = require("path");
 const { PORT, NODE_ENV } = require("./common/env");
 const apiRouter = require("./routes/api");
+const { badge } = require("./common");
 
 const frontendDir = path.join(__dirname, "./dist");
 
 const app = express();
 
-if (NODE_ENV == "development") {
+if (NODE_ENV === "development") {
   app.use("/docs", express.static(path.join(__dirname, "docs")));
   app.use((req, res, next) => {
     if (req.url === "/favicon.ico") return next();
     console.log(req.url);
     next();
   });
+  badge.popcatRecord
+    .findFirst({})
+    .then((data) => {
+      console.log("find first");
+      console.log(data);
+    })
+    .catch((e) => {
+      console.log("error");
+      console.log(e);
+    });
 }
 
 app.use(express.static(frontendDir));
