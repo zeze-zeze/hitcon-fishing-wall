@@ -14,11 +14,16 @@ export default function EmojiPage() {
       }).map(([txt, user, time]) => [
         txt,
         user,
-        moment(time).format("YYYY-MM-DD HH:mm:ss"),
+        moment(time).format("MM-DD HH:mm:ss"),
       ]);
       setData(data);
     });
   }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }, [data]);
+
   return (
     <div>
       <Table headers={["Content", "Username", "Timestamp"]} data={data} />

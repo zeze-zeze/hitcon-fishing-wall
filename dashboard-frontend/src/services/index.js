@@ -4,12 +4,12 @@ const instance = axios.create({
 });
 
 const api = {
-  async getAllPopcat() {
-    const resp = await instance.get("/badge/popcat");
+  async getPopcatRank({ date } = {}) {
+    const resp = await instance.get(`/badge/popcat/rank`, { params: { date } });
     return resp.data;
   },
-  async getAllDino() {
-    const resp = await instance.get("/badge/dino");
+  async getDinoRank({ date } = {}) {
+    const resp = await instance.get(`/badge/dino/rank`, { params: { date } });
     return resp.data;
   },
   async getAllEmoji() {

@@ -257,6 +257,28 @@
         }
       }
     },
+    "/api/v1/badge/popcat/rank": {
+      "get": {
+        "description": "",
+        "operationId": "get_popcat_rank",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/api/v1/badge/popcat/all": {
       "put": {
         "description": "",
@@ -282,11 +304,16 @@
                   },
                   "score": {
                     "type": "number"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
                   }
                 },
                 "required": [
                   "card_uid",
-                  "score"
+                  "score",
+                  "timestamp"
                 ]
               }
             }
@@ -314,9 +341,9 @@
       }
     },
     "/api/v1/badge/popcat/{cardUid}": {
-      "put": {
+      "post": {
         "description": "",
-        "operationId": "put_badge_popcat",
+        "operationId": "post_badge_popcat",
         "parameters": [
           {
             "name": "cardUid",
@@ -335,15 +362,18 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
               "properties": {
                 "score": {
-                  "type": "number",
-                  "example": 10.5
+                  "type": "number"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
                 }
               },
               "required": [
-                "score"
+                "score",
+                "timestamp"
               ]
             }
           }
@@ -376,6 +406,28 @@
         }
       }
     },
+    "/api/v1/badge/dino/rank": {
+      "get": {
+        "description": "",
+        "operationId": "get_dino_rank",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/api/v1/badge/dino/all": {
       "put": {
         "description": "",
@@ -401,11 +453,16 @@
                   },
                   "score": {
                     "type": "number"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "format": "date-time"
                   }
                 },
                 "required": [
                   "card_uid",
-                  "score"
+                  "score",
+                  "timestamp"
                 ]
               }
             }
@@ -433,9 +490,9 @@
       }
     },
     "/api/v1/badge/dino/{cardUid}": {
-      "put": {
+      "post": {
         "description": "",
-        "operationId": "put_badge_dino",
+        "operationId": "post_badge_dino",
         "parameters": [
           {
             "name": "cardUid",
@@ -454,15 +511,18 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
               "properties": {
                 "score": {
-                  "type": "number",
-                  "example": 10.5
+                  "type": "number"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
                 }
               },
               "required": [
-                "score"
+                "score",
+                "timestamp"
               ]
             }
           }

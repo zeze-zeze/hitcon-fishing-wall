@@ -1,4 +1,5 @@
 const express = require("express");
+const moment = require("moment-timezone");
 const {
   SchemaValidator,
   computeCardUidPath,
@@ -7,15 +8,17 @@ const { apiKeyAuth } = require("../../middlewares/auth");
 const {
   getEmojiWithUser,
   checkNonExistentUids,
-  createOrUpdatePopcat,
   getPopcatWithUser,
   createEmojiRecord,
   createOrUpdateBadgeInfo,
   getDinoWithUser,
-  createOrUpdateDino,
   deleteAndCreatePopcats,
   deleteAndCreateDinos,
   deleteAndCreateEmoji,
+  createPopcatRecord,
+  getPopcatRank,
+  getDinoRank,
+  createDinoRecord,
 } = require("./handlers");
 
 const router = express.Router();
@@ -46,6 +49,26 @@ router.get("/popcat", async (req, res) => {
   res.json(record);
 });
 
+router.get(
+  "/popcat/rank",
+  SchemaValidator("get_popcat_rank"),
+  async (req, res) => {
+    /*
+      #swagger.operationId = "get_popcat_rank"
+      #swagger.parameters["date"] = {
+        in: "query",
+        type: "string",
+        format: "date",
+      }
+    */
+    const date = req.query.date
+      ? req.query.date
+      : moment().tz("Asia/Taipei").format("YYYY-MM-DD");
+    const record = await getPopcatRank({ date });
+    res.json(record);
+  }
+);
+
 router.put(
   "/popcat/all",
   apiKeyAuth,
@@ -67,15 +90,20 @@ router.put(
               "score": {
                 "type": "number",
               },
+              "timestamp": {
+                "type": "string",
+                format: "date-time",
+              },
             },
-            "required": ["card_uid", "score"]
+            "required": ["card_uid", "score", "timestamp"]
           },
         }
       }
     */
-    const data = req.body.map(({ card_uid, score }) => ({
+    const data = req.body.map(({ card_uid, score, timestamp }) => ({
       cardUid: Buffer.from(card_uid, "hex"),
       score,
+      timestamp: new Date(timestamp),
     }));
     try {
       const result = await deleteAndCreatePopcats(data);
@@ -97,28 +125,54 @@ router.put(
   }
 );
 
-router.put(
+router.post(
   "/popcat/:cardUid",
   apiKeyAuth,
   computeCardUidPath,
-  SchemaValidator("put_badge_popcat"),
+  SchemaValidator("post_badge_popcat"),
   async (req, res) => {
-    // #swagger.operationId = 'put_badge_popcat'
+    // #swagger.operationId = 'post_badge_popcat'
     /*  #swagger.parameters['body'] = {
       in: 'body',
-      schema: {
-        $score: 10.5,
+      "@schema": {
+        properties: {
+          score: {
+            type: "number",
+          },
+          timestamp: {
+            type: "string",
+            format: "date-time",
+          },
+        },
+        required: ["score", "timestamp"]
       }
     } */
     const { cardUid } = req.computed;
     const { score } = req.body;
-    const record = await createOrUpdatePopcat({ cardUid, score });
+    const timestamp = new Date(req.body.timestamp);
+    const record = await createPopcatRecord({ cardUid, score, timestamp });
     res.status(201).json(record);
   }
 );
 
 router.get("/dino", async (req, res) => {
   const record = await getDinoWithUser();
+  res.json(record);
+});
+
+router.get("/dino/rank", SchemaValidator("get_dino_rank"), async (req, res) => {
+  /*
+    #swagger.operationId = "get_dino_rank"
+    #swagger.parameters["date"] = {
+      in: "query",
+      type: "string",
+      format: "date",
+    }
+  */
+  const date = req.query.date
+    ? req.query.date
+    : moment().tz("Asia/Taipei").format("YYYY-MM-DD");
+  const record = await getDinoRank({ date });
   res.json(record);
 });
 
@@ -143,15 +197,20 @@ router.put(
               "score": {
                 "type": "number",
               },
+              "timestamp": {
+                "type": "string",
+                format: "date-time",
+              },
             },
-            "required": ["card_uid", "score"]
+            "required": ["card_uid", "score", "timestamp"]
           },
         }
       }
     */
-    const data = req.body.map(({ card_uid, score }) => ({
+    const data = req.body.map(({ card_uid, score, timestamp }) => ({
       cardUid: Buffer.from(card_uid, "hex"),
       score,
+      timestamp: new Date(timestamp),
     }));
     try {
       const result = await deleteAndCreateDinos(data);
@@ -173,24 +232,34 @@ router.put(
   }
 );
 
-router.put(
+router.post(
   "/dino/:cardUid",
   apiKeyAuth,
   computeCardUidPath,
-  SchemaValidator("put_badge_dino"),
+  SchemaValidator("post_badge_dino"),
   async (req, res) => {
     /*
-      #swagger.operationId = 'put_badge_dino'
+      #swagger.operationId = 'post_badge_dino'
       #swagger.parameters['body'] = {
         in: 'body',
-        schema: {
-          $score: 10.5,
+        "@schema": {
+          properties: {
+            score: {
+              type: "number",
+            },
+            timestamp: {
+              type: "string",
+              format: "date-time",
+            },
+          },
+          required: ["score", "timestamp"]
         }
       }
      */
     const { cardUid } = req.computed;
     const { score } = req.body;
-    const record = await createOrUpdateDino({ cardUid, score });
+    const timestamp = new Date(req.body.timestamp);
+    const record = await createDinoRecord({ cardUid, score, timestamp });
     res.status(201).json(record);
   }
 );

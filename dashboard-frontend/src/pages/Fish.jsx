@@ -12,9 +12,8 @@ export default function FishPage() {
         headers: ["time", "username", "description", "flagCount"],
         data,
       }).map(([time, ...rest]) => [
-        moment(time).format("YYYY-MM-DD HH:mm:ss"),
-        ...rest
-
+        moment(time).format("MM-DD HH:mm:ss"),
+        ...rest,
       ]);
       setData(data);
     });
@@ -23,6 +22,7 @@ export default function FishPage() {
     <div>
       <Table
         headers={["Time", "Username", "Description", "FlagCount"]}
+        holders={["08_18M12:00:00"]}
         data={data}
         widthClasses={["w-4/12", "w-2/12", "w-5/12", "w-1/12"]}
       />

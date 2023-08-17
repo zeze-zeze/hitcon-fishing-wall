@@ -3,5 +3,12 @@
 @tailwind utilities;
 
 body {
-    background-image: url("/gray-cement-bg.webp");
+  background-image: url("/gray-cement-bg.webp");
+}
+
+/* override react-scroll-to-top style */
+@layer components {
+  button.scroll-to-top {
+    @apply bg-stone-200/80 right-5 bottom-5;
+  }
 }

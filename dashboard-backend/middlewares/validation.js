@@ -1,4 +1,5 @@
 const Ajv = require("ajv");
+const addFormats = require("ajv-formats");
 const express = require("express");
 const swagger = require("../docs/swagger.json");
 const { NODE_ENV } = require("../common/env");
@@ -6,6 +7,7 @@ const { buildDocs } = require("../common/utils");
 
 let routes = transformSchema(swagger);
 const ajv = new Ajv({ strict: false });
+addFormats(ajv);
 
 if (NODE_ENV === "development") {
   buildDocs().then(() => {
@@ -50,7 +52,7 @@ const SchemaValidator =
     if (parameters === undefined) {
       return next();
     }
-    // only validate body and url parameters currently
+    // only validate body, url, query parameters currently
     const errors = [];
     const bodyParams = parameters.find((p) => p.in === "body");
     if (bodyParams !== undefined) {
@@ -68,6 +70,25 @@ const SchemaValidator =
           errors.push(
             ...validate.errors.map((i) => ({ ...i, instancePath: `/${name}` }))
           );
+      });
+    }
+    const queryParams = parameters.filter((i) => i.in === "query");
+    if (queryParams.length > 0) {
+      // not appeared: undefined
+      // appeared: typeof query will be string (may be empty)
+      // query params after check: either undefined or valid
+      queryParams.forEach(({ name, required, ...p }) => {
+        if (required === true || req.query[name] !== undefined) {
+          const validate = ajv.compile(p);
+          const valid = validate(req.query[name]);
+          if (!valid)
+            errors.push(
+              ...validate.errors.map((i) => ({
+                ...i,
+                instancePath: `/${name}`,
+              }))
+            );
+        }
       });
     }
     if (errors.length > 0) {

@@ -19,17 +19,15 @@ model Card {
 model BadgePopcat {
   id        Int      @id @default(autoincrement())
   score     Float
-  cardUid   Bytes    @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  cardUid   Bytes
+  timestamp DateTime
 }
 
 model BadgeDino {
   id        Int      @id @default(autoincrement())
   score     Float
-  cardUid   Bytes    @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  cardUid   Bytes
+  timestamp DateTime
 }
 
 model BadgeEmoji {

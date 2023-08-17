@@ -15,10 +15,12 @@
     "@nivo/core": "^0.83.0",
     "@nivo/line": "^0.83.0",
     "axios": "^1.4.0",
+    "clsx": "^2.0.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.13.0"
+    "react-router-dom": "^6.13.0",
+    "react-scroll-to-top": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
