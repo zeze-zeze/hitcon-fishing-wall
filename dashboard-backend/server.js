@@ -15,16 +15,6 @@ if (NODE_ENV === "development") {
     console.log(req.url);
     next();
   });
-  badge.popcatRecord
-    .findFirst({})
-    .then((data) => {
-      console.log("find first");
-      console.log(data);
-    })
-    .catch((e) => {
-      console.log("error");
-      console.log(e);
-    });
 }
 
 app.use(express.static(frontendDir));

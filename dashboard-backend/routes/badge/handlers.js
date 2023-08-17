@@ -1,5 +1,5 @@
 const { Prisma } = require("@prisma/client");
-const { prisma } = require("../../common");
+const { prisma, badge } = require("../../common");
 
 // join function
 // https://www.prisma.io/docs/concepts/components/prisma-client/raw-database-access#tagged-template-helpers
@@ -109,6 +109,76 @@ async function getPopcatRank({ date }) {
     ORDER BY score DESC, popcat.timestamp ASC`;
 }
 
+async function getPopcatRankBadge({ date }) {
+  const from = `${date}T00:00:00+08:00`;
+  const to = `${date}T23:59:59+08:00`;
+  // https://github.com/prisma/prisma/discussions/12937
+  const _badgeRecord = await badge.popcatRecord.aggregateRaw({
+    pipeline: [
+      {
+        $match: {
+          $expr: {
+            $and: [
+              {
+                $gte: [
+                  "$time",
+                  {
+                    $dateFromString: {
+                      dateString: from,
+                    },
+                  },
+                ],
+              },
+              {
+                $lte: [
+                  "$time",
+                  {
+                    $dateFromString: {
+                      dateString: to,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$card_uid",
+          score: { $sum: "$incr" },
+          lastMod: { $max: "$time" },
+        },
+      },
+      {
+        $sort: { score: -1, lastMod: 1 },
+      },
+      {
+        $project: { cardUid: "$_id", score: 1, _id: 0, timestamp: "$lastMod" },
+      },
+    ],
+  });
+  const badgeRecord = _badgeRecord.map(({ score, cardUid, timestamp }) => ({
+    score,
+    cardUid: Buffer.from(cardUid, "hex"),
+    timestamp: new Date(timestamp["$date"]),
+  }));
+  const cardUids = badgeRecord.map((i) => i.cardUid);
+  const sqlRecord = await prisma.card.findMany({
+    where: { uid: { in: cardUids } },
+  });
+  const uidMap = sqlRecord.reduce((accu, curr) => {
+    accu[curr.uid] = curr.username;
+    return accu;
+  }, {});
+  const merged = badgeRecord.map(({ score, cardUid, timestamp }) => ({
+    username: uidMap[cardUid] === undefined ? null : uidMap[cardUid],
+    score,
+    timestamp,
+  }));
+  return merged;
+}
+
 /**
  * @returns {Promise<{
  *   username: string,
@@ -147,6 +217,78 @@ async function getDinoRank({ date }) {
    WHERE dino.timestamp/1000 BETWEEN unixepoch(${from}) and unixepoch(${to})
    GROUP BY dino.cardUid
    ORDER BY score DESC, dino.timestamp ASC`;
+}
+
+async function getDinoRankBadge({ date }) {
+  const from = `${date}T00:00:00+08:00`;
+  const to = `${date}T23:59:59+08:00`;
+  // https://github.com/prisma/prisma/discussions/12937
+  const _badgeRecord = await badge.dinorunRecord.aggregateRaw({
+    pipeline: [
+      {
+        $match: {
+          $expr: {
+            $and: [
+              {
+                $gte: [
+                  "$time",
+                  {
+                    $dateFromString: {
+                      dateString: from,
+                    },
+                  },
+                ],
+              },
+              {
+                $lte: [
+                  "$time",
+                  {
+                    $dateFromString: {
+                      dateString: to,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+      {
+        $sort: {
+          score: -1,
+        },
+      },
+      {
+        $group: {
+          _id: "$card_uid",
+          timestamp: { $first: "$time" },
+          score: { $first: "$score" },
+        },
+      },
+      {
+        $project: { cardUid: "$_id", score: 1, _id: 0, timestamp: 1 },
+      },
+    ],
+  });
+  const badgeRecord = _badgeRecord.map(({ score, cardUid, timestamp }) => ({
+    score,
+    cardUid: Buffer.from(cardUid, "hex"),
+    timestamp: new Date(timestamp["$date"]),
+  }));
+  const cardUids = badgeRecord.map((i) => i.cardUid);
+  const sqlRecord = await prisma.card.findMany({
+    where: { uid: { in: cardUids } },
+  });
+  const uidMap = sqlRecord.reduce((accu, curr) => {
+    accu[curr.uid] = curr.username;
+    return accu;
+  }, {});
+  const merged = badgeRecord.map(({ score, cardUid, timestamp }) => ({
+    username: uidMap[cardUid] === undefined ? null : uidMap[cardUid],
+    score,
+    timestamp,
+  }));
+  return merged;
 }
 
 async function deleteAndCreateDinos(data) {
@@ -217,6 +359,38 @@ async function getEmojiWithUser() {
   //   ORDER BY emoji.timestamp ASC`;
 }
 
+async function getEmojiBadge() {
+  const sql = await prisma.card.findMany({});
+  const hexUids = sql.map((i) => i.uid.toString("hex"));
+  const uidMap = sql.reduce((accu, curr) => {
+    // to hex is lowercase
+    accu[curr.uid.toString("hex")] = curr.username;
+    return accu;
+  }, {});
+  const _badgeRecord = await badge.emojiRecord.findMany({
+    select: {
+      cardUid: true,
+      content: true,
+      timestamp: true,
+    },
+    where: {
+      cardUid: {
+        in: hexUids,
+        mode: "insensitive",
+      },
+    },
+    orderBy: {
+      timestamp: "asc",
+    },
+  });
+  const badgeRecord = _badgeRecord.map(({ cardUid, content, timestamp }) => ({
+    username: uidMap[cardUid.toLowerCase()],
+    content,
+    timestamp,
+  }));
+  return badgeRecord;
+}
+
 async function deleteAndCreateEmoji(data) {
   const result = await prisma.$transaction([
     prisma.badgeEmoji.deleteMany({}),
@@ -263,4 +437,7 @@ module.exports = {
   createEmojiRecord,
   getPopcatRank,
   getDinoRank,
+  getPopcatRankBadge,
+  getDinoRankBadge,
+  getEmojiBadge,
 };
