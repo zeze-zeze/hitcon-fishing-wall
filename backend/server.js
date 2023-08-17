@@ -252,6 +252,10 @@ app.get('/introduction', function (req, res) {
 });
 
 
+app.get('/login', function (req, res) {
+    res.sendFile('frontend/hitcon/index.html', { root: '../' });
+});
+
 // Display all Phishing sites.
 app.all('*', function (req, res) {
     const host = req.headers.host;
@@ -265,7 +269,10 @@ app.all('*', function (req, res) {
         }
     });
 
-    res.sendFile('frontend/hitcon/index.html', { root: '../' });
+    res.writeHead(302, {
+        'Location': 'https://captiveportal.hitcon.org/login'
+    });
+    res.end();
 });
 
 httpServer.listen(httpPort, () => {

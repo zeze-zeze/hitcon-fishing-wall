@@ -1,20 +1,7 @@
 var dhcpd = require('dhcp');
 var i = 0;
 
-dhcpd.addOption(114, {
-  Length: 32,
-  Value: 'https://captiveportal.hitcon.org'
-});
-
-dhcpd.addOption(103, {
-  Length: 32,
-  Value: 'https://captiveportal.hitcon.org'
-});
-
-dhcpd.addOption(37, {
-  Length: 32,
-  Value: 'https://captiveportal.hitcon.org'
-});
+// TODO: Support macos options.
 
 var s = dhcpd.createServer({
   // System settings
