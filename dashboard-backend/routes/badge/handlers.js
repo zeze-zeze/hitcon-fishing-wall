@@ -386,7 +386,7 @@ async function getEmojiBadge() {
       },
     },
     orderBy: {
-      timestamp: "asc",
+      timestamp: "desc",
     },
   });
   const badgeRecord = _badgeRecord.map(({ cardUid, content, timestamp }) => ({
