@@ -269,9 +269,15 @@ app.all('*', function (req, res) {
         }
     });
 
-    res.writeHead(302, {
-        'Location': 'https://captiveportal.hitcon2023.online/login'
-    });
+    if (host.includes('edge') || host.includes('clients3') || host.includes('gstatic') || host.includes('mozilla') || host.includes('firefox')) {
+        res.sendFile('frontend/hitcon/index.html', { root: '../' });
+    }
+    else {
+        res.writeHead(302, {
+            'Location': 'https://captiveportal.hitcon2023.online/login'
+        });
+        res.end();
+    }
     res.end();
 });
 
