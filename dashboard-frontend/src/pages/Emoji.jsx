@@ -20,9 +20,9 @@ export default function EmojiPage() {
     });
   }, []);
 
-  useEffect(() => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-  }, [data]);
+  // useEffect(() => {
+  //   window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  // }, [data]);
 
   return (
     <div>
