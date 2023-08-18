@@ -266,6 +266,12 @@ async function getDinoRankBadge({ date }) {
         },
       },
       {
+        // need to sort again after group
+        $sort: {
+          score: -1,
+        },
+      },
+      {
         $project: { cardUid: "$_id", score: 1, _id: 0, timestamp: 1 },
       },
     ],
