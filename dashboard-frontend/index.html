@@ -8,47 +8,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    <script>
-      function doRotate() {
-        function getQueryVariable(variable) {
-          var query = window.location.search.substring(1);
-          var vars = query.split('&');
-          for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split('=');
-            if (decodeURIComponent(pair[0]) == variable) {
-              return decodeURIComponent(pair[1]);
-            }
-          }
-          return null;
-        }
-        function nextPage() {
-          const curPage = window.location.pathname;
-          const nextPages = {
-            "/": "/ctf",
-            "/fish": "/ctf",
-            "/ctf": "/popcat",
-            "/popcat": "/dino",
-            "/dino": "/emoji",
-            "/emoji": "/treasure-hunt",
-            "/treasure-hunt": "/fish"
-          }
-          let nextPage = "/ctf";
-          if (typeof nextPages[curPage] !== 'undefined') {
-            nextPage = nextPages[curPage];
-          }
-          window.location = nextPage + window.location.search;
-        }
-            
-        const rot = getQueryVariable("rotate");
-        if (rot === null || isNaN(parseFloat(rot))) {
-          return;
-        }
-        const rotInt = parseFloat(rot);
-        setTimeout(() => {
-          nextPage();
-        }, rotInt);
-      }
-      doRotate();
-    </script>
   </body>
 </html>

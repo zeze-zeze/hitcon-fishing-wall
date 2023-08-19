@@ -1,16 +1,47 @@
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import clsx from "clsx";
+import { useEffect } from "react";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import ScrollToTop from "react-scroll-to-top";
 import hitconLogo from "../assets/hitcon-logo.svg";
 import { navigation } from "./routes";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+const pageTrans = {
+  "/fish": "/ctf",
+  "/ctf": "/popcat",
+  "/popcat": "/dino",
+  "/dino": "/emoji",
+  "/emoji": "/treasure-hunt",
+  "/treasure-hunt": "/fish",
+};
 
 export default function Root() {
   const location = useLocation();
+  let [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // in ms
+    const rotate = parseInt(searchParams.get("rotate"));
+    if (!isNaN(rotate) && rotate >= 100) {
+      const timeoutId = setTimeout(() => {
+        const next = pageTrans[location.pathname] || "/fish";
+        navigate(`${next}?${searchParams.toString()}`, { replace: true });
+      }, rotate);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [searchParams.get("rotate"), location.pathname]);
+
   return (
     <>
       {/*
@@ -51,7 +82,7 @@ export default function Root() {
                           <Link
                             key={item.name}
                             to={item.href}
-                            className={classNames(
+                            className={clsx(
                               location.pathname === item.href
                                 ? "bg-gray-100 text-black"
                                 : "text-zinc-700 hover:bg-gray-200 hover:text-black",
@@ -97,7 +128,7 @@ export default function Root() {
                         key={item.name}
                         // as="a"
                         to={item.href}
-                        className={classNames(
+                        className={clsx(
                           location.pathname === item.href
                             ? "bg-gray-100 text-black"
                             : "text-zinc-700 hover:bg-gray-200 hover:text-black",

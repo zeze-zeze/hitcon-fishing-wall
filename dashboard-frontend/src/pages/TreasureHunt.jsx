@@ -6,7 +6,7 @@ export default function TreasureHuntPage() {
   const [data, setData] = useState([]);
   useEffect(() => {
     api.getAllTreasureHunt().then((tsdata) => {
-      const data = ["level_0", "level_1", "level_2", "level_3", "finished"].map(
+      const data = ["level_0", "level_1", "level_2", "level_3"].map(
         (lineKey) => ({
           id: lineKey,
           data: tsdata.map((o) => ({
