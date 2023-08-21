@@ -92,6 +92,7 @@ app.post('/fish', urlencodedParser, async function (req, res) {
 
     // Redirect to introduction page.
     res.redirect('introduction/entrance?username=' + msg.toString());
+    return;
 });
 
 app.post('/description', urlencodedParser, async function (req, res) {
@@ -157,6 +158,7 @@ app.post('/description', urlencodedParser, async function (req, res) {
 
     // Redirect to introduction page.
     res.redirect('introduction/entrance?description=' + msg.toString());
+    return;
 });
 
 // Receive flags.
@@ -169,6 +171,7 @@ app.post('/flag', urlencodedParser, async function (req, res) {
     } else {
         data.username = "";
         res.redirect('introduction/entrance?flag=3');
+        return;
     }
 
     if (typeof (req.cookies.token) === 'string') {
@@ -176,6 +179,7 @@ app.post('/flag', urlencodedParser, async function (req, res) {
     } else {
         data.token = "";
         res.redirect('introduction/entrance?flag=4');
+        return;
     }
 
     // Check if the flags in cookies are valid.
@@ -195,8 +199,10 @@ app.post('/flag', urlencodedParser, async function (req, res) {
     const answers = config.get('flagAnswers');
     if (typeof (req.body.flag) === "string" && !answers.includes(req.body.flag)) {
         res.redirect('introduction/entrance?flag=1');
+        return;
     } else if (flags.includes(req.body.flag)) {
         res.redirect('introduction/entrance?flag=2');
+        return;
     }
     flags.push(req.body.flag);
 
@@ -243,6 +249,7 @@ app.post('/flag', urlencodedParser, async function (req, res) {
 
     // Redirect to introduction page.
     res.redirect('introduction/entrance?flag=' + msg.toString());
+    return;
 });
 
 
