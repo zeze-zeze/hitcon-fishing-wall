@@ -104,8 +104,6 @@ iptables -A FORWARD -i br_phish -j ACCEPT
 ```
 socat UNIX-LISTEN:/tmp/wall.sock,fork TCP4:127.0.0.1:5002 &
 ip netns exec phishns socat TCP-LISTEN:5002,fork,reuseaddr UNIX-CONNECT:/tmp/wall.sock &
-
-node ../dashboard-backend/server.js &
 ```
 
 ### Guest
